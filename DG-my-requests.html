@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단감 - 내 작업 관리</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d5a27;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "🍊";
+            font-size: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3d1a;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid #2d5a27;
+            color: #2d5a27;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #2d5a27;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .stat-card.recruiting {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+        }
+
+        .stat-card.completed {
+            background: linear-gradient(135deg, #28a745, #34ce57);
+        }
+
+        .stat-card.expired {
+            background: linear-gradient(135deg, #6c757d, #868e96);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2d5a27;
+        }
+
+        /* Requests Section */
+        .requests-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .sort-btn {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn.active {
+            background: #2d5a27;
+            color: white;
+            border-color: #2d5a27;
+        }
+
+        /* Request Items */
+        .request-item {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .request-item:hover {
+            border-color: #2d5a27;
+            box-shadow: 0 5px 15px rgba(45, 90, 39, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .request-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .request-info h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .request-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .request-category {
+            background: #e8f5e8;
+            color: #2d5a27;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .request-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .status-recruiting {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .status-in-progress {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-expired {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .request-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .request-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .applicants-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .applicants-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .applicants-count {
+            font-weight: 600;
+            color: #2d5a27;
+        }
+
+        .view-all-applicants {
+            color: #666;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .applicants-preview {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .applicant-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .applicant-item:hover {
+            border-color: #2d5a27;
+            background: #f0f8f0;
+        }
+
+        .applicant-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .applicant-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .applicant-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .applicant-rating {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .request-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-amount {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d5a27;
+        }
+
+        .work-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Urgent Badge */
+        .urgent-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #dc3545;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-description {
+            margin-bottom: 2rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .applicant-detail {
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .applicant-detail:hover {
+            border-color: #2d5a27;
+            background: #f8f9fa;
+        }
+
+        .applicant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .applicant-main-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .applicant-details h4 {
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .applicant-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .applicant-message {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 3px solid #2d5a27;
+        }
+
+        .message-content {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .applicant-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .request-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .request-status {
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .request-meta {
+                flex-wrap: wrap;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-input {
+                min-width: unset;
+            }
+            
+            .request-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .request-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #dc3545;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <a href="#" class="logo">단감</a>
+        </div>
+        <div class="header-actions">
+            <a href="#" class="btn btn-outline">일거리 찾기</a>
+            <a href="#" class="btn btn-primary">+ 새 작업 등록</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Page Header with Stats -->
+        <div class="page-header">
+            <h1 class="page-title">내 작업 관리</h1>
+            <p class="page-subtitle">등록한 작업의 현황을 확인하고 지원자들을 관리하세요</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card recruiting">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">모집중인 작업</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">총 지원자 수</div>
+                </div>
+                <div class="stat-card completed">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">완료된 작업</div>
+                </div>
+                <div class="stat-card expired">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">기간 만료</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label>상태:</label>
+                <select class="filter-select" id="statusFilter">
+                    <option value="">전체</option>
+                    <option value="recruiting">모집중</option>
+                    <option value="in-progress">진행중</option>
+                    <option value="completed">완료</option>
+                    <option value="expired">만료</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label>분야:</label>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">전체</option>
+                    <option value="rice">논농사</option>
+                    <option value="field">밭농사</option>
+                    <option value="fruit">과수원</option>
+                    <option value="livestock">축산업</option>
+                    <option value="facility">시설관리</option>
+                </select>
+            </div>
+            
+            <input type="text" class="search-input" placeholder="작업 제목으로 검색..." id="searchInput">
+            <button class="btn btn-primary btn-small" onclick="searchRequests()">검색</button>
+        </div>
+
+        <!-- Requests Section -->
+        <div class="requests-section">
+            <div class="section-header">
+                <div class="results-count">총 <strong>8</strong>개의 등록된 작업</div>
+                <div class="sort-options">
+                    <button class="sort-btn active" data-sort="recent">최신순</button>
+                    <button class="sort-btn" data-sort="applicants">지원자순</button>
+                    <button class="sort-btn" data-sort="date">작업일순</button>
+                    <button class="sort-btn" data-sort="status">상태순</button>
+                </div>
+            </div>
+
+            <div class="requests-list" id="requestsList">
+                <!-- 요청 목록이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Applicants Modal -->
+    <div class="modal" id="applicantsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">지원자 목록</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <div id="applicantsDetail">
+                <!-- 지원자 상세 목록이 여기에 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 샘플 데이터
+        const sampleRequests = [
+            {
+                id: 1,
+                title: "벼 수확 작업 (콤바인 보유자 우대)",
+                category: "논농사",
+                location: "전북 완주군 고산면",
+                price: "180,000",
+                priceType: "일당",
+                status: "recruiting",
+                createdAt: "2025-09-04T10:30:00",
+                workDate: "2025-09-06",
+                urgent: true,
+                description: "약 3만평 규모의 벼논에서 수확 작업을 진행합니다. 콤바인을 보유하신 분을 우대합니다.",
+                applicantsCount: 5,
+                viewsCount: 47,
+                applicants: [
+                    {
+                        id: 1,
+                        name: "이농부",
+                        rating: 4.8,
+                        completedWorks: 23,
+                        hasEquipment: true,
+                        message: "안녕하세요! 5년차 농작업 전문가입니다. 콤바인 보유하고 있으며 벼 수확 경험이 풍부합니다.",
+                        appliedAt: "2025-09-04T11:30:00"
+                    },
+                    {
+                        id: 2,
+                        name: "박기계",
+                        rating: 4.9,
+                        completedWorks: 45,
+                        hasEquipment: true,
+                        message: "대형 콤바인 2대 보유하고 있습니다. 신속하고 정확한 작업 약속드립니다.",
+                        appliedAt: "2025-09-04T12:15:00"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "딸기밭 정리 및 모종 심기",
+                category: "밭농사",
+                location: "전북 전주시 덕진구",
+                price: "15,000",
+                priceType: "시급",
+                status: "in-progress",
+                createdAt: "2025-09-03T14:20:00",
+                workDate: "2025-09-05",
+                urgent: false,
+                description: "겨울철 딸기 재배를 위한 밭 정리와 모종 심기 작업입니다.",
+                applicantsCount: 8,
+                viewsCount: 62,
+                selectedApplicant: "김딸기",
+                applicants: [
+                    {
+                        id: 3,
+                        name: "김딸기",
+                        rating: 4.7,
+                        completedWorks: 18,
+                        hasEquipment: false,
+                        message: "딸기 농사 전문으로 하고 있습니다. 정성껏 작업하겠습니다.",
+                        appliedAt: "2025-09-03T15:30:00",
+                        selected: true
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "축사 청소 및 사료 배급",
+                category: "축산업",
+                location: "전북 진안군 마령면",
+                price: "120,000",
+                priceType: "일당",
+                status: "completed",
+                createdAt: "2025-08-28T16:45:00",
+                workDate: "2025-08-30",
+                urgent: false,
+                description: "한우 60두 규모 축사의 일일 관리 업무입니다.",
+                applicantsCount: 3,
+                viewsCount: 28,
+                completedBy: "정축산",
+                rating: 5,
+                review: "매우 성실하게 작업해주셨습니다."
+            }
+        ];
+
+        // 상태별 한글 매핑
+        const statusMap = {
+            'recruiting': '모집중',
+            'in-progress': '진행중',
+            'completed': '완료됨',
+            'expired': '만료됨'
+        };
+
+        // 카테고리 한영 매핑
+        const categoryMap = {
+            "논농사": "rice",
+            "밭농사": "field", 
+            "과수원": "fruit",
+            "축산업": "livestock",
+            "시설관리": "facility"
+        };
+
+        // 요청 항목 렌더링
+        function renderRequests(requests) {
+            const container = document.getElementById('requestsList');
+            
+            if (requests.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <h3 class="empty-title">등록한 작업이 없습니다</h3>
+                        <p class="empty-description">새로운 작업을 등록해보세요!</p>
+                        <a href="#" class="btn btn-primary">+ 새 작업 등록</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = requests.map(request => `
+                <div class="request-item">
+                    ${request.urgent ? '<div class="urgent-badge">긴급</div>' : ''}
+                    ${request.applicantsCount > 0 && request.status === 'recruiting' ? '<div class="notification-dot"></div>' : ''}
+                    
+                    <div class="request-header">
+                        <div class="request-info">
+                            <h3>${request.title}</h3>
+                            <div class="request-meta">
+                                <div class="meta-item">📍 ${request.location}</div>
+                                <div class="meta-item">📅 ${request.workDate}</div>
+                                <div class="meta-item">👁️ ${request.viewsCount}회 조회</div>
+                            </div>
+                            <div class="request-category">${request.category}</div>
+                        </div>
+                        <div class="request-status">
+                            <div class="status-badge status-${request.status}">
+                                ${statusMap[request.status]}
+                            </div>
+                            <div class="request-time">${formatTime(request.createdAt)} 등록</div>
+                        </div>
+                    </div>
+                    
+                    <div class="request-description">${request.description}</div>
+                    
+                    ${renderApplicantsSection(request)}
+                    
+                    <div class="request-footer">
+                        <div class="payment-info">
+                            <span class="payment-amount">${parseInt(request.price).toLocaleString()}원</span>
+                            <span class="work-date">${request.priceType}</span>
+                        </div>
+                        <div class="request-actions">
+                            ${getRequestActions(request)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 지원자 섹션 렌더링
+        function renderApplicantsSection(request) {
+            if (request.status === 'completed') {
+                return `
+                    <div class="applicants-section">
+                        <div class="applicants-header">
+                            <span class="applicants-count">✅ 작업 완료: ${request.completedBy}님</span>
+                            <span style="color: #ffc107;">${'★'.repeat(request.rating)}${request.rating}/5</span>
+                        </div>
+                        <div style="color: #666; font-style: italic;">"${request.review}"</div>
+                    </div>
+                `;
+            }
+            
+            if (request.status === 'in-progress' && request.selectedApplicant) {
+                return `
+                    <div class="applicants-section">
+                        <div class="applicants-header">
+                            <span class="applicants-count">🚀 진행중: ${request.selectedApplicant}님과 작업 중</span>
+                            <span class="view-all-applicants" onclick="contactWorker(${request.id})">연락하기</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (request.applicantsCount === 0) {
+                return `
+                    <div class="applicants-section">
+                        <div class="applicants-header">
+                            <span class="applicants-count">아직 지원자가 없습니다</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const previewApplicants = request.applicants ? request.applicants.slice(0, 3) : [];
+            
+            return `
+                <div class="applicants-section">
+                    <div class="applicants-header">
+                        <span class="applicants-count">👥 ${request.applicantsCount}명이 지원했습니다</span>
+                        <span class="view-all-applicants" onclick="viewAllApplicants(${request.id})">전체 보기</span>
+                    </div>
+                    <div class="applicants-preview">
+                        ${previewApplicants.map(applicant => `
+                            <div class="applicant-item" onclick="viewApplicantDetail(${request.id}, ${applicant.id})">
+                                <div class="applicant-avatar">${applicant.name.charAt(0)}</div>
+                                <div class="applicant-info">
+                                    <div class="applicant-name">${applicant.name}</div>
+                                    <div class="applicant-rating">⭐ ${applicant.rating} (${applicant.completedWorks}회)</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                        ${request.applicantsCount > 3 ? `<div class="applicant-item">+${request.applicantsCount - 3}명 더</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 요청별 액션 버튼
+        function getRequestActions(request) {
+            switch(request.status) {
+                case 'recruiting':
+                    return `
+                        <button class="btn btn-primary btn-small" onclick="viewAllApplicants(${request.id})">지원자 관리</button>
+                        <button class="btn btn-outline btn-small" onclick="editRequest(${request.id})">수정</button>
+                        <button class="btn btn-danger btn-small" onclick="closeRequest(${request.id})">마감</button>
+                    `;
+                case 'in-progress':
+                    return `
+                        <button class="btn btn-primary btn-small" onclick="contactWorker(${request.id})">연락하기</button>
+                        <button class="btn btn-success btn-small" onclick="completeWork(${request.id})">완료처리</button>
+                    `;
+                case 'completed':
+                    return `
+                        <button class="btn btn-outline btn-small" onclick="viewWorkDetail(${request.id})">상세보기</button>
+                        <button class="btn btn-outline btn-small" onclick="rehireWorker(${request.id})">재고용</button>
+                    `;
+                case 'expired':
+                    return `
+                        <button class="btn btn-outline btn-small" onclick="repostRequest(${request.id})">재등록</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteRequest(${request.id})">삭제</button>
+                    `;
+                default:
+                    return '';
+            }
+        }
+
+        // 시간 포맷팅
+        function formatTime(timeString) {
+            const date = new Date(timeString);
+            const now = new Date();
+            const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+            
+            if (diffInHours < 1) return '방금 전';
+            if (diffInHours < 24) return `${diffInHours}시간 전`;
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 7) return `${diffInDays}일 전`;
+            
+            return date.toLocaleDateString();
+        }
+
+        // 필터링 함수
+        function filterRequests() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = sampleRequests;
+            
+            if (statusFilter) {
+                filtered = filtered.filter(request => request.status === statusFilter);
+            }
+            
+            if (categoryFilter) {
+                filtered = filtered.filter(request => categoryMap[request.category] === categoryFilter);
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(request => 
+                    request.title.toLowerCase().includes(searchTerm) ||
+                    request.location.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            return filtered;
+        }
+
+        // 정렬 함수
+        function sortRequests(requests, sortBy) {
+            const sorted = [...requests];
+            
+            switch(sortBy) {
+                case 'recent':
+                    return sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                case 'applicants':
+                    return sorted.sort((a, b) => b.applicantsCount - a.applicantsCount);
+                case 'date':
+                    return sorted.sort((a, b) => new Date(a.workDate) - new Date(b.workDate));
+                case 'status':
+                    const statusOrder = ['recruiting', 'in-progress', 'completed', 'expired'];
+                    return sorted.sort((a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status));
+                default:
+                    return sorted;
+            }
+        }
+
+        // 요청 목록 업데이트
+        function updateRequestsList() {
+            const filtered = filterRequests();
+            const sortBy = document.querySelector('.sort-btn.active').dataset.sort;
+            const sorted = sortRequests(filtered, sortBy);
+            renderRequests(sorted);
+            
+            document.querySelector('.results-count').innerHTML = 
+                `총 <strong>${sorted.length}</strong>개의 등록된 작업`;
+        }
+
+        // 검색 함수
+        function searchRequests() {
+            updateRequestsList();
+        }
+
+        // 전체 지원자 보기
+        function viewAllApplicants(requestId) {
+            const request = sampleRequests.find(r => r.id === requestId);
+            if (!request || !request.applicants) return;
+            
+            document.querySelector('.modal-title').textContent = `"${request.title}" 지원자 목록`;
+            
+            const applicantsDetail = document.getElementById('applicantsDetail');
+            applicantsDetail.innerHTML = request.applicants.map(applicant => `
+                <div class="applicant-detail">
+                    <div class="applicant-header">
+                        <div class="applicant-main-info">
+                            <div class="applicant-avatar" style="width: 50px; height: 50px; font-size: 1.2rem;">${applicant.name.charAt(0)}</div>
+                            <div class="applicant-details">
+                                <h4>${applicant.name} ${applicant.hasEquipment ? '🚜' : ''}</h4>
+                                <div class="applicant-stats">
+                                    <span>⭐ ${applicant.rating}</span>
+                                    <span>완료 ${applicant.completedWorks}회</span>
+                                    <span>${formatTime(applicant.appliedAt)} 지원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="applicant-actions">
+                            <button class="btn btn-outline btn-small" onclick="contactApplicant(${requestId}, ${applicant.id})">연락</button>
+                            <button class="btn btn-primary btn-small" onclick="selectApplicant(${requestId}, ${applicant.id})">선택</button>
+                        </div>
+                    </div>
+                    <div class="applicant-message">
+                        <div class="message-content">${applicant.message}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('applicantsModal').classList.add('show');
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('applicantsModal').classList.remove('show');
+        }
+
+        // 지원자 선택
+        function selectApplicant(requestId, applicantId) {
+            if (confirm('이 지원자를 선택하시겠습니까?')) {
+                alert('지원자가 선택되었습니다. 작업이 진행중 상태로 변경됩니다.');
+                closeModal();
+                updateRequestsList();
+            }
+        }
+
+        // 지원자 연락
+        function contactApplicant(requestId, applicantId) {
+            alert('채팅방으로 이동합니다.');
+            // window.location.href = `DG-chat-room.html?request=${requestId}&applicant=${applicantId}`;
+        }
+
+        // 기타 액션 함수들
+        function editRequest(id) {
+            alert('작업 수정 페이지로 이동합니다.');
+            // window.location.href = `DG-work-edit.html?id=${id}`;
+        }
+
+        function closeRequest(id) {
+            if (confirm('정말로 이 작업을 마감하시겠습니까?')) {
+                alert('작업이 마감되었습니다.');
+                updateRequestsList();
+            }
+        }
+
+        function contactWorker(id) {
+            alert('작업자와의 채팅방으로 이동합니다.');
+        }
+
+        function completeWork(id) {
+            if (confirm('작업이 완료되었습니까?')) {
+                alert('작업 완료 처리되었습니다. 리뷰를 작성해주세요.');
+                updateRequestsList();
+            }
+        }
+
+        function viewWorkDetail(id) {
+            alert('완료된 작업 상세 내역을 확인합니다.');
+        }
+
+        function rehireWorker(id) {
+            if (confirm('같은 작업자에게 새로운 작업을 의뢰하시겠습니까?')) {
+                alert('새 작업 등록 페이지로 이동합니다.');
+            }
+        }
+
+        function repostRequest(id) {
+            if (confirm('이 작업을 다시 등록하시겠습니까?')) {
+                alert('작업이 다시 등록되었습니다.');
+                updateRequestsList();
+            }
+        }
+
+        function deleteRequest(id) {
+            if (confirm('정말로 이 작업을 삭제하시겠습니까?')) {
+                alert('작업이 삭제되었습니다.');
+                updateRequestsList();
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // 이벤트 리스너 등록
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRequests(sampleRequests);
+            
+            // 정렬 버튼
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    updateRequestsList();
+                });
+            });
+            
+            // 필터 변경
+            document.getElementById('statusFilter').addEventListener('change', updateRequestsList);
+            document.getElementById('categoryFilter').addEventListener('change', updateRequestsList);
+            
+            // 검색 Enter 키
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchRequests();
+                }
+            });
+            
+            // 모달 외부 클릭
+            document.getElementById('applicantsModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        });
+
+        // 실시간 업데이트 시뮬레이션
+        function simulateNewApplications() {
+            if (Math.random() > 0.8) {
+                const recruitingRequests = sampleRequests.filter(r => r.status === 'recruiting');
+                if (recruitingRequests.length > 0) {
+                    const randomRequest = recruitingRequests[Math.floor(Math.random() * recruitingRequests.length)];
+                    randomRequest.applicantsCount += 1;
+                    updateRequestsList();
+                }
+            }
+        }
+
+        setInterval(simulateNewApplications, 45000);
+    </script>
+</body>
+</html>

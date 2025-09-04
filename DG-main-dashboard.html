@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단감 - 농작업 대행 플랫폼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d5a27;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "🍊";
+            font-size: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3d1a;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid #2d5a27;
+            color: #2d5a27;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #2d5a27;
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #2d5a27;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Action Cards */
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .action-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-card h3 {
+            font-size: 1.5rem;
+            color: #2d5a27;
+            margin-bottom: 1rem;
+        }
+
+        .action-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d5a27;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Recent Activities */
+        .recent-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #2d5a27;
+        }
+
+        .work-item {
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .work-item:hover {
+            background: #f8f9fa;
+            border-color: #2d5a27;
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .work-price {
+            color: #2d5a27;
+            font-weight: 600;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .location-badge {
+            background: #e8f5e8;
+            color: #2d5a27;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">단감</div>
+        <div class="header-actions">
+            <a href="#" class="btn btn-outline">로그인</a>
+            <a href="#" class="btn btn-primary">회원가입</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>농작업이 필요하신가요?</h1>
+            <p>근처의 농작업 전문가들과 쉽게 연결되세요</p>
+        </section>
+
+        <section class="action-cards">
+            <div class="action-card" onclick="navigateToWorkList()">
+                <div class="action-card-icon">🔍</div>
+                <h3>일거리 찾기</h3>
+                <p>내 주변의 농작업 의뢰를 확인하고 지원하세요</p>
+                <a href="#" class="btn btn-primary">작업 둘러보기</a>
+            </div>
+
+            <div class="action-card" onclick="navigateToWorkCreate()">
+                <div class="action-card-icon">📝</div>
+                <h3>도움 요청하기</h3>
+                <p>필요한 농작업을 등록하고 전문가를 찾으세요</p>
+                <a href="#" class="btn btn-primary">작업 등록하기</a>
+            </div>
+
+            <div class="action-card" onclick="navigateToMap()">
+                <div class="action-card-icon">🗺️</div>
+                <h3>지도에서 찾기</h3>
+                <p>지도를 통해 근처 농작업을 한눈에 확인하세요</p>
+                <a href="#" class="btn btn-primary">지도 보기</a>
+            </div>
+        </section>
+
+        <section class="quick-stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">등록된 작업</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">856</div>
+                    <div class="stat-label">활성 농작업자</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2,134</div>
+                    <div class="stat-label">완료된 작업</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.8</div>
+                    <div class="stat-label">평균 만족도</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="recent-section">
+            <div class="section-header">
+                <h2 class="section-title">🔥 긴급 요청 작업</h2>
+                <a href="#" class="btn btn-outline">전체 보기</a>
+            </div>
+            
+            <div class="work-item">
+                <div class="work-header">
+                    <div class="work-title">벼 수확 작업 (콤바인 보유자)</div>
+                    <div class="work-price">150,000원/일</div>
+                </div>
+                <div class="work-meta">
+                    <span>📍 전북 완주군 고산면</span>
+                    <span>⏰ 내일까지</span>
+                    <span class="location-badge">2km 거리</span>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <div class="work-header">
+                    <div class="work-title">딸기밭 정리 및 모종 심기</div>
+                    <div class="work-price">12,000원/시간</div>
+                </div>
+                <div class="work-meta">
+                    <span>📍 전북 전주시 덕진구</span>
+                    <span>⏰ 3일 후</span>
+                    <span class="location-badge">5km 거리</span>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <div class="work-header">
+                    <div class="work-title">축사 청소 및 사료 배급</div>
+                    <div class="work-price">80,000원/일</div>
+                </div>
+                <div class="work-meta">
+                    <span>📍 전북 진안군 마령면</span>
+                    <span>⏰ 1주일 후</span>
+                    <span class="location-badge">12km 거리</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function navigateToWorkList() {
+            alert('작업 목록 페이지로 이동합니다.');
+            // window.location.href = 'DG-work-list.html';
+        }
+
+        function navigateToWorkCreate() {
+            alert('작업 등록 페이지로 이동합니다.');
+            // window.location.href = 'DG-work-create.html';
+        }
+
+        function navigateToMap() {
+            alert('지도 페이지로 이동합니다.');
+            // window.location.href = 'DG-work-map.html';
+        }
+
+        // 작업 항목 클릭 이벤트
+        document.querySelectorAll('.work-item').forEach(item => {
+            item.addEventListener('click', function() {
+                alert('작업 상세 페이지로 이동합니다.');
+                // window.location.href = 'DG-work-detail.html?id=' + workId;
+            });
+        });
+
+        // 실시간 업데이트 시뮬레이션
+        function updateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const currentValue = parseInt(stat.textContent);
+                if (Math.random() > 0.7) { // 30% 확률로 업데이트
+                    const change = Math.floor(Math.random() * 3) - 1; // -1, 0, 1
+                    stat.textContent = currentValue + change;
+                }
+            });
+        }
+
+        // 5초마다 통계 업데이트 (실제 서비스에서는 WebSocket 사용 권장)
+        setInterval(updateStats, 5000);
+    </script>
+</body>
+</html>
