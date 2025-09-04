@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단감 - 내 활동</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d5a27;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "🍊";
+            font-size: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3d1a;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid #2d5a27;
+            color: #2d5a27;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #2d5a27;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .stat-card.pending {
+            background: linear-gradient(135deg, #ffc107, #ffca2c);
+            color: #333;
+        }
+
+        .stat-card.approved {
+            background: linear-gradient(135deg, #28a745, #34ce57);
+        }
+
+        .stat-card.rejected {
+            background: linear-gradient(135deg, #dc3545, #e4606d);
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: #666;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .tab-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .tab-btn.active:hover {
+            background: #1e3d1a;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2d5a27;
+        }
+
+        /* Applications List */
+        .applications-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .sort-btn {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn.active {
+            background: #2d5a27;
+            color: white;
+            border-color: #2d5a27;
+        }
+
+        /* Application Items */
+        .application-item {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .application-item:hover {
+            border-color: #2d5a27;
+            box-shadow: 0 5px 15px rgba(45, 90, 39, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .application-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .work-info h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .work-category {
+            background: #e8f5e8;
+            color: #2d5a27;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .application-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .application-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .application-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .application-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-amount {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d5a27;
+        }
+
+        .work-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .application-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Messages */
+        .message-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .message-item {
+            background: #f8f9fa;
+            border-left: 3px solid #2d5a27;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .message-from {
+            font-weight: 600;
+            color: #2d5a27;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .message-content {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-description {
+            margin-bottom: 2rem;
+        }
+
+        /* Notification Dot */
+        .notification-dot {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            background: #dc3545;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .application-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .application-status {
+                align-items: flex-start;
+            }
+            
+            .work-meta {
+                flex-wrap: wrap;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-input {
+                min-width: unset;
+            }
+            
+            .tab-buttons {
+                justify-content: center;
+            }
+            
+            .application-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        .urgent-indicator {
+            background: #dc3545;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .rating-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating-comment {
+            color: #555;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <a href="#" class="logo">단감</a>
+        </div>
+        <div class="header-actions">
+            <a href="#" class="btn btn-outline">일거리 찾기</a>
+            <a href="#" class="btn btn-primary">+ 작업 등록</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Page Header with Stats -->
+        <div class="page-header">
+            <h1 class="page-title">내 활동</h1>
+            <p class="page-subtitle">지원한 작업과 요청한 작업을 한눈에 관리하세요</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card pending">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">대기중인 지원</div>
+                </div>
+                <div class="stat-card approved">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">승인된 작업</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156,000</div>
+                    <div class="stat-label">이번 달 수입 (원)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">평균 평점</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="applications">내가 지원한 작업</button>
+                <button class="tab-btn" data-tab="requests">내가 등록한 작업</button>
+                <button class="tab-btn" data-tab="completed">완료된 작업</button>
+                <button class="tab-btn" data-tab="saved">저장한 작업</button>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label>상태:</label>
+                <select class="filter-select" id="statusFilter">
+                    <option value="">전체</option>
+                    <option value="pending">대기중</option>
+                    <option value="approved">승인</option>
+                    <option value="rejected">거절</option>
+                    <option value="completed">완료</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label>분야:</label>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">전체</option>
+                    <option value="rice">논농사</option>
+                    <option value="field">밭농사</option>
+                    <option value="fruit">과수원</option>
+                    <option value="livestock">축산업</option>
+                    <option value="facility">시설관리</option>
+                </select>
+            </div>
+            
+            <input type="text" class="search-input" placeholder="작업 제목, 지역으로 검색..." id="searchInput">
+            <button class="btn btn-primary btn-small" onclick="searchApplications()">검색</button>
+        </div>
+
+        <!-- Applications Section -->
+        <div class="applications-section">
+            <div class="section-header">
+                <div class="results-count">총 <strong>12</strong>개의 지원</div>
+                <div class="sort-options">
+                    <button class="sort-btn active" data-sort="recent">최신순</button>
+                    <button class="sort-btn" data-sort="status">상태순</button>
+                    <button class="sort-btn" data-sort="date">작업일순</button>
+                </div>
+            </div>
+
+            <div class="applications-list" id="applicationsList">
+                <!-- 지원 목록이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 샘플 데이터
+        const sampleApplications = [
+            {
+                id: 1,
+                title: "벼 수확 작업 (콤바인 보유자 우대)",
+                category: "논농사",
+                location: "전북 완주군 고산면",
+                employer: "김농부",
+                price: "180,000",
+                priceType: "일당",
+                status: "approved",
+                appliedAt: "2025-09-04T08:30:00",
+                workDate: "2025-09-06",
+                urgent: true,
+                description: "약 3만평 규모의 벼논에서 수확 작업을 진행합니다. 콤바인을 보유하신 분을 우대합니다.",
+                hasMessage: true,
+                message: {
+                    from: "김농부",
+                    content: "내일 오전 6시에 현장에서 만나뵙겠습니다. 작업복과 도시락을 준비해 주세요.",
+                    time: "1시간 전"
+                }
+            },
+            {
+                id: 2,
+                title: "딸기밭 정리 및 모종 심기",
+                category: "밭농사",
+                location: "전북 전주시 덕진구",
+                employer: "이농장",
+                price: "15,000",
+                priceType: "시급",
+                status: "pending",
+                appliedAt: "2025-09-03T14:20:00",
+                workDate: "2025-09-07",
+                urgent: false,
+                description: "겨울철 딸기 재배를 위한 밭 정리와 모종 심기 작업입니다.",
+                hasMessage: false
+            },
+            {
+                id: 3,
+                title: "축사 청소 및 사료 배급",
+                category: "축산업",
+                location: "전북 진안군 마령면",
+                employer: "박목장",
+                price: "120,000",
+                priceType: "일당",
+                status: "rejected",
+                appliedAt: "2025-09-02T16:45:00",
+                workDate: "2025-09-10",
+                urgent: false,
+                description: "한우 60두 규모 축사의 일일 관리 업무입니다.",
+                hasMessage: true,
+                message: {
+                    from: "박목장",
+                    content: "죄송합니다. 이번에는 축산 경험이 있는 분으로 결정했습니다. 다음 기회에 다시 지원해 주세요.",
+                    time: "2일 전"
+                }
+            },
+            {
+                id: 4,
+                title: "사과 수확 도우미",
+                category: "과수원",
+                location: "전북 임실군 관촌면",
+                employer: "최과수원",
+                price: "13,000",
+                priceType: "시급",
+                status: "completed",
+                appliedAt: "2025-08-28T09:10:00",
+                workDate: "2025-08-30",
+                urgent: false,
+                description: "사과 수확철을 맞아 과수원에서 사과 따기 작업을 도와주실 분을 찾습니다.",
+                hasMessage: false,
+                rating: 5,
+                review: "성실하게 일해주셔서 감사했습니다. 다음에도 또 부탁드리고 싶습니다."
+            },
+            {
+                id: 5,
+                title: "비닐하우스 보수 작업",
+                category: "시설관리",
+                location: "전북 무주군 설천면",
+                employer: "정농원",
+                price: "200,000",
+                priceType: "총액",
+                status: "pending",
+                appliedAt: "2025-09-01T11:30:00",
+                workDate: "협의",
+                urgent: false,
+                description: "겨울철 대비 비닐하우스 보수 작업입니다.",
+                hasMessage: true,
+                message: {
+                    from: "정농원",
+                    content: "지원해주셔서 감사합니다. 다른 지원자들과 함께 검토 중입니다.",
+                    time: "3일 전"
+                }
+            }
+        ];
+
+        // 상태별 한글 매핑
+        const statusMap = {
+            'pending': '대기중',
+            'approved': '승인됨',
+            'rejected': '거절됨',
+            'completed': '완료됨'
+        };
+
+        // 카테고리 한영 매핑
+        const categoryMap = {
+            "논농사": "rice",
+            "밭농사": "field", 
+            "과수원": "fruit",
+            "축산업": "livestock",
+            "시설관리": "facility"
+        };
+
+        // 지원 항목 렌더링
+        function renderApplications(applications) {
+            const container = document.getElementById('applicationsList');
+            
+            if (applications.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <h3 class="empty-title">지원한 작업이 없습니다</h3>
+                        <p class="empty-description">새로운 일거리를 찾아보세요!</p>
+                        <a href="#" class="btn btn-primary">일거리 찾기</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = applications.map(app => `
+                <div class="application-item" onclick="viewApplicationDetail(${app.id})">
+                    ${app.hasMessage ? '<div class="notification-dot"></div>' : ''}
+                    
+                    <div class="application-header">
+                        <div class="work-info">
+                            <h3>
+                                ${app.title}
+                                ${app.urgent ? '<span class="urgent-indicator">긴급</span>' : ''}
+                            </h3>
+                            <div class="work-meta">
+                                <div class="meta-item">📍 ${app.location}</div>
+                                <div class="meta-item">👨‍🌾 ${app.employer}</div>
+                                <div class="meta-item">📅 ${app.workDate}</div>
+                            </div>
+                            <div class="work-category">${app.category}</div>
+                        </div>
+                        <div class="application-status">
+                            <div class="status-badge status-${app.status}">
+                                ${statusMap[app.status]}
+                            </div>
+                            <div class="application-time">${formatTime(app.appliedAt)} 지원</div>
+                        </div>
+                    </div>
+                    
+                    <div class="application-description">${app.description}</div>
+                    
+                    ${app.hasMessage ? `
+                        <div class="message-section">
+                            <div class="message-item">
+                                <div class="message-from">${app.message.from}님의 메시지</div>
+                                <div class="message-content">${app.message.content}</div>
+                                <div class="message-time">${app.message.time}</div>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${app.rating ? `
+                        <div class="rating-section">
+                            <div class="rating-stars">${'★'.repeat(app.rating)}${'☆'.repeat(5-app.rating)}</div>
+                            <div class="rating-comment">"${app.review}"</div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="application-footer">
+                        <div class="payment-info">
+                            <span class="payment-amount">${parseInt(app.price).toLocaleString()}원</span>
+                            <span class="work-date">${app.priceType}</span>
+                        </div>
+                        <div class="application-actions">
+                            ${getActionButtons(app.status, app.id)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 상태별 액션 버튼
+        function getActionButtons(status, id) {
+            switch(status) {
+                case 'pending':
+                    return `
+                        <button class="btn btn-outline btn-small" onclick="cancelApplication(${id}, event)">지원 취소</button>
+                        <button class="btn btn-primary btn-small" onclick="sendMessage(${id}, event)">메시지</button>
+                    `;
+                case 'approved':
+                    return `
+                        <button class="btn btn-primary btn-small" onclick="sendMessage(${id}, event)">메시지</button>
+                    `;
+                case 'rejected':
+                    return `
+                        <button class="btn btn-outline btn-small" onclick="deleteApplication(${id}, event)">삭제</button>
+                    `;
+                case 'completed':
+                    return `
+                        <button class="btn btn-outline btn-small" onclick="writeReview(${id}, event)">리뷰 작성</button>
+                    `;
+                default:
+                    return '';
+            }
+        }
+
+        // 시간 포맷팅
+        function formatTime(timeString) {
+            const date = new Date(timeString);
+            const now = new Date();
+            const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+            
+            if (diffInHours < 1) return '방금 전';
+            if (diffInHours < 24) return `${diffInHours}시간 전`;
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 7) return `${diffInDays}일 전`;
+            
+            return date.toLocaleDateString();
+        }
+
+        // 필터링 함수
+        function filterApplications() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = sampleApplications;
+            
+            // 상태 필터
+            if (statusFilter) {
+                filtered = filtered.filter(app => app.status === statusFilter);
+            }
+            
+            // 카테고리 필터
+            if (categoryFilter) {
+                filtered = filtered.filter(app => categoryMap[app.category] === categoryFilter);
+            }
+            
+            // 검색어 필터
+            if (searchTerm) {
+                filtered = filtered.filter(app => 
+                    app.title.toLowerCase().includes(searchTerm) ||
+                    app.location.toLowerCase().includes(searchTerm) ||
+                    app.employer.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            return filtered;
+        }
+
+        // 정렬 함수
+        function sortApplications(applications, sortBy) {
+            const sorted = [...applications];
+            
+            switch(sortBy) {
+                case 'recent':
+                    return sorted.sort((a, b) => new Date(b.appliedAt) - new Date(a.appliedAt));
+                case 'status':
+                    const statusOrder = ['approved', 'pending', 'rejected', 'completed'];
+                    return sorted.sort((a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status));
+                case 'date':
+                    return sorted.sort((a, b) => new Date(a.workDate) - new Date(b.workDate));
+                default:
+                    return sorted;
+            }
+        }
+
+        // 지원 목록 업데이트
+        function updateApplicationsList() {
+            const filtered = filterApplications();
+            const sortBy = document.querySelector('.sort-btn.active').dataset.sort;
+            const sorted = sortApplications(filtered, sortBy);
+            renderApplications(sorted);
+            
+            // 결과 수 업데이트
+            document.querySelector('.results-count').innerHTML = 
+                `총 <strong>${sorted.length}</strong>개의 지원`;
+        }
+
+        // 검색 함수
+        function searchApplications() {
+            updateApplicationsList();
+        }
+
+        // 지원 상세 보기
+        function viewApplicationDetail(id) {
+            alert(`지원 상세 정보를 확인합니다. (ID: ${id})`);
+            // window.location.href = `DG-work-detail.html?id=${workId}`;
+        }
+
+        // 지원 취소
+        function cancelApplication(id, event) {
+            event.stopPropagation();
+            
+            if (confirm('정말로 지원을 취소하시겠습니까?')) {
+                alert('지원이 취소되었습니다.');
+                // 실제 서비스에서는 서버 API 호출
+                updateApplicationsList();
+            }
+        }
+
+        // 메시지 보내기
+        function sendMessage(id, event) {
+            event.stopPropagation();
+            alert('메시지 페이지로 이동합니다.');
+            // window.location.href = `DG-chat-room.html?application=${id}`;
+        }
+
+        // 지원 삭제
+        function deleteApplication(id, event) {
+            event.stopPropagation();
+            
+            if (confirm('이 지원 기록을 삭제하시겠습니까?')) {
+                alert('지원 기록이 삭제되었습니다.');
+                updateApplicationsList();
+            }
+        }
+
+        // 리뷰 작성
+        function writeReview(id, event) {
+            event.stopPropagation();
+            alert('리뷰 작성 페이지로 이동합니다.');
+            // window.location.href = `DG-write-review.html?application=${id}`;
+        }
+
+        // 뒤로가기
+        function goBack() {
+            window.history.back();
+        }
+
+        // 이벤트 리스너 등록
+        document.addEventListener('DOMContentLoaded', function() {
+            // 초기 렌더링
+            renderApplications(sampleApplications);
+            
+            // 탭 버튼 클릭
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tab = this.dataset.tab;
+                    handleTabChange(tab);
+                });
+            });
+            
+            // 정렬 버튼 클릭
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    updateApplicationsList();
+                });
+            });
+            
+            // 필터 변경
+            document.getElementById('statusFilter').addEventListener('change', updateApplicationsList);
+            document.getElementById('categoryFilter').addEventListener('change', updateApplicationsList);
+            
+            // 검색 Enter 키
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchApplications();
+                }
+            });
+        });
+
+        // 탭 변경 처리
+        function handleTabChange(tab) {
+            switch(tab) {
+                case 'applications':
+                    renderApplications(sampleApplications);
+                    break;
+                case 'requests':
+                    alert('내가 등록한 작업 페이지로 이동합니다.');
+                    // window.location.href = 'DG-my-requests.html';
+                    break;
+                case 'completed':
+                    const completed = sampleApplications.filter(app => app.status === 'completed');
+                    renderApplications(completed);
+                    break;
+                case 'saved':
+                    alert('저장한 작업 페이지로 이동합니다.');
+                    break;
+            }
+        }
+
+        // 실시간 알림 시뮬레이션
+        function simulateNotifications() {
+            if (Math.random() > 0.8) {
+                // 새 메시지 알림
+                const randomApp = sampleApplications[Math.floor(Math.random() * sampleApplications.length)];
+                if (!randomApp.hasMessage && randomApp.status === 'pending') {
+                    randomApp.hasMessage = true;
+                    randomApp.message = {
+                        from: randomApp.employer,
+                        content: "새로운 메시지가 도착했습니다.",
+                        time: "방금 전"
+                    };
+                    updateApplicationsList();
+                }
+            }
+        }
+
+        // 30초마다 알림 확인
+        setInterval(simulateNotifications, 30000);
+    </script>
+</body>
+</html>

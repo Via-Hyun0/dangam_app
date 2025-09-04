@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단감 - 지도에서 일거리 찾기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d5a27;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "🍊";
+            font-size: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .view-btn.active {
+            background: #2d5a27;
+            color: white;
+            border-color: #2d5a27;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3d1a;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2d5a27;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-tag.active {
+            background: #2d5a27;
+            color: white;
+            border-color: #2d5a27;
+        }
+
+        .location-btn {
+            padding: 0.75rem;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .location-btn:hover {
+            background: #138496;
+        }
+
+        /* Main Container */
+        .main-container {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(45deg, #e8f5e8, #d4edda);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #ddd;
+        }
+
+        .map-placeholder {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .map-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .map-control-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .map-control-btn:hover {
+            background: #f8f9fa;
+            border-color: #2d5a27;
+        }
+
+        /* Map Markers */
+        .map-marker {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #2d5a27;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .map-marker:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            z-index: 10;
+        }
+
+        .map-marker.urgent {
+            background: #dc3545;
+            animation: pulse 2s infinite;
+        }
+
+        .map-marker.selected {
+            background: #ffc107;
+            transform: translate(-50%, -50%) scale(1.3);
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 400px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .results-count {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .sort-btn {
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn.active {
+            background: #2d5a27;
+            color: white;
+            border-color: #2d5a27;
+        }
+
+        .work-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        /* Work Items */
+        .work-item {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .work-item:hover {
+            border-color: #2d5a27;
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .work-item.selected {
+            border-color: #ffc107;
+            background: #fff8e1;
+            box-shadow: 0 3px 10px rgba(255, 193, 7, 0.3);
+        }
+
+        .work-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+            line-height: 1.3;
+        }
+
+        .work-distance {
+            background: #e8f5e8;
+            color: #2d5a27;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .work-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .work-price {
+            font-weight: bold;
+            color: #2d5a27;
+            font-size: 0.9rem;
+        }
+
+        .work-category {
+            background: #f0f0f0;
+            color: #666;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .urgent-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #dc3545;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Work Detail Popup */
+        .work-popup {
+            position: absolute;
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 350px;
+            z-index: 100;
+            transform: translate(-50%, -100%) translateY(-10px);
+            border: 1px solid #ddd;
+            display: none;
+        }
+
+        .work-popup.show {
+            display: block;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .popup-title {
+            font-weight: 600;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .close-popup {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #666;
+            cursor: pointer;
+            padding: 0.2rem;
+        }
+
+        .popup-content {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .popup-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .popup-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Distance Rings */
+        .distance-ring {
+            position: absolute;
+            border: 2px dashed #2d5a27;
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .ring-5km {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring-10km {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Legend */
+        .map-legend {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .legend-marker {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .search-bar {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-input {
+                min-width: unset;
+                margin-bottom: 0.5rem;
+            }
+            
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .map-container {
+                height: 50vh;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 50vh;
+            }
+            
+            .work-popup {
+                max-width: 300px;
+                padding: 1rem;
+            }
+            
+            .map-controls {
+                bottom: 1rem;
+                top: auto;
+                right: 1rem;
+                flex-direction: row;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #666;
+        }
+
+        .loading::before {
+            content: "🔄";
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Custom Scrollbar */
+        .work-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .work-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .work-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .work-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <a href="#" class="logo">단감</a>
+        </div>
+        <div class="header-actions">
+            <div class="view-toggle">
+                <button class="view-btn" onclick="switchToList()">📋 목록</button>
+                <button class="view-btn active" onclick="switchToMap()">🗺️ 지도</button>
+            </div>
+            <a href="#" class="btn btn-primary btn-small">+ 작업 등록</a>
+        </div>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="지역, 작업 내용으로 검색하세요" id="searchInput">
+        <div class="filter-tags">
+            <div class="filter-tag" data-filter="all">전체</div>
+            <div class="filter-tag active" data-filter="5km">5km 이내</div>
+            <div class="filter-tag" data-filter="urgent">긴급</div>
+            <div class="filter-tag" data-filter="high-pay">고수익</div>
+            <div class="filter-tag" data-filter="today">오늘</div>
+        </div>
+        <button class="location-btn" onclick="getCurrentLocation()">📍 내 위치</button>
+    </div>
+
+    <div class="main-container">
+        <div class="map-container" id="mapContainer">
+            <div class="map-placeholder">
+                <div>🗺️ 지도가 여기에 표시됩니다</div>
+                <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.7;">
+                    (카카오맵 또는 네이버지도 API 연동)
+                </div>
+            </div>
+
+            <!-- Distance Rings -->
+            <div class="distance-ring ring-5km"></div>
+            <div class="distance-ring ring-10km"></div>
+
+            <!-- Sample Map Markers -->
+            <div class="map-marker urgent" style="top: 30%; left: 40%;" data-work-id="1" onclick="selectWork(1)">1</div>
+            <div class="map-marker" style="top: 60%; left: 30%;" data-work-id="2" onclick="selectWork(2)">2</div>
+            <div class="map-marker" style="top: 45%; left: 70%;" data-work-id="3" onclick="selectWork(3)">3</div>
+            <div class="map-marker urgent" style="top: 70%; left: 60%;" data-work-id="4" onclick="selectWork(4)">4</div>
+            <div class="map-marker" style="top: 25%; left: 65%;" data-work-id="5" onclick="selectWork(5)">5</div>
+
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="map-control-btn" onclick="zoomIn()" title="확대">+</button>
+                <button class="map-control-btn" onclick="zoomOut()" title="축소">−</button>
+                <button class="map-control-btn" onclick="getCurrentLocation()" title="내 위치">📍</button>
+                <button class="map-control-btn" onclick="toggleDistanceRings()" title="거리 표시">🎯</button>
+            </div>
+
+            <!-- Map Legend -->
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-marker" style="background: #2d5a27;"></div>
+                    <span>일반 작업</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-marker" style="background: #dc3545;"></div>
+                    <span>긴급 작업</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-marker" style="background: #ffc107;"></div>
+                    <span>선택된 작업</span>
+                </div>
+            </div>
+
+            <!-- Work Popup -->
+            <div class="work-popup" id="workPopup">
+                <div class="popup-header">
+                    <div class="popup-title" id="popupTitle"></div>
+                    <button class="close-popup" onclick="closePopup()">&times;</button>
+                </div>
+                <div class="popup-content" id="popupContent"></div>
+                <div class="popup-meta" id="popupMeta"></div>
+                <div class="popup-actions">
+                    <button class="btn btn-outline btn-small" onclick="viewDetails()">상세보기</button>
+                    <button class="btn btn-primary btn-small" onclick="applyWork()">지원하기</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="results-count">📍 전북 전주시 기준 <strong>12</strong>개 작업</div>
+                <div class="sort-options">
+                    <button class="sort-btn active" data-sort="distance">거리순</button>
+                    <button class="sort-btn" data-sort="recent">최신순</button>
+                    <button class="sort-btn" data-sort="pay">급여순</button>
+                </div>
+            </div>
+            <div class="work-list" id="workList">
+                <!-- 작업 목록이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 샘플 데이터
+        const sampleWorks = [
+            {
+                id: 1,
+                title: "벼 수확 작업 (콤바인 보유자 우대)",
+                description: "약 3만평 규모의 벼논에서 수확 작업을 진행합니다. 콤바인을 보유하신 분을 우대합니다.",
+                category: "논농사",
+                price: "180,000",
+                priceType: "일당",
+                location: "전북 완주군 고산면",
+                distance: 2.1,
+                date: "내일",
+                time: "오전 6시",
+                urgent: true,
+                employer: "김농부",
+                lat: 35.8563,
+                lng: 127.1345
+            },
+            {
+                id: 2,
+                title: "딸기밭 정리 및 모종 심기",
+                description: "겨울철 딸기 재배를 위한 밭 정리와 모종 심기 작업입니다.",
+                category: "밭농사",
+                price: "15,000",
+                priceType: "시급",
+                location: "전북 전주시 덕진구",
+                distance: 5.2,
+                date: "3일 후",
+                time: "오후 1시",
+                urgent: false,
+                employer: "이농장",
+                lat: 35.8242,
+                lng: 127.1480
+            },
+            {
+                id: 3,
+                title: "축사 청소 및 사료 배급",
+                description: "한우 60두 규모 축사의 일일 관리 업무입니다.",
+                category: "축산업",
+                price: "120,000",
+                priceType: "일당",
+                location: "전북 진안군 마령면",
+                distance: 8.7,
+                date: "1주일 후",
+                time: "오전 7시",
+                urgent: false,
+                employer: "박목장",
+                lat: 35.7912,
+                lng: 127.4234
+            },
+            {
+                id: 4,
+                title: "사과 수확 도우미 (긴급)",
+                description: "사과 수확철을 맞아 과수원에서 사과 따기 작업을 도와주실 분을 찾습니다.",
+                category: "과수원",
+                price: "13,000",
+                priceType: "시급",
+                location: "전북 임실군 관촌면",
+                distance: 12.3,
+                date: "이번 주말",
+                time: "오전 8시",
+                urgent: true,
+                employer: "최과수원",
+                lat: 35.6123,
+                lng: 127.2891
+            },
+            {
+                id: 5,
+                title: "비닐하우스 보수 작업",
+                description: "겨울철 대비 비닐하우스 보수 작업입니다.",
+                category: "시설관리",
+                price: "200,000",
+                priceType: "총액",
+                location: "전북 무주군 설천면",
+                distance: 15.8,
+                date: "협의",
+                time: "협의",
+                urgent: false,
+                employer: "정농원",
+                lat: 36.0134,
+                lng: 127.6612
+            }
+        ];
+
+        let selectedWorkId = null;
+        let currentFilter = '5km';
+        let currentSort = 'distance';
+
+        // 작업 목록 렌더링
+        function renderWorkList(works) {
+            const container = document.getElementById('workList');
+            
+            container.innerHTML = works.map(work => `
+                <div class="work-item ${selectedWorkId === work.id ? 'selected' : ''}" 
+                     onclick="selectWork(${work.id})" data-work-id="${work.id}">
+                    ${work.urgent ? '<div class="urgent-badge">긴급</div>' : ''}
+                    
+                    <div class="work-header">
+                        <div class="work-title">${work.title}</div>
+                        <div class="work-distance">${work.distance}km</div>
+                    </div>
+                    
+                    <div class="work-meta">
+                        <div class="meta-item">📍 ${work.location}</div>
+                        <div class="meta-item">📅 ${work.date}</div>
+                    </div>
+                    
+                    <div class="work-meta">
+                        <div class="work-price">${parseInt(work.price).toLocaleString()}원 ${work.priceType}</div>
+                        <div class="work-category">${work.category}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // 결과 수 업데이트
+            document.querySelector('.results-count').innerHTML = 
+                `📍 전북 전주시 기준 <strong>${works.length}</strong>개 작업`;
+        }
+
+        // 작업 선택
+        function selectWork(workId) {
+            selectedWorkId = workId;
+            const work = sampleWorks.find(w => w.id === workId);
+            
+            if (!work) return;
+            
+            // 지도 마커 업데이트
+            document.querySelectorAll('.map-marker').forEach(marker => {
+                marker.classList.remove('selected');
+            });
+            
+            const selectedMarker = document.querySelector(`[data-work-id="${workId}"]`);
+            if (selectedMarker) {
+                selectedMarker.classList.add('selected');
+                showWorkPopup(work, selectedMarker);
+            }
+            
+            // 사이드바 업데이트
+            document.querySelectorAll('.work-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            const selectedItem = document.querySelector(`.work-item[data-work-id="${workId}"]`);
+            if (selectedItem) {
+                selectedItem.classList.add('selected');
+                selectedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // 작업 팝업 표시
+        function showWorkPopup(work, marker) {
+            const popup = document.getElementById('workPopup');
+            const rect = marker.getBoundingClientRect();
+            const mapRect = document.getElementById('mapContainer').getBoundingClientRect();
+            
+            // 팝업 내용 설정
+            document.getElementById('popupTitle').textContent = work.title;
+            document.getElementById('popupContent').textContent = work.description;
+            document.getElementById('popupMeta').innerHTML = `
+                <div><strong>위치:</strong> ${work.location}</div>
+                <div><strong>급여:</strong> ${work.price.toLocaleString()}원 ${work.priceType}</div>
+                <div><strong>일정:</strong> ${work.date} ${work.time}</div>
+                <div><strong>의뢰자:</strong> ${work.employer}</div>
+            `;
+            
+            // 팝업 위치 설정
+            const popupX = rect.left - mapRect.left;
+            const popupY = rect.top - mapRect.top;
+            
+            popup.style.left = popupX + 'px';
+            popup.style.top = popupY + 'px';
+            popup.classList.add('show');
+        }
+
+        // 팝업 닫기
+        function closePopup() {
+            document.getElementById('workPopup').classList.remove('show');
+            selectedWorkId = null;
+            
+            // 선택 상태 해제
+            document.querySelectorAll('.map-marker, .work-item').forEach(el => {
+                el.classList.remove('selected');
+            });
+        }
+
+        // 필터링
+        function filterWorks() {
+            let filtered = [...sampleWorks];
+            
+            // 거리 필터
+            if (currentFilter === '5km') {
+                filtered = filtered.filter(work => work.distance <= 5);
+            } else if (currentFilter === 'urgent') {
+                filtered = filtered.filter(work => work.urgent);
+            } else if (currentFilter === 'high-pay') {
+                filtered = filtered.filter(work => parseInt(work.price) >= 100000);
+            } else if (currentFilter === 'today') {
+                filtered = filtered.filter(work => work.date === '내일' || work.date === '오늘');
+            }
+            
+            return filtered;
+        }
+
+        // 정렬
+        function sortWorks(works) {
+            const sorted = [...works];
+            
+            switch(currentSort) {
+                case 'distance':
+                    return sorted.sort((a, b) => a.distance - b.distance);
+                case 'recent':
+                    return sorted.sort((a, b) => a.id - b.id);
+                case 'pay':
+                    return sorted.sort((a, b) => parseInt(b.price) - parseInt(a.price));
+                default:
+                    return sorted;
+            }
+        }
+
+        // 작업 목록 업데이트
+        function updateWorkList() {
+            const filtered = filterWorks();
+            const sorted = sortWorks(filtered);
+            renderWorkList(sorted);
+            updateMapMarkers(sorted);
+        }
+
+        // 지도 마커 업데이트
+        function updateMapMarkers(works) {
+            // 모든 마커 숨기기
+            document.querySelectorAll('.map-marker').forEach(marker => {
+                const workId = parseInt(marker.dataset.workId);
+                const shouldShow = works.some(work => work.id === workId);
+                marker.style.display = shouldShow ? 'flex' : 'none';
+            });
+        }
+
+        // 현재 위치 가져오기
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                document.querySelector('.location-btn').textContent = '🔄 위치 확인중...';
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        // 거리 재계산 (실제 서비스에서는 서버에서 계산)
+                        alert(`현재 위치: ${lat.toFixed(4)}, ${lng.toFixed(4)}\n거리 기준으로 작업을 다시 정렬합니다.`);
+                        
+                        document.querySelector('.location-btn').textContent = '📍 내 위치';
+                        updateWorkList();
+                    },
+                    (error) => {
+                        alert('위치 정보를 가져올 수 없습니다.');
+                        document.querySelector('.location-btn').textContent = '📍 내 위치';
+                    }
+                );
+            } else {
+                alert('이 브라우저는 위치 서비스를 지원하지 않습니다.');
+            }
+        }
+
+        // 거리 링 토글
+        function toggleDistanceRings() {
+            const rings = document.querySelectorAll('.distance-ring');
+            rings.forEach(ring => {
+                ring.style.display = ring.style.display === 'none' ? 'block' : 'none';
+            });
+        }
+
+        // 지도 줌
+        function zoomIn() {
+            alert('지도 확대 (지도 API 연동 필요)');
+        }
+
+        function zoomOut() {
+            alert('지도 축소 (지도 API 연동 필요)');
+        }
+
+        // 뷰 전환
+        function switchToList() {
+            alert('목록 보기로 전환합니다.');
+            // window.location.href = 'DG-work-list.html';
+        }
+
+        function switchToMap() {
+            // 이미 지도 뷰
+        }
+
+        // 작업 상세보기
+        function viewDetails() {
+            if (selectedWorkId) {
+                alert(`작업 상세 페이지로 이동합니다. (ID: ${selectedWorkId})`);
+                // window.location.href = `DG-work-detail.html?id=${selectedWorkId}`;
+            }
+        }
+
+        // 작업 지원
+        function applyWork() {
+            if (selectedWorkId) {
+                alert('작업에 지원했습니다!');
+                closePopup();
+            }
+        }
+
+        // 뒤로가기
+        function goBack() {
+            window.history.back();
+        }
+
+        // 이벤트 리스너 등록
+        document.addEventListener('DOMContentLoaded', function() {
+            // 초기 렌더링
+            updateWorkList();
+            
+            // 필터 태그 클릭
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    if (this.dataset.filter === 'all') {
+                        currentFilter = '';
+                    } else {
+                        currentFilter = this.dataset.filter;
+                    }
+                    
+                    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    updateWorkList();
+                });
+            });
+            
+            // 정렬 버튼 클릭
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    currentSort = this.dataset.sort;
+                    
+                    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    updateWorkList();
+                });
+            });
+            
+            // 검색 입력
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                if (searchTerm) {
+                    // 실제 서비스에서는 API 호출
+                    console.log('검색어:', searchTerm);
+                }
+            });
+            
+            // 지도 클릭으로 팝업 닫기
+            document.getElementById('mapContainer').addEventListener('click', function(e) {
+                if (e.target === this || e.target.classList.contains('map-placeholder')) {
+                    closePopup();
+                }
+            });
+            
+            // ESC 키로 팝업 닫기
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePopup();
+                }
+            });
+        });
+
+        // 실시간 업데이트 시뮬레이션
+        function simulateRealTimeUpdates() {
+            // 새 작업 추가
+            if (Math.random() > 0.9) {
+                const newWork = {
+                    id: Date.now(),
+                    title: "새로운 농작업 의뢰",
+                    description: "방금 등록된 새로운 작업입니다.",
+                    category: "기타",
+                    price: "80000",
+                    priceType: "일당",
+                    location: "전북 전주시 완산구",
+                    distance: Math.random() * 20,
+                    date: "내일",
+                    time: "오전 9시",
+                    urgent: Math.random() > 0.7,
+                    employer: "신규농장",
+                    lat: 35.8 + Math.random() * 0.1,
+                    lng: 127.1 + Math.random() * 0.1
+                };
+                
+                sampleWorks.push(newWork);
+                updateWorkList();
+                
+                // 새 마커 추가 (실제로는 지도 API를 통해)
+                console.log('새 작업이 지도에 추가되었습니다:', newWork.title);
+            }
+        }
+
+        // 지도 초기화 시뮬레이션
+        function initializeMap() {
+            console.log('지도 초기화 중...');
+            
+            // 실제 서비스에서는 여기에 카카오맵 또는 네이버지도 초기화 코드
+            // 예: new kakao.maps.Map(...);
+            
+            setTimeout(() => {
+                console.log('지도 로딩 완료');
+            }, 1000);
+        }
+
+        // 페이지 로드 시 지도 초기화
+        window.addEventListener('load', initializeMap);
+
+        // 10초마다 실시간 업데이트
+        setInterval(simulateRealTimeUpdates, 10000);
+
+        // 리사이즈 이벤트 처리
+        window.addEventListener('resize', function() {
+            closePopup(); // 팝업이 열려있으면 닫기
+        });
+    </script>
+</body>
+</html>
