@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Check, Building, User, ChevronRight, UploadCloud } from 'lucide-react';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { Textarea } from '@/components/ui/Textarea';
+import { Check, Building, User, ChevronRight, UploadCloud, Tractor, Wrench } from 'lucide-react';
 
 const steps = ["Business Info", "Expertise", "Confirmation"];
 
@@ -29,33 +31,60 @@ const Step1 = () => (
             <CardDescription>Please provide your business registration details.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-            <div>
-                <label className="font-medium">Business Type</label>
-                <div className="grid grid-cols-2 gap-4 mt-2">
-                    <Button variant="outline" className="flex flex-col h-auto p-4 items-start text-left focus:border-primary focus:ring-2">
-                        <User className="mb-2"/>
-                        <span className="font-semibold">Individual</span>
-                        <span className="text-xs text-gray-500">For sole proprietors.</span>
-                    </Button>
-                    <Button variant="outline" className="flex flex-col h-auto p-4 items-start text-left focus:border-primary focus:ring-2">
-                        <Building className="mb-2"/>
-                        <span className="font-semibold">Corporation</span>
-                        <span className="text-xs text-gray-500">For registered companies.</span>
-                    </Button>
-                </div>
-            </div>
-            <Input placeholder="Business Registration Number (e.g., 000-00-00000)" />
+            <Input placeholder="Business Registration Number" />
             <Input placeholder="Company Name" />
-            <Input placeholder="CEO/Owner Name" />
-             <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary cursor-pointer">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary cursor-pointer">
                 <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
-                <p className="mt-2 text-sm text-gray-600">Click to upload Business Registration Certificate</p>
-                <p className="text-xs text-gray-500">PDF, PNG, JPG up to 10MB</p>
+                <p className="mt-2 text-sm text-gray-600">Upload Business Registration Certificate</p>
             </div>
         </CardContent>
     </>
 );
-// ... Other steps would be defined similarly
+
+const Step2 = () => (
+    <>
+        <CardHeader>
+            <CardTitle>Expertise & Equipment</CardTitle>
+            <CardDescription>Let clients know what you specialize in.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+            <div>
+                <h4 className="font-semibold mb-2 flex items-center"><Wrench className="mr-2 h-5 w-5"/> Main Services</h4>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center space-x-2"><Checkbox id="s1"/><label htmlFor="s1">Paddy Field</label></div>
+                    <div className="flex items-center space-x-2"><Checkbox id="s2"/><label htmlFor="s2">Field Work</label></div>
+                    <div className="flex items-center space-x-2"><Checkbox id="s3"/><label htmlFor="s3">Orchard</label></div>
+                    <div className="flex items-center space-x-2"><Checkbox id="s4"/><label htmlFor="s4">Livestock</label></div>
+                </div>
+            </div>
+            <div>
+                <h4 className="font-semibold mb-2 flex items-center"><Tractor className="mr-2 h-5 w-5"/> Equipment</h4>
+                <Textarea placeholder="List the equipment you own (e.g., Tractor, Combine)..." />
+            </div>
+        </CardContent>
+    </>
+);
+
+const Step3 = () => (
+     <>
+        <CardHeader>
+            <CardTitle>Confirmation</CardTitle>
+            <CardDescription>Please review all the information before submitting.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+            <div className="p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-semibold">Business Info</h4>
+                <p className="text-sm text-gray-600">Company Name: Dangam Inc.</p>
+                <p className="text-sm text-gray-600">Registration #: 123-45-67890</p>
+            </div>
+             <div className="p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-semibold">Expertise</h4>
+                <p className="text-sm text-gray-600">Services: Paddy Field, Field Work</p>
+                <p className="text-sm text-gray-600">Equipment: Tractor, Combine</p>
+            </div>
+        </CardContent>
+    </>
+);
 
 export default function BusinessUpgradePage() {
     const [step, setStep] = useState(0);
@@ -65,7 +94,7 @@ export default function BusinessUpgradePage() {
 
     return (
         <div className="bg-gray-100">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="container mx-auto px-4 sm:px-6 lg:p-8 py-12">
                 <div className="max-w-3xl mx-auto">
                     <div className="mb-8">
                         <StepIndicator currentStep={step} />
@@ -73,19 +102,17 @@ export default function BusinessUpgradePage() {
 
                     <Card>
                         {step === 0 && <Step1 />}
-                        {/* Add other steps here */}
-                        {step === 1 && <CardContent><p>Step 2: Expertise details form goes here.</p></CardContent>}
-                        {step === 2 && <CardContent><p>Step 3: Confirmation of all details goes here.</p></CardContent>}
+                        {step === 1 && <Step2 />}
+                        {step === 2 && <Step3 />}
                     </Card>
 
                     <div className="mt-6 flex justify-between">
                         <Button variant="outline" onClick={prevStep} disabled={step === 0}>
                             Previous
                         </Button>
-                        <Button onClick={nextStep} disabled={step === steps.length - 1}>
-                            Next
-                        </Button>
-                        {step === steps.length - 1 && (
+                        {step < steps.length - 1 ? (
+                            <Button onClick={nextStep}>Next</Button>
+                        ) : (
                              <Button>Submit Application</Button>
                         )}
                     </div>
