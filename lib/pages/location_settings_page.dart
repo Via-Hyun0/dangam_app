@@ -246,7 +246,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: isSelected ? primary.withOpacity(0.1) : Colors.white,
+        color: isSelected ? Color.fromARGB(26, 199, 93, 49) : Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isSelected ? primary : Colors.grey.shade200,
@@ -309,10 +309,10 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: primary.withOpacity(0.1),
+          color: Color.fromARGB(26, 199, 93, 49),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: primary.withOpacity(0.3),
+            color: Color.fromARGB(77, 199, 93, 49),
             width: 1,
           ),
         ),

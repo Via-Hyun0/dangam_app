@@ -280,10 +280,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: primary.withOpacity(0.1),
+                color: Color.fromARGB(26, 199, 93, 49),
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                  color: primary.withOpacity(0.3),
+                  color: Color.fromARGB(77, 199, 93, 49),
                   width: 2,
                 ),
               ),

@@ -111,7 +111,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: primary.withOpacity(0.1),
+                    color: Color.fromARGB(26, 199, 93, 49),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -146,9 +146,9 @@ class _WorkMapPageState extends State<WorkMapPage> {
                         child: SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             activeTrackColor: primary,
-                            inactiveTrackColor: primary.withOpacity(0.2),
+                            inactiveTrackColor: Color.fromARGB(51, 199, 93, 49),
                             thumbColor: primary,
-                            overlayColor: primary.withOpacity(0.1),
+                            overlayColor: Color.fromARGB(26, 199, 93, 49),
                           ),
                           child: Slider(
                             value: _searchRadius,
@@ -170,7 +170,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: primary.withOpacity(0.1),
+                          color: Color.fromARGB(26, 199, 93, 49),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -232,7 +232,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
                 boxShadow: [
                   BoxShadow(
-                    color: primary.withOpacity(0.1),
+                    color: Color.fromARGB(26, 199, 93, 49),
                     blurRadius: 20,
                     offset: const Offset(0, -8),
                   ),
@@ -251,7 +251,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                     height: 5,
                     margin: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
-                      color: primary.withOpacity(0.3),
+                      color: Color.fromARGB(77, 199, 93, 49),
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
@@ -275,7 +275,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: primary.withOpacity(0.1),
+                            color: Color.fromARGB(26, 199, 93, 49),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -313,7 +313,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
-                                    color: primary.withOpacity(0.1),
+                                    color: Color.fromARGB(26, 199, 93, 49),
                                     width: 1,
                                   ),
                                   boxShadow: [
@@ -330,7 +330,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                       width: 48,
                                       height: 48,
                                       decoration: BoxDecoration(
-                                        color: primary.withOpacity(0.1),
+                                        color: Color.fromARGB(26, 199, 93, 49),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(
@@ -360,7 +360,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                                   vertical: 4,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  color: jobStatusColor(job.status).withOpacity(0.1),
+                                                  color: Color.fromARGB(26, 76, 175, 80),
                                                   borderRadius: BorderRadius.circular(8),
                                                 ),
                                                 child: Text(
@@ -386,7 +386,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                     ),
                                     Icon(
                                       Icons.chevron_right,
-                                      color: primary.withOpacity(0.6),
+                                      color: Color.fromARGB(153, 199, 93, 49),
                                       size: 20,
                                     ),
                                   ],
@@ -428,10 +428,10 @@ class _FilterChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primary : primary.withOpacity(0.1),
+          color: isSelected ? primary : Color.fromARGB(26, 199, 93, 49),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? primary : primary.withOpacity(0.3),
+            color: isSelected ? primary : Color.fromARGB(77, 199, 93, 49),
             width: 1,
           ),
         ),

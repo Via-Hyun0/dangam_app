@@ -36,7 +36,7 @@ class _MessagesBodyState extends State<MessagesBody> {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: primary.withOpacity(0.1),
+                color: Color.fromARGB(26, 199, 93, 49),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -65,14 +65,14 @@ class _MessagesBodyState extends State<MessagesBody> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide(
-                      color: primary.withOpacity(0.2),
+                      color: Color.fromARGB(51, 199, 93, 49),
                       width: 1,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide(
-                      color: primary.withOpacity(0.2),
+                      color: Color.fromARGB(51, 199, 93, 49),
                       width: 1,
                     ),
                   ),
@@ -178,7 +178,7 @@ class _ChatCard extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: primary.withOpacity(0.1),
+              color: Color.fromARGB(26, 199, 93, 49),
               width: 1,
             ),
             boxShadow: [
@@ -200,7 +200,7 @@ class _ChatCard extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
+                      color: Color.fromARGB(26, 76, 175, 80),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -260,7 +260,7 @@ class _ChatCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: typeColor.withOpacity(0.1),
+                      color: Color.fromARGB(26, 76, 175, 80),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -281,7 +281,7 @@ class _ChatCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
+                      color: Color.fromARGB(26, 76, 175, 80),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -372,10 +372,10 @@ class _FilterChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primary : primary.withOpacity(0.1),
+          color: isSelected ? primary : Color.fromARGB(26, 199, 93, 49),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? primary : primary.withOpacity(0.3),
+            color: isSelected ? primary : Color.fromARGB(77, 199, 93, 49),
             width: 1,
           ),
         ),
@@ -404,7 +404,7 @@ class _EmptyState extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: primary.withOpacity(0.1),
+              color: Color.fromARGB(26, 199, 93, 49),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(

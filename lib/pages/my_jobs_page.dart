@@ -136,14 +136,14 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            primary.withOpacity(0.1),
-            primary.withOpacity(0.05),
+            Color.fromARGB(26, 199, 93, 49),
+            Color.fromARGB(13, 199, 93, 49),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.1),
+            color: Color.fromARGB(26, 199, 93, 49),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -162,7 +162,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Container(
             width: 1,
             height: 40,
-            color: primary.withOpacity(0.2),
+            color: Color.fromARGB(51, 199, 93, 49),
           ),
           Expanded(
             child: _buildStatItem(
@@ -175,7 +175,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Container(
             width: 1,
             height: 40,
-            color: primary.withOpacity(0.2),
+            color: Color.fromARGB(51, 199, 93, 49),
           ),
           Expanded(
             child: _buildStatItem(
@@ -246,7 +246,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                   _selectedFilter = filter;
                 });
               },
-              selectedColor: primary.withOpacity(0.2),
+              selectedColor: Color.fromARGB(51, 199, 93, 49),
               checkmarkColor: primary,
               labelStyle: TextStyle(
                 color: isSelected ? primary : Colors.grey.shade600,
@@ -354,10 +354,10 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: statusColor.withOpacity(0.1),
+                        color: Color.fromARGB(26, 76, 175, 80),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: statusColor.withOpacity(0.3),
+                          color: Color.fromARGB(77, 76, 175, 80),
                           width: 1,
                         ),
                       ),
@@ -469,7 +469,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: Color.fromARGB(26, 76, 175, 80),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
