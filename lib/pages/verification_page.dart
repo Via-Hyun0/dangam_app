@@ -351,7 +351,7 @@ class _VerificationPageState extends State<VerificationPage> {
           const SizedBox(height: 12),
           
           _buildBenefitItem(
-            icon: Icons.trust_outlined,
+            icon: Icons.verified_user_outlined,
             title: '신뢰도 향상',
             description: '고용주가 더 신뢰할 수 있는 프로필이 됩니다',
           ),
