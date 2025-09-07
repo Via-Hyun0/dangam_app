@@ -35,7 +35,7 @@ class Job {
   final String location;
   final double areaHectares;
   final List<String>
-      requiredEquipment; // can be empty; may include tractor implements
+  requiredEquipment; // can be empty; may include tractor implements
   final DateTime? scheduledDate;
   final JobType type;
   final double distanceKm;
