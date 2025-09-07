@@ -1,7 +1,7 @@
 import React from 'react';
 import MobileLayout from '@/components/layout/MobileLayout';
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
+import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 
 const Label = ({ children, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) => (
