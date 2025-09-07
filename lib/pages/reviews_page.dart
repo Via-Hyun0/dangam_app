@@ -78,14 +78,14 @@ class _ReviewsPageState extends State<ReviewsPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            primary.withOpacity(0.1),
-            primary.withOpacity(0.05),
+            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.1),
+            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -206,7 +206,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -291,10 +291,10 @@ class _ReviewsPageState extends State<ReviewsPage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: primary.withOpacity(0.05),
+                color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: primary.withOpacity(0.2),
+                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
                   width: 1,
                 ),
               ),

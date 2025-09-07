@@ -222,7 +222,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             Text(
               widget.chat.employerName,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.white.withOpacity(0.8),
+                color: Color.fromRGBO(255, 255, 255, 0.8),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -265,7 +265,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Color.fromRGBO(0, 0, 0, 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -2),
                 ),
@@ -285,14 +285,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(
-                          color: primary.withOpacity(0.2),
+                          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(
-                          color: primary.withOpacity(0.2),
+                          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
                           width: 1,
                         ),
                       ),
@@ -362,7 +362,7 @@ class _MessageBubble extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: primary.withOpacity(0.1),
+                color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(
@@ -406,7 +406,7 @@ class _MessageBubble extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Color.fromRGBO(0, 0, 0, 0.05),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -496,12 +496,12 @@ class _ContractCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: statusColor.withOpacity(0.3),
+          color: Color.fromRGBO(statusColor.red, statusColor.green, statusColor.blue, 0.3),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: statusColor.withOpacity(0.1),
+            color: Color.fromRGBO(statusColor.red, statusColor.green, statusColor.blue, 0.1),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -583,7 +583,7 @@ class _ContractCard extends StatelessWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: primary.withOpacity(0.1),
+                          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
