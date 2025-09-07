@@ -8,12 +8,14 @@ import 'package:dangam_app/pages/reviews_page.dart';
 import 'package:dangam_app/pages/help_center_page.dart';
 import 'package:dangam_app/pages/contact_us_page.dart';
 import 'package:dangam_app/pages/about_page.dart';
+import 'package:dangam_app/data/mock_profile.dart';
 import 'package:dangam_app/theme/app_colors.dart';
 import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
+import 'package:dangam_app/theme/app_icons.dart';
 
 /// 프로필 페이지
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 페이지는 사용자의 프로필 정보와 설정을 표시합니다
 /// - 사용자 정보, 통계, 메뉴 항목을 포함합니다
@@ -27,14 +29,18 @@ class ProfileBody extends StatefulWidget {
 
 class _ProfileBodyState extends State<ProfileBody> {
   // 사용자 데이터 (실제 앱에서는 API에서 가져옴)
-  String _userName = '김농부';
-  String _userTitle = '농업 근로자 • 5년 경력';
-  String _userLocation = '김제시 금구면';
-  int _completedJobs = 47;
-  double _rating = 4.8;
-  int _responseRate = 98;
-  bool _isVerified = false;
-  String _profileImage = '';
+  late UserProfile _userProfile;
+  late UserStats _userStats;
+  late UserSettings _userSettings;
+
+  @override
+  void initState() {
+    super.initState();
+    // 목업데이터 초기화 (실제 앱에서는 API 호출)
+    _userProfile = MockProfileData.defaultProfile;
+    _userStats = MockProfileData.userStats;
+    _userSettings = MockProfileData.userSettings;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,29 +50,26 @@ class _ProfileBodyState extends State<ProfileBody> {
         children: [
           // 프로필 헤더
           _ProfileHeader(
-            userName: _userName,
-            userTitle: _userTitle,
-            userLocation: _userLocation,
-            isVerified: _isVerified,
-            profileImage: _profileImage,
+            userProfile: _userProfile,
             onEditTap: () => _navigateToProfileEdit(),
           ),
-          
+
           const SizedBox(height: AppSpacing.xl),
-          
+
           // 통계 카드
           _StatsSection(
-            completedJobs: _completedJobs,
-            rating: _rating,
-            responseRate: _responseRate,
+            userStats: _userStats,
           ),
-          
+
           const SizedBox(height: AppSpacing.xl),
-          
+
           // 메뉴 섹션
           _MenuSection(
-            isVerified: _isVerified,
+            userProfile: _userProfile,
+            userStats: _userStats,
             onLogout: _showLogoutDialog,
+            onProfileUpdated: _updateProfile,
+            onLocationUpdated: _updateLocation,
           ),
         ],
       ),
@@ -75,8 +78,52 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   void _navigateToProfileEdit() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const ProfileEditPage()),
+      MaterialPageRoute(
+          builder: (context) => ProfileEditPage(
+                userName: _userProfile.userName,
+                userTitle: _userProfile.userTitle,
+                userLocation: _userProfile.userLocation,
+                onProfileUpdated: _updateProfile,
+              )),
     );
+  }
+
+  void _updateProfile(String name, String title, String location, String bio) {
+    setState(() {
+      _userProfile = UserProfile(
+        userName: name,
+        userTitle: title,
+        userLocation: location,
+        profileImage: _userProfile.profileImage,
+        isVerified: _userProfile.isVerified,
+        completedJobs: _userProfile.completedJobs,
+        rating: _userProfile.rating,
+        responseRate: _userProfile.responseRate,
+        bio: bio,
+        joinDate: _userProfile.joinDate,
+        skills: _userProfile.skills,
+        certifications: _userProfile.certifications,
+      );
+    });
+  }
+
+  void _updateLocation(String location) {
+    setState(() {
+      _userProfile = UserProfile(
+        userName: _userProfile.userName,
+        userTitle: _userProfile.userTitle,
+        userLocation: location,
+        profileImage: _userProfile.profileImage,
+        isVerified: _userProfile.isVerified,
+        completedJobs: _userProfile.completedJobs,
+        rating: _userProfile.rating,
+        responseRate: _userProfile.responseRate,
+        bio: _userProfile.bio,
+        joinDate: _userProfile.joinDate,
+        skills: _userProfile.skills,
+        certifications: _userProfile.certifications,
+      );
+    });
   }
 
   void _showLogoutDialog() {
@@ -141,24 +188,16 @@ class _ProfileBodyState extends State<ProfileBody> {
 }
 
 /// 프로필 헤더 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 사용자의 기본 정보를 표시합니다
 /// - 프로필 이미지, 이름, 인증 상태를 포함합니다
 class _ProfileHeader extends StatelessWidget {
-  final String userName;
-  final String userTitle;
-  final String userLocation;
-  final bool isVerified;
-  final String profileImage;
+  final UserProfile userProfile;
   final VoidCallback onEditTap;
 
   const _ProfileHeader({
-    required this.userName,
-    required this.userTitle,
-    required this.userLocation,
-    required this.isVerified,
-    required this.profileImage,
+    required this.userProfile,
     required this.onEditTap,
   });
 
@@ -176,11 +215,11 @@ class _ProfileHeader extends StatelessWidget {
           ],
         ),
         borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.primaryLighter,
             blurRadius: 20,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -198,21 +237,22 @@ class _ProfileHeader extends StatelessWidget {
                 width: 2,
               ),
             ),
-            child: profileImage.isNotEmpty
+            child: userProfile.profileImage.isNotEmpty
                 ? ClipRRect(
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
+                    borderRadius:
+                        BorderRadius.circular(AppSpacing.radiusCircular),
                     child: Image.network(
-                      profileImage,
+                      userProfile.profileImage,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Icon(
-                        Icons.person,
+                      errorBuilder: (context, error, stackTrace) => const Icon(
+                        AppIcons.user,
                         size: AppSpacing.iconHuge,
                         color: AppColors.primary,
                       ),
                     ),
                   )
-                : Icon(
-                    Icons.person,
+                : const Icon(
+                    AppIcons.user,
                     size: AppSpacing.iconHuge,
                     color: AppColors.primary,
                   ),
@@ -226,14 +266,14 @@ class _ProfileHeader extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      userName,
+                      userProfile.userName,
                       style: AppTypography.headlineSmall.copyWith(
                         fontWeight: FontWeight.w800,
                         color: AppColors.darkAccent,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.md),
-                    if (isVerified)
+                    if (userProfile.isVerified)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.md,
@@ -246,8 +286,8 @@ class _ProfileHeader extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.verified,
+                            const Icon(
+                              AppIcons.verified,
                               color: AppColors.white,
                               size: AppSpacing.iconSmall,
                             ),
@@ -266,7 +306,7 @@ class _ProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  userTitle,
+                  userProfile.userTitle,
                   style: AppTypography.bodyMedium.copyWith(
                     color: AppColors.secondary,
                     fontWeight: FontWeight.w500,
@@ -275,14 +315,14 @@ class _ProfileHeader extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
-                    Icon(
-                      Icons.location_on,
+                    const Icon(
+                      AppIcons.location,
                       color: AppColors.primary,
                       size: AppSpacing.iconSmall,
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
-                      userLocation,
+                      userProfile.userLocation,
                       style: AppTypography.bodySmall.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.w500,
@@ -296,8 +336,8 @@ class _ProfileHeader extends StatelessWidget {
           // 편집 버튼
           IconButton(
             onPressed: onEditTap,
-            icon: Icon(
-              Icons.edit,
+            icon: const Icon(
+              AppIcons.edit,
               color: AppColors.primary,
               size: AppSpacing.iconMedium,
             ),
@@ -315,19 +355,15 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 /// 통계 섹션 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 사용자의 작업 통계를 표시합니다
 /// - 완료된 작업, 평점, 응답률을 포함합니다
 class _StatsSection extends StatelessWidget {
-  final int completedJobs;
-  final double rating;
-  final int responseRate;
+  final UserStats userStats;
 
   const _StatsSection({
-    required this.completedJobs,
-    required this.rating,
-    required this.responseRate,
+    required this.userStats,
   });
 
   @override
@@ -336,27 +372,27 @@ class _StatsSection extends StatelessWidget {
       children: [
         Expanded(
           child: _StatCard(
-            icon: Icons.work_outline,
+            icon: AppIcons.workOutline,
             label: '완료된 작업',
-            value: completedJobs.toString(),
+            value: userStats.completedJobs.toString(),
             color: AppColors.success,
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: _StatCard(
-            icon: Icons.star_outline,
+            icon: AppIcons.starOutline,
             label: '평점',
-            value: rating.toString(),
+            value: userStats.rating.toString(),
             color: AppColors.warning,
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: _StatCard(
-            icon: Icons.schedule,
+            icon: AppIcons.schedule,
             label: '응답률',
-            value: '$responseRate%',
+            value: '${userStats.responseRate}%',
             color: AppColors.info,
           ),
         ),
@@ -366,7 +402,7 @@ class _StatsSection extends StatelessWidget {
 }
 
 /// 통계 카드 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 개별 통계를 카드 형태로 표시합니다
 /// - 아이콘, 라벨, 값을 포함합니다
@@ -425,17 +461,23 @@ class _StatCard extends StatelessWidget {
 }
 
 /// 메뉴 섹션 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 프로필 관련 메뉴 항목들을 표시합니다
 /// - 설정, 도움말, 로그아웃 등을 포함합니다
 class _MenuSection extends StatelessWidget {
-  final bool isVerified;
+  final UserProfile userProfile;
+  final UserStats userStats;
   final VoidCallback onLogout;
+  final Function(String, String, String, String) onProfileUpdated;
+  final Function(String) onLocationUpdated;
 
   const _MenuSection({
-    required this.isVerified,
+    required this.userProfile,
+    required this.userStats,
     required this.onLogout,
+    required this.onProfileUpdated,
+    required this.onLocationUpdated,
   });
 
   @override
@@ -446,82 +488,106 @@ class _MenuSection extends StatelessWidget {
           title: '계정',
           items: [
             _MenuItem(
-              icon: Icons.person_outline,
+              icon: AppIcons.userOutline,
               title: '프로필 편집',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ProfileEditPage(userName: '김농부')),
+                MaterialPageRoute(
+                    builder: (context) => ProfileEditPage(
+                          userName: userProfile.userName,
+                          userTitle: userProfile.userTitle,
+                          userLocation: userProfile.userLocation,
+                          onProfileUpdated: onProfileUpdated,
+                        )),
               ),
             ),
             _MenuItem(
-              icon: Icons.verified_user_outlined,
+              icon: AppIcons.verifiedOutline,
               title: '인증 관리',
-              subtitle: isVerified ? '완료' : '필요',
-              badge: isVerified ? '완료' : '필요',
-              badgeColor: isVerified ? AppColors.success : AppColors.warning,
+              subtitle: userProfile.isVerified ? '완료' : '필요',
+              badge: userProfile.isVerified ? '완료' : '필요',
+              badgeColor: userProfile.isVerified
+                  ? AppColors.success
+                  : AppColors.warning,
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const VerificationPage(isVerified: false)),
+                MaterialPageRoute(
+                    builder: (context) => VerificationPage(
+                          isVerified: userProfile.isVerified,
+                          onVerificationUpdated: (bool value) {},
+                        )),
               ),
             ),
             _MenuItem(
-              icon: Icons.location_on_outlined,
+              icon: AppIcons.locationOutline,
               title: '위치 설정',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const LocationSettingsPage(currentLocation: '김제시 금구면')),
+                MaterialPageRoute(
+                    builder: (context) => LocationSettingsPage(
+                          currentLocation: userProfile.userLocation,
+                          onLocationUpdated: onLocationUpdated,
+                        )),
               ),
             ),
           ],
         ),
-        
+
         const SizedBox(height: AppSpacing.lg),
-        
+
         _MenuGroup(
           title: '작업',
           items: [
             _MenuItem(
-              icon: Icons.work_outline,
+              icon: AppIcons.workOutline,
               title: '내 작업',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const MyJobsPage(completedJobs: 47)),
+                MaterialPageRoute(
+                    builder: (context) => MyJobsPage(
+                          completedJobs: userStats.completedJobs,
+                          rating: userStats.rating,
+                        )),
               ),
             ),
             _MenuItem(
-              icon: Icons.schedule_outlined,
+              icon: AppIcons.scheduleOutline,
               title: '가능 시간',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const AvailabilityPage()),
+                MaterialPageRoute(
+                    builder: (context) => const AvailabilityPage()),
               ),
             ),
             _MenuItem(
-              icon: Icons.star_outline,
+              icon: AppIcons.starOutline,
               title: '리뷰',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ReviewsPage(rating: 4.8)),
+                MaterialPageRoute(
+                    builder: (context) => ReviewsPage(
+                          rating: userStats.rating,
+                        )),
               ),
             ),
           ],
         ),
-        
+
         const SizedBox(height: AppSpacing.lg),
-        
+
         _MenuGroup(
           title: '지원',
           items: [
             _MenuItem(
-              icon: Icons.help_outline,
+              icon: AppIcons.helpOutline,
               title: '도움말',
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const HelpCenterPage()),
               ),
             ),
             _MenuItem(
-              icon: Icons.contact_support_outlined,
+              icon: AppIcons.contactSupport,
               title: '문의하기',
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const ContactUsPage()),
               ),
             ),
             _MenuItem(
-              icon: Icons.info_outline,
+              icon: AppIcons.infoOutline,
               title: '앱 정보',
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const AboutPage()),
@@ -529,9 +595,9 @@ class _MenuSection extends StatelessWidget {
             ),
           ],
         ),
-        
+
         const SizedBox(height: AppSpacing.xl),
-        
+
         // 로그아웃 버튼
         SizedBox(
           width: double.infinity,
@@ -559,7 +625,7 @@ class _MenuSection extends StatelessWidget {
 }
 
 /// 메뉴 그룹 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 관련된 메뉴 항목들을 그룹화합니다
 /// - 그룹 제목과 메뉴 항목들을 포함합니다
@@ -578,7 +644,8 @@ class _MenuGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: AppSpacing.xs, bottom: AppSpacing.md),
+          padding:
+              const EdgeInsets.only(left: AppSpacing.xs, bottom: AppSpacing.md),
           child: Text(
             title,
             style: AppTypography.titleMedium.copyWith(
@@ -609,7 +676,7 @@ class _MenuGroup extends StatelessWidget {
 }
 
 /// 메뉴 항목 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 개별 메뉴 항목을 표시합니다
 /// - 아이콘, 제목, 부제목, 배지를 포함할 수 있습니다
@@ -674,10 +741,12 @@ class _MenuItemWidget extends StatelessWidget {
                     vertical: AppSpacing.xs,
                   ),
                   decoration: BoxDecoration(
-                    color: (item.badgeColor ?? AppColors.primary).withOpacity(0.1),
+                    color:
+                        (item.badgeColor ?? AppColors.primary).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(AppSpacing.sm),
                     border: Border.all(
-                      color: (item.badgeColor ?? AppColors.primary).withOpacity(0.3),
+                      color: (item.badgeColor ?? AppColors.primary)
+                          .withOpacity(0.3),
                       width: 1,
                     ),
                   ),
@@ -692,7 +761,7 @@ class _MenuItemWidget extends StatelessWidget {
                 const SizedBox(width: AppSpacing.md),
               ],
               Icon(
-                Icons.chevron_right,
+                AppIcons.chevronRight,
                 color: AppColors.grey,
                 size: AppSpacing.iconMedium,
               ),

@@ -4,9 +4,10 @@ import 'package:dangam_app/pages/chat_detail_page.dart';
 import 'package:dangam_app/theme/app_colors.dart';
 import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
+import 'package:dangam_app/theme/app_theme.dart';
 
 /// 메시지 목록 페이지
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 페이지는 모든 메시지/채팅 목록을 표시합니다
 /// - 필터링과 검색 기능을 제공합니다
@@ -26,7 +27,7 @@ class _MessagesBodyState extends State<MessagesBody> {
   Widget build(BuildContext context) {
     // 필터링된 채팅 목록
     List<Chat> filteredChats = mockChats.where((chat) {
-      final matchesFilter = _selectedFilter == 'all' || 
+      final matchesFilter = _selectedFilter == 'all' ||
           chat.type.toString().split('.').last == _selectedFilter;
       final matchesSearch = _searchQuery.isEmpty ||
           chat.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
@@ -43,7 +44,7 @@ class _MessagesBodyState extends State<MessagesBody> {
           onSearchChanged: (value) => setState(() => _searchQuery = value),
           onFilterChanged: (value) => setState(() => _selectedFilter = value),
         ),
-        
+
         // Messages List
         filteredChats.isEmpty
             ? _EmptyState()
@@ -66,7 +67,7 @@ class _MessagesBodyState extends State<MessagesBody> {
 }
 
 /// 검색 및 필터 바 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 메시지 검색과 필터링을 담당합니다
 /// - 검색 입력 필드와 필터 칩을 포함합니다
@@ -111,14 +112,14 @@ class _SearchFilterBar extends StatelessWidget {
               prefixIcon: Icon(
                 Icons.search,
                 color: AppColors.grey,
-                size: AppSpacing.iconMedium,
+                size: AppTheme.iconTheme.size,
               ),
               suffixIcon: searchQuery.isNotEmpty
                   ? IconButton(
                       icon: Icon(
                         Icons.clear,
                         color: AppColors.grey,
-                        size: AppSpacing.iconMedium,
+                        size: AppTheme.iconTheme.size,
                       ),
                       onPressed: () => onSearchChanged(''),
                     )
@@ -133,7 +134,8 @@ class _SearchFilterBar extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
-                borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                borderSide:
+                    const BorderSide(color: AppColors.primary, width: 2),
               ),
               filled: true,
               fillColor: AppColors.background,
@@ -184,7 +186,7 @@ class _SearchFilterBar extends StatelessWidget {
 }
 
 /// 필터 칩 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 필터 옵션을 칩 형태로 표시합니다
 /// - 선택된 상태와 선택되지 않은 상태를 구분합니다
@@ -205,7 +207,7 @@ class _FilterChip extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg, 
+          horizontal: AppSpacing.lg,
           vertical: AppSpacing.md,
         ),
         decoration: BoxDecoration(
@@ -229,7 +231,7 @@ class _FilterChip extends StatelessWidget {
 }
 
 /// 채팅 카드 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 개별 채팅을 카드 형태로 표시합니다
 /// - 채팅의 모든 중요한 정보를 포함합니다
@@ -243,7 +245,7 @@ class _ChatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color typeColor = chatTypeColor(chat.type);
     final Color statusColor = messageStatusColor(chat.status);
-    
+
     return Material(
       elevation: 0,
       borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
@@ -288,12 +290,13 @@ class _ChatCard extends StatelessWidget {
                           height: AppSpacing.iconHuge,
                           decoration: BoxDecoration(
                             color: AppColors.successLight,
-                            borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
+                            borderRadius: BorderRadius.circular(
+                                AppSpacing.radiusCircular),
                           ),
                           child: Icon(
                             _getChatTypeIcon(chat.type),
                             color: typeColor,
-                            size: AppSpacing.iconLarge,
+                            size: AppTheme.iconThemeLarge.size,
                           ),
                         ),
                         const SizedBox(width: AppSpacing.lg),
@@ -324,7 +327,7 @@ class _ChatCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
+
                   // Time
                   Text(
                     _formatTime(chat.lastMessageTime),
@@ -358,9 +361,9 @@ class _ChatCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(width: AppSpacing.md),
-                  
+
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.sm,
@@ -378,9 +381,9 @@ class _ChatCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const Spacer(),
-                  
+
                   // Unread count
                   if (chat.unreadCount > 0)
                     Container(
@@ -424,7 +427,7 @@ class _ChatCard extends StatelessWidget {
 }
 
 /// 빈 상태 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 메시지가 없을 때 표시됩니다
 /// - 사용자에게 안내 메시지를 제공합니다
@@ -445,8 +448,8 @@ class _EmptyState extends StatelessWidget {
               ),
               child: Icon(
                 Icons.chat_bubble_outline,
-                size: AppSpacing.iconHuge,
-                color: AppColors.primary,
+                size: AppTheme.iconThemeHuge.size,
+                color: AppTheme.iconThemeHuge.color,
               ),
             ),
             const SizedBox(height: AppSpacing.xl),
@@ -477,8 +480,6 @@ IconData _getChatTypeIcon(ChatType type) {
   switch (type) {
     case ChatType.job:
       return Icons.work_outline;
-    case ChatType.contract:
-      return Icons.description_outlined;
     case ChatType.support:
       return Icons.support_agent;
     case ChatType.general:
@@ -490,7 +491,7 @@ IconData _getChatTypeIcon(ChatType type) {
 String _formatTime(DateTime time) {
   final now = DateTime.now();
   final difference = now.difference(time);
-  
+
   if (difference.inDays > 0) {
     return '${difference.inDays}일 전';
   } else if (difference.inHours > 0) {

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dangam_app/theme/app_colors.dart';
 import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
+import 'package:dangam_app/theme/app_theme.dart';
 
 /// 앱 정보 페이지
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 페이지는 앱에 대한 정보를 표시합니다
 /// - 앱 로고, 버전, 개발자 정보, 라이선스 등을 포함합니다
@@ -33,24 +34,24 @@ class _AboutPageState extends State<AboutPage> {
           children: [
             // 앱 로고 및 정보
             _buildAppInfo(),
-            
+
             const SizedBox(height: AppSpacing.xl),
-            
+
             // 앱 기능 소개
             _buildAppFeatures(),
-            
+
             const SizedBox(height: AppSpacing.xl),
-            
+
             // 개발자 정보
             _buildDeveloperInfo(),
-            
+
             const SizedBox(height: AppSpacing.xl),
-            
+
             // 라이선스 및 법적 정보
             _buildLegalInfo(),
-            
+
             const SizedBox(height: AppSpacing.xl),
-            
+
             // 연락처
             _buildContactInfo(),
           ],
@@ -60,7 +61,7 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 앱 로고 및 기본 정보 위젯
-  /// 
+  ///
   /// 디자이너 가이드:
   /// - 이 위젯은 앱의 로고와 기본 정보를 표시합니다
   /// - 앱 이름, 버전, 설명을 포함합니다
@@ -77,11 +78,11 @@ class _AboutPageState extends State<AboutPage> {
           ],
         ),
         borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.primaryLighter,
             blurRadius: 20,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -94,23 +95,23 @@ class _AboutPageState extends State<AboutPage> {
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: AppColors.shadowLight,
                   blurRadius: 10,
-                  offset: const Offset(0, 2),
+                  offset: Offset(0, 2),
                 ),
               ],
             ),
             child: Icon(
               Icons.agriculture,
-              size: AppSpacing.iconHuge,
-              color: AppColors.primary,
+              size: AppTheme.iconThemeHuge.size,
+              color: AppTheme.iconThemeHuge.color,
             ),
           ),
-          
+
           const SizedBox(height: AppSpacing.lg),
-          
+
           // 앱 이름
           Text(
             '단감',
@@ -119,9 +120,9 @@ class _AboutPageState extends State<AboutPage> {
               color: AppColors.darkAccent,
             ),
           ),
-          
+
           const SizedBox(height: AppSpacing.sm),
-          
+
           // 앱 설명
           Text(
             '농업 근로자와 농장주를 연결하는 플랫폼',
@@ -131,9 +132,9 @@ class _AboutPageState extends State<AboutPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: AppSpacing.lg),
-          
+
           // 버전 정보
           Container(
             padding: const EdgeInsets.symmetric(
@@ -158,12 +159,12 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 앱 기능 소개 위젯
-  /// 
+  ///
   /// 디자이너 가이드:
   /// - 이 위젯은 앱의 주요 기능들을 소개합니다
   /// - 아이콘과 설명을 함께 표시합니다
   Widget _buildAppFeatures() {
-    return _InfoSection(
+    return const _InfoSection(
       title: '주요 기능',
       items: [
         _FeatureItem(
@@ -191,12 +192,12 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 개발자 정보 위젯
-  /// 
+  ///
   /// 디자이너 가이드:
   /// - 이 위젯은 개발팀 정보를 표시합니다
   /// - 개발자 이름, 연락처, 소셜 미디어를 포함합니다
   Widget _buildDeveloperInfo() {
-    return _InfoSection(
+    return const _InfoSection(
       title: '개발팀',
       items: [
         _InfoItem(
@@ -224,12 +225,12 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 법적 정보 위젯
-  /// 
+  ///
   /// 디자이너 가이드:
   /// - 이 위젯은 라이선스 및 법적 정보를 표시합니다
   /// - 이용약관, 개인정보처리방침, 라이선스를 포함합니다
   Widget _buildLegalInfo() {
-    return _InfoSection(
+    return const _InfoSection(
       title: '법적 정보',
       items: [
         _InfoItem(
@@ -257,12 +258,12 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   /// 연락처 정보 위젯
-  /// 
+  ///
   /// 디자이너 가이드:
   /// - 이 위젯은 고객 지원 연락처를 표시합니다
   /// - 이메일, 전화번호, 운영시간을 포함합니다
   Widget _buildContactInfo() {
-    return _InfoSection(
+    return const _InfoSection(
       title: '고객 지원',
       items: [
         _InfoItem(
@@ -291,7 +292,7 @@ class _AboutPageState extends State<AboutPage> {
 }
 
 /// 정보 섹션 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 관련된 정보들을 그룹화하여 표시합니다
 /// - 섹션 제목과 정보 항목들을 포함합니다
@@ -321,11 +322,11 @@ class _InfoSection extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: AppColors.shadowLight,
                 blurRadius: 10,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -339,7 +340,7 @@ class _InfoSection extends StatelessWidget {
 }
 
 /// 기능 아이템 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 개별 기능을 표시합니다
 /// - 아이콘, 제목, 설명을 포함합니다
@@ -370,7 +371,7 @@ class _FeatureItem extends StatelessWidget {
             child: Icon(
               icon,
               color: AppColors.primary,
-              size: AppSpacing.iconMedium,
+              size: AppTheme.iconTheme.size,
             ),
           ),
           const SizedBox(width: AppSpacing.lg),
@@ -403,7 +404,7 @@ class _FeatureItem extends StatelessWidget {
 }
 
 /// 정보 아이템 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 개별 정보를 표시합니다
 /// - 아이콘, 제목, 값을 포함합니다
@@ -427,7 +428,7 @@ class _InfoItem extends StatelessWidget {
           Icon(
             icon,
             color: AppColors.secondary,
-            size: AppSpacing.iconMedium,
+            size: AppTheme.iconTheme.size,
           ),
           const SizedBox(width: AppSpacing.lg),
           Expanded(
