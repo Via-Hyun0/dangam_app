@@ -248,10 +248,13 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               controller: _scrollController,
               padding: const EdgeInsets.all(16),
               itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final message = _messages[index];
-                return _MessageBubble(message: message);
-              },
+                      itemBuilder: (context, index) {
+                        final message = _messages[index];
+                        return _MessageBubble(
+                          message: message,
+                          onContractAction: _handleContractAction,
+                        );
+                      },
             ),
           ),
           
@@ -334,8 +337,12 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
 class _MessageBubble extends StatelessWidget {
   final ChatMessage message;
+  final Function(ContractStatus) onContractAction;
   
-  const _MessageBubble({required this.message});
+  const _MessageBubble({
+    required this.message,
+    required this.onContractAction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +384,7 @@ class _MessageBubble extends StatelessWidget {
                 if (message.type == MessageType.contract)
                   _ContractCard(
                     contractData: message.contractData!,
-                    onAction: _handleContractAction,
+                    onAction: onContractAction,
                   )
                 else
                   Container(
