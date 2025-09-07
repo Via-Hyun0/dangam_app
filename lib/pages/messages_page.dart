@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_messages.dart';
+import 'package:dangam_app/pages/chat_detail_page.dart';
 
 class MessagesBody extends StatefulWidget {
   const MessagesBody({super.key});
@@ -164,7 +165,11 @@ class _ChatCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: () {
-          // 채팅 상세 페이지로 이동
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ChatDetailPage(chat: chat),
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(20),
         child: Container(
