@@ -111,12 +111,12 @@ class _WorkMapPageState extends State<WorkMapPage> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                    color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
                   BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.05),
+                    color: Color.fromARGB(13, 0, 0, 0),
                     blurRadius: 10,
                     offset: const Offset(0, 2),
                   ),
@@ -146,9 +146,9 @@ class _WorkMapPageState extends State<WorkMapPage> {
                         child: SliderTheme(
                           data: SliderTheme.of(context).copyWith(
                             activeTrackColor: primary,
-                            inactiveTrackColor: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
+                            inactiveTrackColor: Color.fromARGB(51, primary.red, primary.green, primary.blue),
                             thumbColor: primary,
-                            overlayColor: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                            overlayColor: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                           ),
                           child: Slider(
                             value: _searchRadius,
@@ -170,7 +170,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                          color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -232,12 +232,12 @@ class _WorkMapPageState extends State<WorkMapPage> {
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                    color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                     blurRadius: 20,
                     offset: const Offset(0, -8),
                   ),
                   BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.05),
+                    color: Color.fromARGB(13, 0, 0, 0),
                     blurRadius: 10,
                     offset: const Offset(0, -2),
                   ),
@@ -251,7 +251,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                     height: 5,
                     margin: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
+                      color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
@@ -275,7 +275,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -313,12 +313,12 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
-                                    color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                                    color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                                     width: 1,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.04),
+                                      color: Color.fromARGB(10, 0, 0, 0),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
@@ -330,7 +330,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                       width: 48,
                                       height: 48,
                                       decoration: BoxDecoration(
-                                        color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                                        color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(
@@ -360,7 +360,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                                   vertical: 4,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  color: Color.fromRGBO(jobStatusColor(job.status).red, jobStatusColor(job.status).green, jobStatusColor(job.status).blue, 0.1),
+                                                  color: Color.fromARGB(26, jobStatusColor(job.status).red, jobStatusColor(job.status).green, jobStatusColor(job.status).blue),
                                                   borderRadius: BorderRadius.circular(8),
                                                 ),
                                                 child: Text(
@@ -386,7 +386,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
                                     ),
                                     Icon(
                                       Icons.chevron_right,
-                                      color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.6),
+                                      color: Color.fromARGB(153, primary.red, primary.green, primary.blue),
                                       size: 20,
                                     ),
                                   ],
@@ -428,10 +428,10 @@ class _FilterChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primary : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+          color: isSelected ? primary : Color.fromARGB(26, primary.red, primary.green, primary.blue),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? primary : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
+            color: isSelected ? primary : Color.fromARGB(77, primary.red, primary.green, primary.blue),
             width: 1,
           ),
         ),

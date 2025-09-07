@@ -55,14 +55,14 @@ class _AboutPageState extends State<AboutPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
-            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
+            Color.fromARGB(26, primary.red, primary.green, primary.blue),
+            Color.fromARGB(13, primary.red, primary.green, primary.blue),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -79,7 +79,7 @@ class _AboutPageState extends State<AboutPage> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
+                  color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -120,7 +120,7 @@ class _AboutPageState extends State<AboutPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+              color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -144,7 +144,7 @@ class _AboutPageState extends State<AboutPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -200,7 +200,7 @@ class _AboutPageState extends State<AboutPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -261,7 +261,7 @@ class _AboutPageState extends State<AboutPage> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
@@ -310,7 +310,7 @@ class _AboutPageState extends State<AboutPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

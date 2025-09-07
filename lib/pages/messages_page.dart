@@ -36,7 +36,7 @@ class _MessagesBodyState extends State<MessagesBody> {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -65,14 +65,14 @@ class _MessagesBodyState extends State<MessagesBody> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide(
-                      color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
+                      color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
                       width: 1,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide(
-                      color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
+                      color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
                       width: 1,
                     ),
                   ),
@@ -178,12 +178,12 @@ class _ChatCard extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+              color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
               width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.04),
+                color: Color.fromARGB(10, 0, 0, 0),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -200,7 +200,7 @@ class _ChatCard extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(statusColor.red, statusColor.green, statusColor.blue, 0.1),
+                      color: Color.fromARGB(26, statusColor.red, statusColor.green, statusColor.blue),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -260,7 +260,7 @@ class _ChatCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(typeColor.red, typeColor.green, typeColor.blue, 0.1),
+                      color: Color.fromARGB(26, typeColor.red, typeColor.green, typeColor.blue),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -281,7 +281,7 @@ class _ChatCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(statusColor.red, statusColor.green, statusColor.blue, 0.1),
+                      color: Color.fromARGB(26, statusColor.red, statusColor.green, statusColor.blue),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -372,10 +372,10 @@ class _FilterChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primary : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+          color: isSelected ? primary : Color.fromARGB(26, primary.red, primary.green, primary.blue),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? primary : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
+            color: isSelected ? primary : Color.fromARGB(77, primary.red, primary.green, primary.blue),
             width: 1,
           ),
         ),
@@ -404,7 +404,7 @@ class _EmptyState extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+              color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(

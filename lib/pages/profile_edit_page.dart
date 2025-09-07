@@ -265,7 +265,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -280,10 +280,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
+                  color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
                   width: 2,
                 ),
               ),
@@ -333,7 +333,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
