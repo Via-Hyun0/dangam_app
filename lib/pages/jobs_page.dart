@@ -159,7 +159,7 @@ class _JobsBodyState extends State<JobsBody> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Header with title and distance
+                            // Header with title and status
                             Row(
                               children: [
                                 Expanded(
@@ -175,12 +175,38 @@ class _JobsBodyState extends State<JobsBody> {
                                         ),
                                       ),
                                       const SizedBox(height: 6),
-                                      Text(
-                                        jobTypeLabel(job.type),
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: primary,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            jobTypeLabel(job.type),
+                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: primary,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: jobStatusColor(job.status).withOpacity(0.1),
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: jobStatusColor(job.status).withOpacity(0.3),
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Text(
+                                              jobStatusLabel(job.status),
+                                              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                                color: jobStatusColor(job.status),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),

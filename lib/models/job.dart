@@ -27,6 +27,14 @@ enum JobType {
   fencing,
 }
 
+enum JobStatus {
+  available,    // 신청 가능
+  applied,      // 신청함
+  interested,   // 관심있음
+  completed,    // 완료됨
+  cancelled,    // 취소됨
+}
+
 @immutable
 class Job {
   final String id;
@@ -40,6 +48,7 @@ class Job {
   final JobType type;
   final double distanceKm;
   final String employerName;
+  final JobStatus status;
 
   const Job({
     required this.id,
@@ -52,7 +61,38 @@ class Job {
     required this.type,
     required this.distanceKm,
     required this.employerName,
+    this.status = JobStatus.available,
   });
+}
+
+String jobStatusLabel(JobStatus status) {
+  switch (status) {
+    case JobStatus.available:
+      return '신청 가능';
+    case JobStatus.applied:
+      return '신청함';
+    case JobStatus.interested:
+      return '관심있음';
+    case JobStatus.completed:
+      return '완료됨';
+    case JobStatus.cancelled:
+      return '취소됨';
+  }
+}
+
+Color jobStatusColor(JobStatus status) {
+  switch (status) {
+    case JobStatus.available:
+      return Colors.green;
+    case JobStatus.applied:
+      return Colors.blue;
+    case JobStatus.interested:
+      return Colors.orange;
+    case JobStatus.completed:
+      return Colors.grey;
+    case JobStatus.cancelled:
+      return Colors.red;
+  }
 }
 
 String jobTypeLabel(JobType t) {
