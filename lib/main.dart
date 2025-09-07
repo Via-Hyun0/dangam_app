@@ -16,18 +16,21 @@ class MyApp extends StatelessWidget {
       title: '단감',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1E88E5), // neutral, global blue
-          primary: const Color(0xFF1E88E5),
-          secondary: const Color(0xFF7E57C2), // subtle accent
+          seedColor: const Color(0xFFc75d31), // 단감 오렌지
+          primary: const Color(0xFFc75d31), // 단감 오렌지
+          secondary: const Color(0xFFa48e7b), // 보조 브라운
+          surface: const Color(0xFFfdfdfd), // 중성 배경
+          onPrimary: Colors.white, // 오렌지 위의 텍스트
+          onSurface: const Color(0xFF503123), // 다크 액센트
         ),
         textTheme: GoogleFonts.interTextTheme(),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          foregroundColor: Color(0xFF503123), // 다크 액센트
           elevation: 0,
           centerTitle: true,
         ),
-        scaffoldBackgroundColor: const Color(0xFFF7F7F7),
+        scaffoldBackgroundColor: const Color(0xFFfdfdfd),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: true,
       ),

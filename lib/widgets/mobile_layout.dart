@@ -41,17 +41,23 @@ class _MobileLayoutState extends State<MobileLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(_pageTitles[_selectedIndex]),
+        backgroundColor: Colors.white,
+        foregroundColor: theme.colorScheme.onSurface,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed, // To show labels for all items
-        selectedItemColor: Colors.green[700],
-        unselectedItemColor: Colors.grey[600],
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: theme.colorScheme.primary, // 단감 오렌지
+        unselectedItemColor: theme.colorScheme.secondary, // 보조 브라운
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
