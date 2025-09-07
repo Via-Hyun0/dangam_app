@@ -121,7 +121,7 @@ class _JobsBodyState extends State<JobsBody> {
         ),
         // Jobs List
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             padding: const EdgeInsets.all(16.0),
             itemBuilder: (context, index) {
               final Job job = _filteredJobs[index];
