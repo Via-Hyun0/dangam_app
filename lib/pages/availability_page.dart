@@ -56,10 +56,10 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
+                  color: primary.withOpacity(0.3),
                   width: 1,
                 ),
               ),
@@ -285,7 +285,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
         onPressed: onTap,
         style: OutlinedButton.styleFrom(
           foregroundColor: primary,
-          side: BorderSide(color: Color.fromARGB(77, primary.red, primary.green, primary.blue)),
+          side: BorderSide(color: primary.withOpacity(0.3)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),

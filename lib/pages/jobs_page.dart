@@ -143,7 +143,7 @@ class _JobsBodyState extends State<JobsBody> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                          color: primary.withOpacity(0.1),
                           width: 1,
                         ),
                         boxShadow: [
@@ -191,10 +191,10 @@ class _JobsBodyState extends State<JobsBody> {
                                               vertical: 4,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: Color.fromARGB(26, jobStatusColor(job.status).red, jobStatusColor(job.status).green, jobStatusColor(job.status).blue),
+                                              color: jobStatusColor(job.status).withOpacity(0.1),
                                               borderRadius: BorderRadius.circular(8),
                                               border: Border.all(
-                                                color: Color.fromARGB(77, jobStatusColor(job.status).red, jobStatusColor(job.status).green, jobStatusColor(job.status).blue),
+                                                color: jobStatusColor(job.status).withOpacity(0.3),
                                                 width: 1,
                                               ),
                                             ),
@@ -218,7 +218,7 @@ class _JobsBodyState extends State<JobsBody> {
                                     vertical: 8,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                                    color: primary.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Row(
@@ -312,7 +312,7 @@ class _JobsBodyState extends State<JobsBody> {
                                             vertical: 6,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                                            color: primary.withOpacity(0.1),
                                             borderRadius: BorderRadius.circular(16),
                                           ),
                                           child: Text(

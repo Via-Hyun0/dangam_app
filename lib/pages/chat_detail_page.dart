@@ -285,14 +285,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(
-                          color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+                          color: primary.withOpacity(0.2),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(
-                          color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+                          color: primary.withOpacity(0.2),
                           width: 1,
                         ),
                       ),
@@ -362,7 +362,7 @@ class _MessageBubble extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(
@@ -496,12 +496,12 @@ class _ContractCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Color.fromARGB(77, statusColor.red, statusColor.green, statusColor.blue),
+          color: statusColor.withOpacity(0.3),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(26, statusColor.red, statusColor.green, statusColor.blue),
+            color: statusColor.withOpacity(0.1),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -583,7 +583,7 @@ class _ContractCard extends StatelessWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                          color: primary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(

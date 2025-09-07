@@ -55,14 +55,14 @@ class _AboutPageState extends State<AboutPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(26, primary.red, primary.green, primary.blue),
-            Color.fromARGB(13, primary.red, primary.green, primary.blue),
+            primary.withOpacity(0.1),
+            primary.withOpacity(0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+            color: primary.withOpacity(0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -79,7 +79,7 @@ class _AboutPageState extends State<AboutPage> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
+                  color: primary.withOpacity(0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -120,7 +120,7 @@ class _AboutPageState extends State<AboutPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+              color: primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -261,7 +261,7 @@ class _AboutPageState extends State<AboutPage> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+            color: primary.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(

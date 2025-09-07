@@ -391,14 +391,14 @@ class _FormField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.2),
                 width: 1,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.2),
                 width: 1,
               ),
             ),
@@ -458,7 +458,7 @@ class _DateField extends StatelessWidget {
               color: Colors.grey.shade50,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.2),
                 width: 1,
               ),
             ),
@@ -545,7 +545,7 @@ class _RequirementsField extends StatelessWidget {
               color: Colors.grey.shade50,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.2),
                 width: 1,
               ),
             ),
@@ -567,10 +567,10 @@ class _RequirementsField extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                  color: primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
+                    color: primary.withOpacity(0.3),
                     width: 1,
                   ),
                 ),
