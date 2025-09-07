@@ -28,7 +28,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   
   final _formKey = GlobalKey<FormState>();
   String _selectedGender = '남성';
-  String _selectedExperience = '5년';
+  String _selectedExperience = '3-5년';
   String _profileImage = '';
 
   @override
