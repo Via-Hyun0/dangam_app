@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:farm_work_app/pages/dashboard_body.dart';
 import 'package:farm_work_app/pages/jobs_page.dart';
+import 'package:farm_work_app/pages/messages_page.dart';
+import 'package:farm_work_app/pages/profile_page.dart';
+import 'package:farm_work_app/pages/work_map_page.dart';
 
 class MobileLayout extends StatefulWidget {
   final String title;
@@ -17,8 +20,17 @@ class _MobileLayoutState extends State<MobileLayout> {
   final List<Widget> _pages = const [
     DashboardBody(),
     JobsBody(),
-    Center(child: Text('Messages')),
-    Center(child: Text('Profile')),
+    WorkMapPage(),
+    MessagesBody(),
+    ProfileBody(),
+  ];
+
+  final List<String> _pageTitles = const [
+    'Farm Work',
+    'Jobs',
+    'Map',
+    'Messages',
+    'Profile',
   ];
 
   void _onItemTapped(int index) {
@@ -31,7 +43,7 @@ class _MobileLayoutState extends State<MobileLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(_pageTitles[_selectedIndex]),
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -42,12 +54,16 @@ class _MobileLayoutState extends State<MobileLayout> {
         unselectedItemColor: Colors.grey[600],
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.work),
             label: 'Jobs',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),

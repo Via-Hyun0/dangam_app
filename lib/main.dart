@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MobileLayout(
-        title: 'Dashboard',
+        title: 'Farm Work',
         body: DashboardBody(),
       ),
     );

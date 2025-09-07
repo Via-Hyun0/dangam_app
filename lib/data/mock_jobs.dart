@@ -1,0 +1,40 @@
+import 'package:farm_work_app/models/job.dart';
+
+final List<Job> mockJobs = [
+  Job(
+    id: 'j1',
+    title: 'Grape harvest team',
+    crop: 'Grape',
+    location: 'Barossa Valley',
+    areaHectares: 3.2,
+    requiredEquipment: const ['Bins', 'Shears'],
+    scheduledDate: DateTime.now().add(const Duration(days: 5)),
+    type: JobType.fruitPicking,
+    distanceKm: 2.1,
+    employerName: 'Barossa Valley Wines',
+  ),
+  Job(
+    id: 'j2',
+    title: 'Tractor mowing (orchard)',
+    crop: 'Apple',
+    location: 'Huon Valley',
+    areaHectares: 5.0,
+    requiredEquipment: const ['Tractor + mower'],
+    scheduledDate: DateTime.now().add(const Duration(days: 2)),
+    type: JobType.tractorMowing,
+    distanceKm: 6.4,
+    employerName: 'Hillside Orchards',
+  ),
+  const Job(
+    id: 'j3',
+    title: 'Irrigation setup for row crops',
+    crop: 'Lettuce',
+    location: 'Werribee',
+    areaHectares: 1.8,
+    requiredEquipment: ['Pipes', 'Pump'],
+    scheduledDate: null,
+    type: JobType.irrigationSetup,
+    distanceKm: 1.3,
+    employerName: 'Riverland Produce Co.',
+  ),
+];
