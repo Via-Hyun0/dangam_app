@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/widgets/iphone_frame.dart';
 import 'package:farm_work_app/pages/dashboard_page.dart';
 
 void main() {
@@ -20,9 +19,7 @@ class MyApp extends StatelessWidget {
       home: const Scaffold(
         backgroundColor: Colors.grey,
         body: Center(
-          child: IPhoneFrame(
-            child: DashboardPage(),
-          ),
+          child: DashboardPage(),
         ),
       ),
     );
