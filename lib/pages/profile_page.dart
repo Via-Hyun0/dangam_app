@@ -8,7 +8,16 @@ import 'package:dangam_app/pages/reviews_page.dart';
 import 'package:dangam_app/pages/help_center_page.dart';
 import 'package:dangam_app/pages/contact_us_page.dart';
 import 'package:dangam_app/pages/about_page.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
+/// 프로필 페이지
+/// 
+/// 디자이너 가이드:
+/// - 이 페이지는 사용자의 프로필 정보와 설정을 표시합니다
+/// - 사용자 정보, 통계, 메뉴 항목을 포함합니다
+/// - 일관된 디자인을 위해 테마 시스템을 사용합니다
 class ProfileBody extends StatefulWidget {
   const ProfileBody({super.key});
 
@@ -29,409 +38,44 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         children: [
           // 프로필 헤더
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromARGB(26, 199, 93, 49),
-                  Color.fromARGB(13, 199, 93, 49),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(26, 199, 93, 49),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                // 아바타와 편집 버튼
-                Row(
-                  children: [
-                    // 아바타
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(26, 199, 93, 49),
-                        borderRadius: BorderRadius.circular(40),
-                        border: Border.all(
-                          color: Color.fromARGB(77, 199, 93, 49),
-                          width: 2,
-                        ),
-                      ),
-                      child: _profileImage.isEmpty
-                          ? Icon(
-                              Icons.person,
-                              size: 40,
-                              color: primary,
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(40),
-                              child: Image.network(
-                                _profileImage,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Icon(
-                                    Icons.person,
-                                    size: 40,
-                                    color: primary,
-                                  );
-                                },
-                              ),
-                            ),
-                    ),
-                    const SizedBox(width: 16),
-                    // 이름과 인증 상태
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                _userName,
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  color: const Color(0xFF503123),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              if (_isVerified)
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(
-                                        Icons.verified,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        '인증됨',
-                                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            _userTitle,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: const Color(0xFFa48e7b),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_on_outlined,
-                                color: primary,
-                                size: 16,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                _userLocation,
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: primary,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    // 편집 버튼
-                    IconButton(
-                      onPressed: () => _navigateToProfileEdit(),
-                      icon: Icon(
-                        Icons.edit_outlined,
-                        color: primary,
-                      ),
-                      style: IconButton.styleFrom(
-                        backgroundColor: Color.fromARGB(26, 199, 93, 49),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                
-                const SizedBox(height: 24),
-                
-                // 통계
-                Row(
-                  children: [
-                    Expanded(
-                      child: _StatCard(
-                        icon: Icons.work_outline,
-                        label: '완료된 작업',
-                        value: _completedJobs.toString(),
-                        color: Colors.green,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _StatCard(
-                        icon: Icons.star_outline,
-                        label: '평점',
-                        value: _rating.toString(),
-                        color: Colors.amber,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _StatCard(
-                            icon: Icons.schedule,
-                        label: '응답률',
-                        value: '$_responseRate%',
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          _ProfileHeader(
+            userName: _userName,
+            userTitle: _userTitle,
+            userLocation: _userLocation,
+            isVerified: _isVerified,
+            profileImage: _profileImage,
+            onEditTap: () => _navigateToProfileEdit(),
           ),
           
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
           
-          // 메뉴 섹션들
+          // 통계 카드
+          _StatsSection(
+            completedJobs: _completedJobs,
+            rating: _rating,
+            responseRate: _responseRate,
+          ),
+          
+          const SizedBox(height: AppSpacing.xl),
+          
+          // 메뉴 섹션
           _MenuSection(
-            title: '계정',
-            items: [
-              _MenuItem(
-                icon: Icons.person_outline,
-                title: '프로필 편집',
-                subtitle: '개인정보 업데이트',
-                onTap: () => _navigateToProfileEdit(),
-              ),
-              _MenuItem(
-                icon: Icons.verified_outlined,
-                title: '인증 관리',
-                subtitle: '신분증 및 기술 인증',
-                onTap: () => _navigateToVerification(),
-                badge: _isVerified ? '완료' : '필요',
-                badgeColor: _isVerified ? Colors.green : Colors.orange,
-              ),
-              _MenuItem(
-                icon: Icons.location_on_outlined,
-                title: '위치 설정',
-                subtitle: '작업 지역 관리',
-                onTap: () => _navigateToLocationSettings(),
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _MenuSection(
-            title: '작업',
-            items: [
-              _MenuItem(
-                icon: Icons.work_outline,
-                title: '내 작업',
-                subtitle: '작업 이력 보기',
-                onTap: () => _navigateToMyJobs(),
-                badge: _completedJobs.toString(),
-                badgeColor: primary,
-              ),
-              _MenuItem(
-                icon: Icons.schedule,
-                title: '가능 시간',
-                subtitle: '근무 시간 설정',
-                onTap: () => _navigateToAvailability(),
-              ),
-              _MenuItem(
-                icon: Icons.star_outline,
-                title: '리뷰',
-                subtitle: '고용주 평가 보기',
-                onTap: () => _navigateToReviews(),
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _MenuSection(
-            title: '지원',
-            items: [
-              _MenuItem(
-                icon: Icons.help_outline,
-                title: '도움말',
-                subtitle: '도움말 및 지원',
-                onTap: () => _navigateToHelpCenter(),
-              ),
-              _MenuItem(
-                icon: Icons.chat_bubble_outline,
-                title: '문의하기',
-                subtitle: '메시지 보내기',
-                onTap: () => _navigateToContactUs(),
-              ),
-              _MenuItem(
-                icon: Icons.info_outline,
-                title: '앱 정보',
-                subtitle: '버전 및 정보',
-                onTap: () => _navigateToAbout(),
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: 24),
-          
-          // 로그아웃 버튼
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: () => _showLogoutDialog(),
-              icon: const Icon(Icons.logout),
-              label: const Text('로그아웃'),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                side: BorderSide(color: Colors.red.shade300),
-                foregroundColor: Colors.red.shade600,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
+            isVerified: _isVerified,
+            onLogout: _showLogoutDialog,
           ),
         ],
       ),
     );
   }
 
-  // 네비게이션 메서드들
   void _navigateToProfileEdit() {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ProfileEditPage(
-          userName: _userName,
-          userTitle: _userTitle,
-          userLocation: _userLocation,
-          onProfileUpdated: (name, title, location, image) {
-            setState(() {
-              _userName = name;
-              _userTitle = title;
-              _userLocation = location;
-              _profileImage = image;
-            });
-          },
-        ),
-      ),
-    );
-  }
-
-  void _navigateToVerification() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => VerificationPage(
-          isVerified: _isVerified,
-          onVerificationUpdated: (verified) {
-            setState(() {
-              _isVerified = verified;
-            });
-          },
-        ),
-      ),
-    );
-  }
-
-  void _navigateToLocationSettings() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => LocationSettingsPage(
-          currentLocation: _userLocation,
-          onLocationUpdated: (location) {
-            setState(() {
-              _userLocation = location;
-            });
-          },
-        ),
-      ),
-    );
-  }
-
-  void _navigateToMyJobs() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => MyJobsPage(
-          completedJobs: _completedJobs,
-          rating: _rating,
-        ),
-      ),
-    );
-  }
-
-  void _navigateToAvailability() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => AvailabilityPage(),
-      ),
-    );
-  }
-
-  void _navigateToReviews() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ReviewsPage(
-          rating: _rating,
-        ),
-      ),
-    );
-  }
-
-  void _navigateToHelpCenter() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => HelpCenterPage(),
-      ),
-    );
-  }
-
-  void _navigateToContactUs() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ContactUsPage(),
-      ),
-    );
-  }
-
-  void _navigateToAbout() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => AboutPage(),
-      ),
+      MaterialPageRoute(builder: (context) => const ProfileEditPage()),
     );
   }
 
@@ -439,25 +83,230 @@ class _ProfileBodyState extends State<ProfileBody> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('로그아웃'),
-        content: const Text('정말 로그아웃하시겠습니까?'),
+        title: Text(
+          '로그아웃',
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkAccent,
+          ),
+        ),
+        content: Text(
+          '정말 로그아웃하시겠습니까?',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.grey,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('취소'),
+            child: Text(
+              '취소',
+              style: AppTypography.labelLarge.copyWith(
+                color: AppColors.grey,
+              ),
+            ),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // 실제 앱에서는 로그아웃 로직 실행
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('로그아웃되었습니다'),
-                  backgroundColor: Colors.green,
-                ),
-              );
+              _performLogout();
             },
-            child: const Text('로그아웃'),
+            child: Text(
+              '로그아웃',
+              style: AppTypography.labelLarge.copyWith(
+                color: AppColors.error,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _performLogout() {
+    // 로그아웃 로직 구현
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '로그아웃되었습니다',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        backgroundColor: AppColors.success,
+      ),
+    );
+  }
+}
+
+/// 프로필 헤더 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 사용자의 기본 정보를 표시합니다
+/// - 프로필 이미지, 이름, 인증 상태를 포함합니다
+class _ProfileHeader extends StatelessWidget {
+  final String userName;
+  final String userTitle;
+  final String userLocation;
+  final bool isVerified;
+  final String profileImage;
+  final VoidCallback onEditTap;
+
+  const _ProfileHeader({
+    required this.userName,
+    required this.userTitle,
+    required this.userLocation,
+    required this.isVerified,
+    required this.profileImage,
+    required this.onEditTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primaryLighter,
+            AppColors.primaryLight,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primaryLighter,
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          // 프로필 이미지
+          Container(
+            width: AppSpacing.iconHuge * 2,
+            height: AppSpacing.iconHuge * 2,
+            decoration: BoxDecoration(
+              color: AppColors.primaryLighter,
+              borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
+              border: Border.all(
+                color: AppColors.primaryLightest,
+                width: 2,
+              ),
+            ),
+            child: profileImage.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
+                    child: Image.network(
+                      profileImage,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.person,
+                        size: AppSpacing.iconHuge,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  )
+                : Icon(
+                    Icons.person,
+                    size: AppSpacing.iconHuge,
+                    color: AppColors.primary,
+                  ),
+          ),
+          const SizedBox(width: AppSpacing.lg),
+          // 이름과 인증 상태
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      userName,
+                      style: AppTypography.headlineSmall.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.darkAccent,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    if (isVerified)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.xs,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.success,
+                          borderRadius: BorderRadius.circular(AppSpacing.sm),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.verified,
+                              color: AppColors.white,
+                              size: AppSpacing.iconSmall,
+                            ),
+                            const SizedBox(width: AppSpacing.xs),
+                            Text(
+                              '인증됨',
+                              style: AppTypography.labelSmall.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  userTitle,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppColors.secondary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.location_on,
+                      color: AppColors.primary,
+                      size: AppSpacing.iconSmall,
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Text(
+                      userLocation,
+                      style: AppTypography.bodySmall.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          // 편집 버튼
+          IconButton(
+            onPressed: onEditTap,
+            icon: Icon(
+              Icons.edit,
+              color: AppColors.primary,
+              size: AppSpacing.iconMedium,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: AppColors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSpacing.sm),
+              ),
+            ),
           ),
         ],
       ),
@@ -465,6 +314,62 @@ class _ProfileBodyState extends State<ProfileBody> {
   }
 }
 
+/// 통계 섹션 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 사용자의 작업 통계를 표시합니다
+/// - 완료된 작업, 평점, 응답률을 포함합니다
+class _StatsSection extends StatelessWidget {
+  final int completedJobs;
+  final double rating;
+  final int responseRate;
+
+  const _StatsSection({
+    required this.completedJobs,
+    required this.rating,
+    required this.responseRate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _StatCard(
+            icon: Icons.work_outline,
+            label: '완료된 작업',
+            value: completedJobs.toString(),
+            color: AppColors.success,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: _StatCard(
+            icon: Icons.star_outline,
+            label: '평점',
+            value: rating.toString(),
+            color: AppColors.warning,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: _StatCard(
+            icon: Icons.schedule,
+            label: '응답률',
+            value: '$responseRate%',
+            color: AppColors.info,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 통계 카드 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 개별 통계를 카드 형태로 표시합니다
+/// - 아이콘, 라벨, 값을 포함합니다
 class _StatCard extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -481,12 +386,12 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: Color.fromARGB(26, 76, 175, 80),
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.successLight,
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
         border: Border.all(
-          color: Color.fromARGB(77, 76, 175, 80),
+          color: AppColors.successMuted,
           width: 1,
         ),
       ),
@@ -495,24 +400,23 @@ class _StatCard extends StatelessWidget {
           Icon(
             icon,
             color: color,
-            size: 24,
+            size: AppSpacing.iconLarge,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.md),
           Text(
             value,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            style: AppTypography.titleLarge.copyWith(
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF503123),
+              color: AppColors.darkAccent,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: const Color(0xFFa48e7b),
+            style: AppTypography.labelSmall.copyWith(
+              color: AppColors.secondary,
               fontWeight: FontWeight.w500,
             ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -520,10 +424,153 @@ class _StatCard extends StatelessWidget {
   }
 }
 
+/// 메뉴 섹션 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 프로필 관련 메뉴 항목들을 표시합니다
+/// - 설정, 도움말, 로그아웃 등을 포함합니다
 class _MenuSection extends StatelessWidget {
+  final bool isVerified;
+  final VoidCallback onLogout;
+
+  const _MenuSection({
+    required this.isVerified,
+    required this.onLogout,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _MenuGroup(
+          title: '계정',
+          items: [
+            _MenuItem(
+              icon: Icons.person_outline,
+              title: '프로필 편집',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ProfileEditPage()),
+              ),
+            ),
+            _MenuItem(
+              icon: Icons.verified_user_outlined,
+              title: '인증 관리',
+              subtitle: isVerified ? '완료' : '필요',
+              badge: isVerified ? '완료' : '필요',
+              badgeColor: isVerified ? AppColors.success : AppColors.warning,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const VerificationPage()),
+              ),
+            ),
+            _MenuItem(
+              icon: Icons.location_on_outlined,
+              title: '위치 설정',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const LocationSettingsPage()),
+              ),
+            ),
+          ],
+        ),
+        
+        const SizedBox(height: AppSpacing.lg),
+        
+        _MenuGroup(
+          title: '작업',
+          items: [
+            _MenuItem(
+              icon: Icons.work_outline,
+              title: '내 작업',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const MyJobsPage()),
+              ),
+            ),
+            _MenuItem(
+              icon: Icons.schedule_outlined,
+              title: '가능 시간',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const AvailabilityPage()),
+              ),
+            ),
+            _MenuItem(
+              icon: Icons.star_outline,
+              title: '리뷰',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ReviewsPage()),
+              ),
+            ),
+          ],
+        ),
+        
+        const SizedBox(height: AppSpacing.lg),
+        
+        _MenuGroup(
+          title: '지원',
+          items: [
+            _MenuItem(
+              icon: Icons.help_outline,
+              title: '도움말',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HelpCenterPage()),
+              ),
+            ),
+            _MenuItem(
+              icon: Icons.contact_support_outlined,
+              title: '문의하기',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ContactUsPage()),
+              ),
+            ),
+            _MenuItem(
+              icon: Icons.info_outline,
+              title: '앱 정보',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const AboutPage()),
+              ),
+            ),
+          ],
+        ),
+        
+        const SizedBox(height: AppSpacing.xl),
+        
+        // 로그아웃 버튼
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton(
+            onPressed: onLogout,
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+              side: const BorderSide(color: AppColors.error),
+              foregroundColor: AppColors.error,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSpacing.sm),
+              ),
+            ),
+            child: Text(
+              '로그아웃',
+              style: AppTypography.labelLarge.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 메뉴 그룹 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 관련된 메뉴 항목들을 그룹화합니다
+/// - 그룹 제목과 메뉴 항목들을 포함합니다
+class _MenuGroup extends StatelessWidget {
   final String title;
   final List<_MenuItem> items;
-  const _MenuSection({required this.title, required this.items});
+
+  const _MenuGroup({
+    required this.title,
+    required this.items,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -531,135 +578,147 @@ class _MenuSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 8),
+          padding: const EdgeInsets.only(left: AppSpacing.xs, bottom: AppSpacing.md),
           child: Text(
             title,
-            style: const TextStyle(
-              fontSize: 16,
+            style: AppTypography.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
-              color: Colors.grey,
+              color: AppColors.grey,
             ),
           ),
         ),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
+                color: AppColors.shadowLight,
                 blurRadius: 10,
-                offset: const Offset(0, 6),
+                offset: const Offset(0, 2),
               ),
             ],
           ),
           child: Column(
-            children:
-                items.map((item) => _buildMenuItem(context, item)).toList(),
+            children: items.map((item) => _MenuItemWidget(item: item)).toList(),
           ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildMenuItem(BuildContext context, _MenuItem item) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
-    return InkWell(
-      onTap: item.onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(26, 199, 93, 49),
-                borderRadius: BorderRadius.circular(10),
+/// 메뉴 항목 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 개별 메뉴 항목을 표시합니다
+/// - 아이콘, 제목, 부제목, 배지를 포함할 수 있습니다
+class _MenuItemWidget extends StatelessWidget {
+  final _MenuItem item;
+
+  const _MenuItemWidget({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: item.onTap,
+        borderRadius: BorderRadius.circular(AppSpacing.sm),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Row(
+            children: [
+              Container(
+                width: AppSpacing.iconLarge + AppSpacing.md,
+                height: AppSpacing.iconLarge + AppSpacing.md,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLighter,
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+                ),
+                child: Icon(
+                  item.icon,
+                  color: AppColors.primary,
+                  size: AppSpacing.iconMedium,
+                ),
               ),
-              child: Icon(
-                item.icon,
-                color: primary,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF503123),
-                    ),
-                  ),
-                  if (item.subtitle != null) ...[
-                    const SizedBox(height: 2),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      item.subtitle!,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                        fontWeight: FontWeight.w500,
+                      item.title,
+                      style: AppTypography.titleMedium.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.darkAccent,
                       ),
                     ),
+                    if (item.subtitle != null) ...[
+                      const SizedBox(height: AppSpacing.xs),
+                      Text(
+                        item.subtitle!,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.secondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
-              ),
-            ),
-            // 배지
-            if (item.badge != null) ...[
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO((item.badgeColor ?? primary).red, (item.badgeColor ?? primary).green, (item.badgeColor ?? primary).blue, 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Color.fromRGBO((item.badgeColor ?? primary).red, (item.badgeColor ?? primary).green, (item.badgeColor ?? primary).blue, 0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Text(
-                  item.badge!,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: item.badgeColor ?? primary,
-                    fontWeight: FontWeight.w600,
-                  ),
                 ),
               ),
-              const SizedBox(width: 8),
+              if (item.badge != null) ...[
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.xs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: (item.badgeColor ?? AppColors.primary).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(AppSpacing.sm),
+                    border: Border.all(
+                      color: (item.badgeColor ?? AppColors.primary).withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    item.badge!,
+                    style: AppTypography.labelSmall.copyWith(
+                      color: item.badgeColor ?? AppColors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+              ],
+              Icon(
+                Icons.chevron_right,
+                color: AppColors.grey,
+                size: AppSpacing.iconMedium,
+              ),
             ],
-            Icon(
-              Icons.chevron_right,
-              color: Colors.grey.shade400,
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
+/// 메뉴 항목 데이터 클래스
 class _MenuItem {
   final IconData icon;
   final String title;
   final String? subtitle;
-  final VoidCallback onTap;
   final String? badge;
   final Color? badgeColor;
+  final VoidCallback onTap;
 
   const _MenuItem({
     required this.icon,
     required this.title,
     this.subtitle,
-    required this.onTap,
     this.badge,
     this.badgeColor,
+    required this.onTap,
   });
 }

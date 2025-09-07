@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_messages.dart';
 import 'package:dangam_app/pages/chat_detail_page.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
+/// 메시지 목록 페이지
+/// 
+/// 디자이너 가이드:
+/// - 이 페이지는 모든 메시지/채팅 목록을 표시합니다
+/// - 필터링과 검색 기능을 제공합니다
+/// - 각 메시지 카드는 일관된 디자인을 사용합니다
 class MessagesBody extends StatefulWidget {
   const MessagesBody({super.key});
 
@@ -15,8 +24,6 @@ class _MessagesBodyState extends State<MessagesBody> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
     // 필터링된 채팅 목록
     List<Chat> filteredChats = mockChats.where((chat) {
       final matchesFilter = _selectedFilter == 'all' || 
@@ -29,329 +36,158 @@ class _MessagesBodyState extends State<MessagesBody> {
 
     return Column(
       children: [
-        // 상단 검색 및 필터 바
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(26, 199, 93, 49),
-                blurRadius: 10,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              // 검색 바
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    _searchQuery = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: '대화 검색...',
-                  hintStyle: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search_outlined,
-                    color: primary,
-                    size: 22,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(51, 199, 93, 49),
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(51, 199, 93, 49),
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(
-                      color: primary,
-                      width: 2,
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.shade50,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // 필터 칩
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    _FilterChip(
-                      label: '전체',
-                      isSelected: _selectedFilter == 'all',
-                      onTap: () => setState(() => _selectedFilter = 'all'),
-                    ),
-                    const SizedBox(width: 8),
-                    _FilterChip(
-                      label: '작업',
-                      isSelected: _selectedFilter == 'job',
-                      onTap: () => setState(() => _selectedFilter = 'job'),
-                    ),
-                    const SizedBox(width: 8),
-                    _FilterChip(
-                      label: '지원사업',
-                      isSelected: _selectedFilter == 'support',
-                      onTap: () => setState(() => _selectedFilter = 'support'),
-                    ),
-                    const SizedBox(width: 8),
-                    _FilterChip(
-                      label: '일반',
-                      isSelected: _selectedFilter == 'general',
-                      onTap: () => setState(() => _selectedFilter = 'general'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        // Search and Filter Bar
+        _SearchFilterBar(
+          searchQuery: _searchQuery,
+          selectedFilter: _selectedFilter,
+          onSearchChanged: (value) => setState(() => _searchQuery = value),
+          onFilterChanged: (value) => setState(() => _selectedFilter = value),
         ),
-
-        // 채팅 목록
-        Expanded(
-          child: filteredChats.isEmpty
-              ? _EmptyState()
-              : ListView.builder(
-                  padding: const EdgeInsets.all(20),
+        
+        // Messages List
+        filteredChats.isEmpty
+            ? const _EmptyState()
+            : Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   itemCount: filteredChats.length,
                   itemBuilder: (context, index) {
-                    final chat = filteredChats[index];
+                    final Chat chat = filteredChats[index];
                     return Container(
-                      margin: const EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
                       child: _ChatCard(chat: chat),
                     );
                   },
                 ),
-        ),
+              ),
       ],
     );
   }
 }
 
-class _ChatCard extends StatelessWidget {
-  final Chat chat;
-  const _ChatCard({required this.chat});
+/// 검색 및 필터 바 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 메시지 검색과 필터링을 담당합니다
+/// - 검색 입력 필드와 필터 칩을 포함합니다
+class _SearchFilterBar extends StatelessWidget {
+  final String searchQuery;
+  final String selectedFilter;
+  final ValueChanged<String> onSearchChanged;
+  final ValueChanged<String> onFilterChanged;
+
+  const _SearchFilterBar({
+    required this.searchQuery,
+    required this.selectedFilter,
+    required this.onSearchChanged,
+    required this.onFilterChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    final Color typeColor = chatTypeColor(chat.type);
-    final Color statusColor = messageStatusColor(chat.status);
-    
-    return Material(
-      elevation: 0,
-      borderRadius: BorderRadius.circular(20),
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ChatDetailPage(chat: chat),
-            ),
-          );
-        },
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Color.fromARGB(26, 199, 93, 49),
-              width: 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromARGB(10, 0, 0, 0),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadowLight,
+            blurRadius: 8,
+            offset: Offset(0, 2),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 헤더 (상태 아이콘, 제목, 시간)
-              Row(
-                children: [
-                  // 상태 아이콘
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(26, 76, 175, 80),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      messageStatusIcon(chat.status),
-                      color: statusColor,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  
-                  // 제목과 시간
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          chat.title,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF503123),
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          chat.employerName,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: const Color(0xFFa48e7b),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  
-                  // 시간
-                  Text(
-                    _formatTime(chat.lastMessageTime),
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Colors.grey.shade500,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+        ],
+      ),
+      child: Column(
+        children: [
+          // Search Field
+          TextField(
+            onChanged: onSearchChanged,
+            decoration: InputDecoration(
+              hintText: '메시지 검색...',
+              hintStyle: AppTypography.bodyMedium.copyWith(
+                color: AppColors.grey,
+                fontWeight: FontWeight.w500,
               ),
-
-              const SizedBox(height: 16),
-
-              // 메시지 내용과 상태
-              Row(
-                children: [
-                  // 타입 칩
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(26, 76, 175, 80),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      chatTypeLabel(chat.type),
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: typeColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  
-                  const SizedBox(width: 8),
-                  
-                  // 상태 칩
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(26, 76, 175, 80),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      messageStatusLabel(chat.status),
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: statusColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  
-                  const Spacer(),
-                  
-                  // 읽지 않은 메시지 수
-                  if (chat.unreadCount > 0)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        chat.unreadCount.toString(),
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                ],
+              prefixIcon: Icon(
+                Icons.search,
+                color: AppColors.grey,
+                size: AppSpacing.iconMedium,
               ),
+              suffixIcon: searchQuery.isNotEmpty
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        color: AppColors.grey,
+                        size: AppSpacing.iconMedium,
+                      ),
+                      onPressed: () => onSearchChanged(''),
+                    )
+                  : null,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+                borderSide: const BorderSide(color: AppColors.divider),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+                borderSide: const BorderSide(color: AppColors.divider),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+                borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              ),
+              filled: true,
+              fillColor: AppColors.background,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.md,
+              ),
+            ),
+          ),
 
-              const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.lg),
 
-              // 마지막 메시지
-              Text(
-                chat.lastMessage,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey.shade600,
-                  fontWeight: FontWeight.w500,
+          // Filter Chips
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _FilterChip(
+                  label: '전체',
+                  isSelected: selectedFilter == 'all',
+                  onTap: () => onFilterChanged('all'),
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+                const SizedBox(width: AppSpacing.md),
+                _FilterChip(
+                  label: '요청함',
+                  isSelected: selectedFilter == 'requested',
+                  onTap: () => onFilterChanged('requested'),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                _FilterChip(
+                  label: '요청받음',
+                  isSelected: selectedFilter == 'received',
+                  onTap: () => onFilterChanged('received'),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                _FilterChip(
+                  label: '계약중',
+                  isSelected: selectedFilter == 'contract',
+                  onTap: () => onFilterChanged('contract'),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
-
-  String _formatTime(DateTime time) {
-    final now = DateTime.now();
-    final difference = now.difference(time);
-
-    if (difference.inDays == 0) {
-      return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
-    } else if (difference.inDays == 1) {
-      return '어제';
-    } else if (difference.inDays < 7) {
-      return '${difference.inDays}일 전';
-    } else {
-      return '${time.month}/${time.day}';
-    }
-  }
 }
 
+/// 필터 칩 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 필터 옵션을 칩 형태로 표시합니다
+/// - 선택된 상태와 선택되지 않은 상태를 구분합니다
 class _FilterChip extends StatelessWidget {
   final String label;
   final bool isSelected;
@@ -365,24 +201,25 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg, 
+          vertical: AppSpacing.md,
+        ),
         decoration: BoxDecoration(
-          color: isSelected ? primary : Color.fromARGB(26, 199, 93, 49),
-          borderRadius: BorderRadius.circular(20),
+          color: isSelected ? AppColors.primary : AppColors.primaryLighter,
+          borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
           border: Border.all(
-            color: isSelected ? primary : Color.fromARGB(77, 199, 93, 49),
+            color: isSelected ? AppColors.primary : AppColors.primaryLightest,
             width: 1,
           ),
         ),
         child: Text(
           label,
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: isSelected ? Colors.white : primary,
+          style: AppTypography.labelMedium.copyWith(
+            color: isSelected ? AppColors.white : AppColors.primary,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -391,46 +228,262 @@ class _FilterChip extends StatelessWidget {
   }
 }
 
+/// 채팅 카드 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 개별 채팅을 카드 형태로 표시합니다
+/// - 채팅의 모든 중요한 정보를 포함합니다
+/// - 클릭 시 채팅 상세 페이지로 이동합니다
+class _ChatCard extends StatelessWidget {
+  final Chat chat;
+
+  const _ChatCard({required this.chat});
+
+  @override
+  Widget build(BuildContext context) {
+    final Color typeColor = chatTypeColor(chat.type);
+    final Color statusColor = messageStatusColor(chat.status);
+    
+    return Material(
+      elevation: 0,
+      borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ChatDetailPage(chat: chat),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+            border: Border.all(
+              color: AppColors.primaryLighter,
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.shadowLight,
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header
+              Row(
+                children: [
+                  // Avatar and Info
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Container(
+                          width: AppSpacing.iconHuge,
+                          height: AppSpacing.iconHuge,
+                          decoration: BoxDecoration(
+                            color: AppColors.successLight,
+                            borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
+                          ),
+                          child: Icon(
+                            chatTypeIcon(chat.type),
+                            color: typeColor,
+                            size: AppSpacing.iconLarge,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.lg),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                chat.title,
+                                style: AppTypography.titleMedium.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.darkAccent,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: AppSpacing.xs),
+                              Text(
+                                chat.subtitle,
+                                style: AppTypography.bodySmall.copyWith(
+                                  color: AppColors.secondary,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                  // Time
+                  Text(
+                    _formatTime(chat.lastMessageTime),
+                    style: AppTypography.labelSmall.copyWith(
+                      color: AppColors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: AppSpacing.lg),
+
+              // Type and Status Badges
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                      vertical: AppSpacing.xs,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.successLight,
+                      borderRadius: BorderRadius.circular(AppSpacing.sm),
+                    ),
+                    child: Text(
+                      chatTypeLabel(chat.type),
+                      style: AppTypography.labelSmall.copyWith(
+                        color: typeColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(width: AppSpacing.md),
+                  
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                      vertical: AppSpacing.xs,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.successLight,
+                      borderRadius: BorderRadius.circular(AppSpacing.sm),
+                    ),
+                    child: Text(
+                      messageStatusLabel(chat.status),
+                      style: AppTypography.labelSmall.copyWith(
+                        color: statusColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  
+                  const Spacer(),
+                  
+                  // Unread count
+                  if (chat.unreadCount > 0)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.xs,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(AppSpacing.sm),
+                      ),
+                      child: Text(
+                        '${chat.unreadCount}',
+                        style: AppTypography.labelSmall.copyWith(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+
+              const SizedBox(height: AppSpacing.sm),
+
+              // Last Message
+              Text(
+                chat.lastMessage,
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// 빈 상태 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 메시지가 없을 때 표시됩니다
+/// - 사용자에게 안내 메시지를 제공합니다
 class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: Color.fromARGB(26, 199, 93, 49),
-              borderRadius: BorderRadius.circular(20),
+    return Expanded(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: AppSpacing.iconHuge * 2,
+              height: AppSpacing.iconHuge * 2,
+              decoration: BoxDecoration(
+                color: AppColors.primaryLighter,
+                borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+              ),
+              child: Icon(
+                Icons.chat_bubble_outline,
+                size: AppSpacing.iconHuge,
+                color: AppColors.primary,
+              ),
             ),
-            child: Icon(
-              Icons.chat_bubble_outline,
-              color: primary,
-              size: 40,
+            const SizedBox(height: AppSpacing.xl),
+            Text(
+              '메시지가 없습니다',
+              style: AppTypography.titleLarge.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppColors.darkAccent,
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            '메시지가 없습니다',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              '새로운 작업 요청이나 계약을 시작해보세요',
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppColors.secondary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '새로운 대화를 시작해보세요',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFFa48e7b),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+}
+
+/// 시간 포맷팅 함수
+String _formatTime(DateTime time) {
+  final now = DateTime.now();
+  final difference = now.difference(time);
+  
+  if (difference.inDays > 0) {
+    return '${difference.inDays}일 전';
+  } else if (difference.inHours > 0) {
+    return '${difference.inHours}시간 전';
+  } else if (difference.inMinutes > 0) {
+    return '${difference.inMinutes}분 전';
+  } else {
+    return '방금 전';
   }
 }

@@ -4,6 +4,9 @@ import 'package:dangam_app/pages/jobs_page.dart';
 import 'package:dangam_app/pages/messages_page.dart';
 import 'package:dangam_app/pages/profile_page.dart';
 import 'package:dangam_app/pages/work_map_page.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
 class MobileLayout extends StatefulWidget {
   final String title;
@@ -46,7 +49,7 @@ class _MobileLayoutState extends State<MobileLayout> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_pageTitles[_selectedIndex]),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         foregroundColor: theme.colorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
