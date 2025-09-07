@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_messages.dart';
 import 'package:dangam_app/models/chat_message.dart';
+import 'package:dangam_app/pages/contract_edit_modal.dart';
 
 class ChatDetailPage extends StatefulWidget {
   final Chat chat;
@@ -131,21 +132,61 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   }
 
   void _handleContractAction(ContractStatus action) {
-    // 계약 액션 처리
-    final message = ChatMessage(
-      id: 'm${DateTime.now().millisecondsSinceEpoch}',
-      content: _getContractActionMessage(action),
-      timestamp: DateTime.now(),
-      isFromUser: true,
-      type: MessageType.contract,
-      contractData: _messages.last.contractData?.copyWith(status: action),
+    if (action == ContractStatus.modified) {
+      // 수정 모달 표시
+      _showContractEditModal();
+    } else {
+      // 다른 액션 처리
+      final message = ChatMessage(
+        id: 'm${DateTime.now().millisecondsSinceEpoch}',
+        content: _getContractActionMessage(action),
+        timestamp: DateTime.now(),
+        isFromUser: true,
+        type: MessageType.contract,
+        contractData: _messages.last.contractData?.copyWith(status: action),
+      );
+      
+      setState(() {
+        _messages.add(message);
+      });
+      
+      _scrollToBottom();
+    }
+  }
+
+  void _showContractEditModal() {
+    final lastContractMessage = _messages.lastWhere(
+      (msg) => msg.type == MessageType.contract,
+      orElse: () => _messages.first,
     );
     
-    setState(() {
-      _messages.add(message);
-    });
-    
-    _scrollToBottom();
+    if (lastContractMessage.contractData != null) {
+      showDialog(
+        context: context,
+        builder: (context) => ContractEditModal(
+          contractData: lastContractMessage.contractData!,
+          onSave: (updatedContract) {
+            final message = ChatMessage(
+              id: 'm${DateTime.now().millisecondsSinceEpoch}',
+              content: '계약 조건을 수정 제안합니다.',
+              timestamp: DateTime.now(),
+              isFromUser: true,
+              type: MessageType.contract,
+              contractData: updatedContract,
+            );
+            
+            setState(() {
+              _messages.add(message);
+            });
+            
+            _scrollToBottom();
+          },
+          onCancel: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      );
+    }
   }
 
   String _getContractActionMessage(ContractStatus action) {
