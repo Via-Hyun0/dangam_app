@@ -91,7 +91,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -132,10 +132,10 @@ class _ContactUsPageState extends State<ContactUsPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primary : primary.withOpacity(0.1),
+          color: isSelected ? primary : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? primary : primary.withOpacity(0.3),
+            color: isSelected ? primary : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
             width: 1,
           ),
         ),
@@ -158,7 +158,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -293,10 +293,10 @@ class _ContactUsPageState extends State<ContactUsPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: primary.withOpacity(0.05),
+        color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: primary.withOpacity(0.2),
+          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
           width: 1,
         ),
       ),
@@ -370,7 +370,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: primary.withOpacity(0.1),
+                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(

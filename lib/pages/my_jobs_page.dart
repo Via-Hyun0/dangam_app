@@ -136,14 +136,14 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            primary.withOpacity(0.1),
-            primary.withOpacity(0.05),
+            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.1),
+            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -162,7 +162,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Container(
             width: 1,
             height: 40,
-            color: primary.withOpacity(0.2),
+            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
           ),
           Expanded(
             child: _buildStatItem(
@@ -175,7 +175,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Container(
             width: 1,
             height: 40,
-            color: primary.withOpacity(0.2),
+            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
           ),
           Expanded(
             child: _buildStatItem(
@@ -246,7 +246,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                   _selectedFilter = filter;
                 });
               },
-              selectedColor: primary.withOpacity(0.2),
+              selectedColor: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
               checkmarkColor: primary,
               labelStyle: TextStyle(
                 color: isSelected ? primary : Colors.grey.shade600,
@@ -320,7 +320,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -354,10 +354,10 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: statusColor.withOpacity(0.1),
+                        color: Color.fromRGBO(statusColor.red, statusColor.green, statusColor.blue, 0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: statusColor.withOpacity(0.3),
+                          color: Color.fromRGBO(statusColor.red, statusColor.green, statusColor.blue, 0.3),
                           width: 1,
                         ),
                       ),
@@ -469,7 +469,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: Color.fromRGBO(color.red, color.green, color.blue, 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

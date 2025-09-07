@@ -97,7 +97,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -122,7 +122,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -194,7 +194,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: primary.withOpacity(0.1),
+                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -263,7 +263,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -335,10 +335,10 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: primary.withOpacity(0.05),
+        color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: primary.withOpacity(0.2),
+          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.2),
           width: 1,
         ),
       ),

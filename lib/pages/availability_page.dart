@@ -56,10 +56,10 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: primary.withOpacity(0.1),
+                color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: primary.withOpacity(0.3),
+                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
                   width: 1,
                 ),
               ),
@@ -107,7 +107,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -217,7 +217,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Color.fromRGBO(0, 0, 0, 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -285,7 +285,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
         onPressed: onTap,
         style: OutlinedButton.styleFrom(
           foregroundColor: primary,
-          side: BorderSide(color: primary.withOpacity(0.3)),
+          side: BorderSide(color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
