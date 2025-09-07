@@ -162,18 +162,28 @@ class _JobsBodyState extends State<JobsBody> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(job.title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w800)),
+                            Text(
+                              job.title,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: const Color(0xFF503123),
+                              ),
+                            ),
                             const SizedBox(height: 4),
                             Text(
                               '${jobTypeLabel(job.type)} • ${job.crop} • ${job.areaHectares.toStringAsFixed(1)} ha',
-                              style: const TextStyle(color: Colors.grey),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: const Color(0xFFa48e7b),
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               '${job.location} • ${job.distanceKm.toStringAsFixed(1)} km',
-                              style: const TextStyle(color: Colors.grey),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: const Color(0xFFa48e7b),
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             if (job.requiredEquipment.isNotEmpty)
                               Padding(
@@ -193,9 +203,8 @@ class _JobsBodyState extends State<JobsBody> {
                                             ),
                                             child: Text(
                                               e,
-                                              style: TextStyle(
+                                              style: Theme.of(context).textTheme.labelMedium?.copyWith(
                                                 color: primary,
-                                                fontSize: 12,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
