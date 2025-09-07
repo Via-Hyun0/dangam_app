@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
@@ -7,7 +8,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'default' | 'sm' | 'lg' | 'icon';
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ href, variant = 'primary', size = 'default', className, children, ...props }, ref) => {
 
     const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
@@ -27,15 +28,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon: "h-10 w-10",
     };
 
-    const finalClassName = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className || ''}`;
+    const finalClassName = cn(baseClasses, variantClasses[variant], sizeClasses[size], className);
 
-    const buttonContent = (
-      <button className={finalClassName} ref={ref} {...props}>
+    if (href) {
+      return (
+        <Link to={href} className={finalClassName} ref={ref as React.ForwardedRef<HTMLAnchorElement>} {...props}>
+          {children}
+        </Link>
+      );
+    }
+
+    return (
+      <button className={finalClassName} ref={ref as React.ForwardedRef<HTMLButtonElement>} {...props}>
         {children}
       </button>
     );
-
-    return href ? <Link href={href}>{buttonContent}</Link> : buttonContent;
   }
 );
 
