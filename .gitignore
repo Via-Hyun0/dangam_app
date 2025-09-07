@@ -8,14 +8,13 @@
 # Flutter / Dart
 .dart_tool/
 .packages
-.packages
+package_config.json
 build/
 .flutter-plugins
 .flutter-plugins-dependencies
 coverage/
 *.dill
 *.snapshot
-*.lock
 
 # Flutter platform build folders
 android/.gradle/
