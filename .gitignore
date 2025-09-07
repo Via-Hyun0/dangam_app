@@ -1,3 +1,39 @@
+# General
+.DS_Store
+*.log
+*.iml
+.idea/
+.vscode/
+
+# Node / Vite (web subapp)
+node_modules/
+dist/
+
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+coverage/
+
+# iOS / Xcode
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/App.framework/
+ios/Flutter/engine/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/Flutter.podspec
+ios/Runner.xcworkspace/
+**/xcuserdata/
+**/*.xcuserstate
+DerivedData/
+
+# CocoaPods intermediate
+ios/.last_build_id
+
 # Logs
 logs
 *.log

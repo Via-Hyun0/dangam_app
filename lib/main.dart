@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/pages/dashboard_page.dart';
+import 'package:farm_work_app/pages/dashboard_body.dart';
+import 'package:farm_work_app/widgets/mobile_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,11 +17,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const Scaffold(
-        backgroundColor: Colors.grey,
-        body: Center(
-          child: DashboardPage(),
-        ),
+      home: const MobileLayout(
+        title: 'Dashboard',
+        body: DashboardBody(),
       ),
     );
   }

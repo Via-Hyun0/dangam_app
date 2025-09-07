@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:farm_work_app/pages/dashboard_body.dart';
+import 'package:farm_work_app/pages/jobs_page.dart';
 
 class MobileLayout extends StatefulWidget {
   final String title;
@@ -12,26 +14,17 @@ class MobileLayout extends StatefulWidget {
 
 class _MobileLayoutState extends State<MobileLayout> {
   int _selectedIndex = 0;
+  final List<Widget> _pages = const [
+    DashboardBody(),
+    JobsBody(),
+    Center(child: Text('Messages')),
+    Center(child: Text('Profile')),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    // TODO: Add navigation logic here later
-    switch (index) {
-      case 0:
-        // Navigate to Home
-        break;
-      case 1:
-        // Navigate to Jobs
-        break;
-      case 2:
-        // Navigate to Messages
-        break;
-      case 3:
-        // Navigate to Profile
-        break;
-    }
   }
 
   @override
@@ -43,7 +36,7 @@ class _MobileLayoutState extends State<MobileLayout> {
         foregroundColor: Colors.black,
         elevation: 1.0,
       ),
-      body: widget.body,
+      body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
