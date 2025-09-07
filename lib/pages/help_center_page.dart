@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HelpCenterPage extends StatelessWidget {
+class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({super.key});
 
+  @override
+  State<HelpCenterPage> createState() => _HelpCenterPageState();
+}
+
+class _HelpCenterPageState extends State<HelpCenterPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
@@ -370,7 +375,7 @@ class HelpCenterPage extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => _showContactDialog('문의하기', '문의하기 페이지로 이동합니다'),
+              onPressed: () => _showContactDialog(context, '문의하기', '문의하기 페이지로 이동합니다'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: primary,
                 padding: const EdgeInsets.symmetric(vertical: 16),

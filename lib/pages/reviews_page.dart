@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ReviewsPage extends StatelessWidget {
+class ReviewsPage extends StatefulWidget {
   final double rating;
 
   const ReviewsPage({
@@ -8,6 +8,11 @@ class ReviewsPage extends StatelessWidget {
     required this.rating,
   });
 
+  @override
+  State<ReviewsPage> createState() => _ReviewsPageState();
+}
+
+class _ReviewsPageState extends State<ReviewsPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
@@ -92,7 +97,7 @@ class ReviewsPage extends StatelessWidget {
           Row(
             children: [
               Text(
-                rating.toString(),
+                widget.rating.toString(),
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF503123),
@@ -105,7 +110,7 @@ class ReviewsPage extends StatelessWidget {
                   Row(
                     children: List.generate(5, (index) {
                       return Icon(
-                        index < rating.floor() ? Icons.star : Icons.star_border,
+                        index < widget.rating.floor() ? Icons.star : Icons.star_border,
                         color: Colors.amber,
                         size: 24,
                       );
