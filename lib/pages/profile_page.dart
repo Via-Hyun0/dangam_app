@@ -267,7 +267,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                 badgeColor: primary,
               ),
               _MenuItem(
-                icon: Icons.schedule_outlined,
+                icon: Icons.schedule,
                 title: '가능 시간',
                 subtitle: '근무 시간 설정',
                 onTap: () => _navigateToAvailability(),
