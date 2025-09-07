@@ -51,21 +51,21 @@ class ReviewsPage extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
-          children: [
-            // 평점 요약
-            _buildRatingSummary(primary),
-            
-            const SizedBox(height: 24),
-            
-            // 리뷰 목록
-            _buildReviewsList(reviews, primary),
-          ],
+        children: [
+          // 평점 요약
+          _buildRatingSummary(context, primary),
+          
+          const SizedBox(height: 24),
+          
+          // 리뷰 목록
+          _buildReviewsList(context, reviews, primary),
+        ],
         ),
       ),
     );
   }
 
-  Widget _buildRatingSummary(Color primary) {
+  Widget _buildRatingSummary(BuildContext context, Color primary) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -127,13 +127,13 @@ class ReviewsPage extends StatelessWidget {
           const SizedBox(height: 20),
           
           // 평점 분포
-          _buildRatingDistribution(),
+          _buildRatingDistribution(context),
         ],
       ),
     );
   }
 
-  Widget _buildRatingDistribution() {
+  Widget _buildRatingDistribution(BuildContext context) {
     final Map<int, int> ratingCounts = {
       5: 8,
       4: 2,
@@ -186,13 +186,13 @@ class ReviewsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewsList(List<Map<String, dynamic>> reviews, Color primary) {
+  Widget _buildReviewsList(BuildContext context, List<Map<String, dynamic>> reviews, Color primary) {
     return Column(
-      children: reviews.map((review) => _buildReviewCard(review, primary)).toList(),
+      children: reviews.map((review) => _buildReviewCard(context, review, primary)).toList(),
     );
   }
 
-  Widget _buildReviewCard(Map<String, dynamic> review, Color primary) {
+  Widget _buildReviewCard(BuildContext context, Map<String, dynamic> review, Color primary) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
