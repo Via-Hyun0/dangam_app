@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/data/mock_notices.dart';
-import 'package:farm_work_app/data/mock_jobs.dart';
-import 'package:farm_work_app/models/job.dart';
+import 'package:dangam_app/data/mock_notices.dart';
+import 'package:dangam_app/data/mock_jobs.dart';
+import 'package:dangam_app/models/job.dart';
 
 class DashboardBody extends StatelessWidget {
   const DashboardBody({super.key});
@@ -22,17 +22,17 @@ class DashboardBody extends StatelessWidget {
           const _NoticesList(),
           const SizedBox(height: 24),
 
-          const _SectionTitle('Ongoing contracts'),
+          const _SectionTitle('진행중인 계약'),
           const SizedBox(height: 10),
           _OngoingContractsList(),
           const SizedBox(height: 24),
 
-          const _SectionTitle('Nearby opportunities'),
+          const _SectionTitle('근처 작업 기회'),
           const SizedBox(height: 10),
           const _HorizontalChipsCarousel(kind: _CarouselKind.opportunity),
           const SizedBox(height: 24),
 
-          const _SectionTitle('Nearby providers'),
+          const _SectionTitle('근처 제공자'),
           const SizedBox(height: 10),
           const _HorizontalChipsCarousel(kind: _CarouselKind.provider),
         ],
@@ -60,7 +60,7 @@ class _WelcomeHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Welcome back!',
+            '안녕하세요!',
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -69,7 +69,7 @@ class _WelcomeHeader extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Ready to find your next farm work opportunity?',
+            '다음 농작업 기회를 찾아보세요!',
             style: TextStyle(
               color: Colors.white70,
               fontSize: 16,
@@ -80,21 +80,21 @@ class _WelcomeHeader extends StatelessWidget {
             children: [
               _StatItem(
                 icon: Icons.assignment_turned_in,
-                label: 'Active Contracts',
+                label: '진행중인 계약',
                 value: '2',
                 color: Colors.white,
               ),
               const SizedBox(width: 20),
               _StatItem(
                 icon: Icons.work_outline,
-                label: 'Available Jobs',
+                label: '가능한 작업',
                 value: '${mockJobs.length}',
                 color: Colors.white,
               ),
               const SizedBox(width: 20),
               _StatItem(
                 icon: Icons.location_on,
-                label: 'Nearby',
+                label: '근처',
                 value: '5',
                 color: Colors.white,
               ),
@@ -168,20 +168,20 @@ class _OngoingContractsList extends StatelessWidget {
     // Mock ongoing contracts data
     final List<Map<String, dynamic>> contracts = [
       {
-        'title': 'Wheat Harvesting - Greenfield Farm',
-        'status': 'In Progress',
+        'title': '밀 수확 - 김제 농장',
+        'status': '진행중',
         'daysLeft': 3,
         'progress': 0.7,
-        'employer': 'Greenfield Farm',
-        'type': 'Harvesting',
+        'employer': '김제 농장',
+        'type': '수확',
       },
       {
-        'title': 'Soil Preparation - Valley Agriculture',
-        'status': 'Pending Start',
+        'title': '토양 준비 - 곡성 농업',
+        'status': '시작 대기',
         'daysLeft': 7,
         'progress': 0.0,
-        'employer': 'Valley Agriculture',
-        'type': 'Soil Preparation',
+        'employer': '곡성 농업',
+        'type': '토양 준비',
       },
     ];
 
@@ -226,7 +226,7 @@ class _OngoingContractsList extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${contract['status']} • ${contract['daysLeft']} days left',
+                          '${contract['status']} • ${contract['daysLeft']}일 남음',
                           style: const TextStyle(color: Colors.grey),
                         ),
                         const SizedBox(height: 4),
@@ -373,7 +373,7 @@ class _HorizontalChipsCarousel extends StatelessWidget {
         : _getMockProviders();
 
     return SizedBox(
-      height: 130,
+      height: 140,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,

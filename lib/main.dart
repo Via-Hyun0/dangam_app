@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/pages/dashboard_body.dart';
-import 'package:farm_work_app/widgets/mobile_layout.dart';
+import 'package:dangam_app/pages/dashboard_body.dart';
+import 'package:dangam_app/widgets/mobile_layout.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Farm Work App',
+      title: '단감',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF1E88E5), // neutral, global blue
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MobileLayout(
-        title: 'Farm Work',
+        title: '단감',
         body: DashboardBody(),
       ),
     );

@@ -45,7 +45,7 @@ class ProfileBody extends StatelessWidget {
                 const SizedBox(height: 16),
                 // Name and Title
                 const Text(
-                  'John Smith',
+                  '김농부',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
@@ -53,7 +53,7 @@ class ProfileBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  'Farm Worker • 5 years experience',
+                  '농업 근로자 • 5년 경력',
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
@@ -64,9 +64,9 @@ class ProfileBody extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _StatItem('Jobs Completed', '47'),
-                    _StatItem('Rating', '4.8'),
-                    _StatItem('Response Rate', '98%'),
+                    _StatItem('완료된 작업', '47'),
+                    _StatItem('평점', '4.8'),
+                    _StatItem('응답률', '98%'),
                   ],
                 ),
               ],
@@ -75,12 +75,12 @@ class ProfileBody extends StatelessWidget {
           const SizedBox(height: 24),
           // Menu Sections
           _MenuSection(
-            title: 'Account',
+            title: '계정',
             items: [
               _MenuItem(
                 icon: Icons.person_outline,
-                title: 'Edit Profile',
-                subtitle: 'Update your personal information',
+                title: '프로필 편집',
+                subtitle: '개인정보 업데이트',
                 onTap: () {},
               ),
               _MenuItem(

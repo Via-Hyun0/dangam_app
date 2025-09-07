@@ -21,6 +21,10 @@ enum JobType {
   fencingRepair,
   equipmentMaintenance,
   generalLabor,
+  harvesting,
+  fertilizing,
+  pestControl,
+  fencing,
 }
 
 @immutable
@@ -54,44 +58,52 @@ class Job {
 String jobTypeLabel(JobType t) {
   switch (t) {
     case JobType.fruitPicking:
-      return 'Fruit picking';
+      return '과일 수확';
     case JobType.vegetableHarvest:
-      return 'Vegetable harvest';
+      return '채소 수확';
     case JobType.pruning:
-      return 'Pruning';
+      return '가지치기';
     case JobType.planting:
-      return 'Planting';
+      return '심기';
     case JobType.weeding:
-      return 'Weeding';
+      return '제초';
     case JobType.irrigationSetup:
-      return 'Irrigation setup';
+      return '관수 설치';
     case JobType.pesticideSpray:
-      return 'Pesticide spray';
+      return '농약 살포';
     case JobType.fertilizerApply:
-      return 'Fertilizer apply';
+      return '비료 시용';
     case JobType.soilPreparation:
-      return 'Soil preparation';
+      return '토양 준비';
     case JobType.tractorMowing:
-      return 'Tractor mowing';
+      return '트랙터 제초';
     case JobType.baling:
-      return 'Baling';
+      return '건초 포장';
     case JobType.seeding:
-      return 'Seeding';
+      return '파종';
     case JobType.transplanting:
-      return 'Transplanting';
+      return '이식';
     case JobType.greenhouseWork:
-      return 'Greenhouse';
+      return '온실 작업';
     case JobType.packingSorting:
-      return 'Packing & sorting';
+      return '포장 및 선별';
     case JobType.orchardMaintenance:
-      return 'Orchard maintenance';
+      return '과수원 관리';
     case JobType.vineyardTrellising:
-      return 'Vineyard trellising';
+      return '포도밭 지주 설치';
     case JobType.fencingRepair:
-      return 'Fencing repair';
+      return '울타리 수리';
     case JobType.equipmentMaintenance:
-      return 'Equipment maintenance';
+      return '장비 관리';
     case JobType.generalLabor:
-      return 'General labor';
+      return '일반 작업';
+    case JobType.harvesting:
+      return '수확';
+    case JobType.fertilizing:
+      return '비료 주기';
+    case JobType.pestControl:
+      return '해충 방제';
+    case JobType.fencing:
+      return '울타리 설치';
   }
 }
