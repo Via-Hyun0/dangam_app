@@ -71,143 +71,143 @@ final List<Notice> mockNotices = [
   ),
   Notice(
     id: 'n3',
-    title: 'Sustainable Agriculture Grant',
+    title: '친환경 농업 지원금',
     content:
-        'Funding available for farmers implementing eco-friendly practices and renewable energy.',
+        '친환경 농업 실천과 재생에너지 도입을 위한 농가 지원금 신청하세요.',
     publishedAt: DateTime.now().subtract(const Duration(days: 7)),
     type: NoticeType.support,
     link: 'https://example.com/sustainable-agriculture',
   ),
   Notice(
     id: 'n4',
-    title: 'Young Farmer Development Program',
+    title: '청년농업인 육성 프로그램',
     content:
-        'Mentorship and financial support for farmers under 35 starting their agricultural business.',
+        '35세 미만 청년농업인을 위한 멘토링 및 창업 자금 지원 프로그램입니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 10)),
     type: NoticeType.support,
     link: 'https://example.com/young-farmer-program',
   ),
 
-  // Policy Updates
+  // 정책 업데이트
   Notice(
     id: 'n5',
-    title: 'New Safety Regulations for Farm Workers',
+    title: '농업 근로자 안전 규정 신규 제정',
     content:
-        'Updated safety guidelines for agricultural workers effective March 2025.',
+        '2025년 3월부터 시행되는 농업 근로자 안전 가이드라인이 업데이트되었습니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 4)),
     type: NoticeType.policy,
   ),
   Notice(
     id: 'n6',
-    title: 'Minimum Wage Increase for Seasonal Workers',
+    title: '계절근로자 최저임금 인상',
     content:
-        'New minimum wage rates for agricultural workers effective February 1st, 2025.',
+        '2025년 2월 1일부터 농업 근로자 최저임금이 인상됩니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 6)),
     type: NoticeType.policy,
   ),
   Notice(
     id: 'n7',
-    title: 'Updated Pesticide Use Guidelines',
+    title: '농약 사용 지침 개정',
     content:
-        'New regulations for pesticide application and worker safety protocols.',
+        '농약 살포 및 근로자 안전 규정이 새롭게 개정되었습니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 8)),
     type: NoticeType.policy,
   ),
   Notice(
     id: 'n8',
-    title: 'Water Usage Restrictions Update',
+    title: '농업용수 사용 제한 업데이트',
     content:
-        'Revised water allocation limits for agricultural use during dry season.',
+        '건조기간 중 농업용수 배분 한도가 수정되었습니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 12)),
     type: NoticeType.policy,
   ),
 
-  // Events
+  // 행사
   Notice(
     id: 'n9',
-    title: 'Agricultural Technology Expo 2025',
+    title: '2025 농업기술 전시회',
     content:
-        'Join us at the annual expo showcasing the latest in farming technology and equipment.',
+        '최신 농업 기술과 장비를 선보이는 연례 전시회에 참여하세요.',
     publishedAt: DateTime.now().subtract(const Duration(days: 3)),
     type: NoticeType.event,
     link: 'https://example.com/agtech-expo-2025',
   ),
   Notice(
     id: 'n10',
-    title: 'Farm Safety Workshop Series',
+    title: '농장 안전 워크숍 시리즈',
     content:
-        'Free workshops on farm safety, equipment operation, and emergency procedures.',
+        '농장 안전, 장비 조작, 비상 절차에 대한 무료 워크숍을 개최합니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 9)),
     type: NoticeType.event,
     link: 'https://example.com/farm-safety-workshop',
   ),
   Notice(
     id: 'n11',
-    title: 'Organic Farming Conference',
+    title: '유기농업 컨퍼런스',
     content:
-        'Learn about organic farming techniques, certification, and market opportunities.',
+        '유기농업 기술, 인증, 시장 기회에 대해 알아보세요.',
     publishedAt: DateTime.now().subtract(const Duration(days: 11)),
     type: NoticeType.event,
     link: 'https://example.com/organic-farming-conference',
   ),
   Notice(
     id: 'n12',
-    title: 'Rural Jobs Fair 2025',
+    title: '2025 농촌 일자리 박람회',
     content:
-        'Connect with employers and find seasonal work opportunities in rural areas.',
+        '고용주와 연결되고 농촌 지역 계절근로 기회를 찾아보세요.',
     publishedAt: DateTime.now().subtract(const Duration(days: 13)),
     type: NoticeType.event,
     link: 'https://example.com/rural-jobs-fair',
   ),
 
-  // Platform Updates
+  // 플랫폼 업데이트
   Notice(
     id: 'n13',
-    title: 'Platform Maintenance Scheduled',
+    title: '플랫폼 정기 점검 예정',
     content:
-        'Scheduled maintenance on January 15th from 2-4 AM. Some features may be temporarily unavailable.',
+        '1월 15일 새벽 2-4시 정기 점검으로 일부 기능이 일시적으로 이용 불가할 수 있습니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 1)),
     type: NoticeType.update,
   ),
   Notice(
     id: 'n14',
-    title: 'New Mobile App Features',
+    title: '새로운 모바일 앱 기능',
     content:
-        'Check out the latest updates: offline mode, push notifications, and improved job matching.',
+        '최신 업데이트를 확인하세요: 오프라인 모드, 푸시 알림, 개선된 작업 매칭.',
     publishedAt: DateTime.now().subtract(const Duration(days: 14)),
     type: NoticeType.update,
   ),
   Notice(
     id: 'n15',
-    title: 'Enhanced Job Search Filters',
+    title: '향상된 작업 검색 필터',
     content:
-        'New filtering options by distance, pay rate, and work duration now available.',
+        '거리, 급여, 근무 기간별 새로운 필터링 옵션이 추가되었습니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 16)),
     type: NoticeType.update,
   ),
   Notice(
     id: 'n16',
-    title: 'Payment System Upgrade',
+    title: '결제 시스템 업그레이드',
     content:
-        'Faster and more secure payment processing for completed contracts.',
+        '완료된 계약에 대한 더 빠르고 안전한 결제 처리가 가능합니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 18)),
     type: NoticeType.update,
   ),
 
-  // Weather & Seasonal
+  // 날씨 및 계절
   Notice(
     id: 'n17',
-    title: 'Heat Wave Safety Alert',
+    title: '폭염 안전 경보',
     content:
-        'Extreme heat conditions expected. Ensure adequate hydration and rest breaks for workers.',
+        '극한 고온이 예상됩니다. 근로자들의 충분한 수분 섭취와 휴식 시간을 보장하세요.',
     publishedAt: DateTime.now().subtract(const Duration(hours: 6)),
     type: NoticeType.policy,
   ),
   Notice(
     id: 'n18',
-    title: 'Harvest Season Preparation',
+    title: '수확철 준비',
     content:
-        'Tips and resources for preparing your farm for the upcoming harvest season.',
+        '다가오는 수확철을 위한 농장 준비 팁과 자료를 제공합니다.',
     publishedAt: DateTime.now().subtract(const Duration(days: 20)),
     type: NoticeType.support,
   ),
