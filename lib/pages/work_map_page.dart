@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:farm_work_app/data/mock_jobs.dart';
-import 'package:farm_work_app/models/job.dart';
-import 'package:farm_work_app/pages/job_detail_page.dart';
+import 'package:dangam_app/data/mock_jobs.dart';
+import 'package:dangam_app/models/job.dart';
+import 'package:dangam_app/pages/job_detail_page.dart';
 
 class WorkMapPage extends StatefulWidget {
   const WorkMapPage({super.key});

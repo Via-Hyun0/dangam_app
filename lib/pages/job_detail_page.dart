@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/models/job.dart';
+import 'package:dangam_app/models/job.dart';
 
 class JobDetailPage extends StatelessWidget {
   final Job job;

@@ -1,5 +1,5 @@
-name: farm_work_app
-description: A new Flutter project for a farm work marketplace.
+name: dangam_app
+description: 단감 - 농작업 연결 플랫폼
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/data/mock_messages.dart';
+import 'package:dangam_app/data/mock_messages.dart';
 
 class MessagesBody extends StatelessWidget {
   const MessagesBody({super.key});
@@ -17,7 +17,7 @@ class MessagesBody extends StatelessWidget {
           ),
           child: TextField(
             decoration: InputDecoration(
-              hintText: 'Search conversations...',
+              hintText: '대화 검색...',
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -198,4 +198,3 @@ class _ChatCard extends StatelessWidget {
     }
   }
 }
-

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/pages/dashboard_body.dart';
-import 'package:farm_work_app/pages/jobs_page.dart';
-import 'package:farm_work_app/pages/messages_page.dart';
-import 'package:farm_work_app/pages/profile_page.dart';
-import 'package:farm_work_app/pages/work_map_page.dart';
+import 'package:dangam_app/pages/dashboard_body.dart';
+import 'package:dangam_app/pages/jobs_page.dart';
+import 'package:dangam_app/pages/messages_page.dart';
+import 'package:dangam_app/pages/profile_page.dart';
+import 'package:dangam_app/pages/work_map_page.dart';
 
 class MobileLayout extends StatefulWidget {
   final String title;
@@ -26,11 +26,11 @@ class _MobileLayoutState extends State<MobileLayout> {
   ];
 
   final List<String> _pageTitles = const [
-    'Farm Work',
-    'Jobs',
-    'Map',
-    'Messages',
-    'Profile',
+    '단감',
+    '작업',
+    '지도',
+    '메시지',
+    '프로필',
   ];
 
   void _onItemTapped(int index) {
@@ -55,23 +55,23 @@ class _MobileLayoutState extends State<MobileLayout> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+            label: '대시보드',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.work),
-            label: 'Jobs',
+            label: '작업',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
-            label: 'Map',
+            label: '지도',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
-            label: 'Messages',
+            label: '메시지',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            label: 'Profile',
+            label: '프로필',
           ),
         ],
       ),

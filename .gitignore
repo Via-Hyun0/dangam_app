@@ -5,23 +5,29 @@
 .idea/
 .vscode/
 
-# Node / Vite (web subapp)
-node_modules/
-dist/
-
 # Flutter / Dart
 .dart_tool/
+.packages
 .packages
 build/
 .flutter-plugins
 .flutter-plugins-dependencies
 coverage/
+*.dill
+*.snapshot
+*.lock
 
 # Flutter platform build folders
 android/.gradle/
 android/build/
 android/app/build/
+android/app/debug/
+android/app/profile/
+android/app/release/
 ios/build/
+ios/Debug-iphonesimulator/
+ios/Release-iphonesimulator/
+ios/iphonesimulator/
 macos/Build/
 macos/build/
 linux/build/
@@ -37,15 +43,25 @@ ios/Flutter/Generated.xcconfig
 ios/Flutter/ephemeral/
 ios/Flutter/Flutter.podspec
 ios/Runner.xcworkspace/
+ios/Runner.xcodeproj/xcuserdata/
+ios/Runner.xcodeproj/project.xcworkspace/xcuserdata/
 **/xcuserdata/
 **/*.xcuserstate
 DerivedData/
+*.xcworkspace/xcuserdata/
 
-# CocoaPods intermediate
+# CocoaPods
+ios/Podfile.lock
 ios/.last_build_id
 
+# Flutter build artifacts
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -53,18 +69,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary files
+*.tmp
+*.temp
+*.cache

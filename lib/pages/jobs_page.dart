@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:farm_work_app/data/mock_jobs.dart';
-import 'package:farm_work_app/models/job.dart';
-import 'package:farm_work_app/pages/job_detail_page.dart';
+import 'package:dangam_app/data/mock_jobs.dart';
+import 'package:dangam_app/models/job.dart';
+import 'package:dangam_app/pages/job_detail_page.dart';
 
 class JobsBody extends StatefulWidget {
   const JobsBody({super.key});
@@ -73,7 +73,7 @@ class _JobsBodyState extends State<JobsBody> {
                       isExpanded: true,
                       items: [
                         const DropdownMenuItem(
-                            value: 'all', child: Text('All types')),
+                            value: 'all', child: Text('모든 유형')),
                         ...JobType.values.map((type) => DropdownMenuItem(
                               value: type.toString().split('.').last,
                               child: Text(jobTypeLabel(type)),
@@ -103,10 +103,9 @@ class _JobsBodyState extends State<JobsBody> {
                       value: _sortBy,
                       isExpanded: true,
                       items: const [
-                        DropdownMenuItem(
-                            value: 'distance', child: Text('Distance')),
-                        DropdownMenuItem(value: 'date', child: Text('Date')),
-                        DropdownMenuItem(value: 'type', child: Text('Type')),
+                        DropdownMenuItem(value: 'distance', child: Text('거리')),
+                        DropdownMenuItem(value: 'date', child: Text('날짜')),
+                        DropdownMenuItem(value: 'type', child: Text('유형')),
                       ],
                       onChanged: (value) {
                         setState(() {
