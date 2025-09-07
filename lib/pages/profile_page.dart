@@ -449,7 +449,7 @@ class _MenuSection extends StatelessWidget {
               icon: Icons.person_outline,
               title: '프로필 편집',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ProfileEditPage()),
+                MaterialPageRoute(builder: (context) => const ProfileEditPage(userName: '김농부')),
               ),
             ),
             _MenuItem(
@@ -459,14 +459,14 @@ class _MenuSection extends StatelessWidget {
               badge: isVerified ? '완료' : '필요',
               badgeColor: isVerified ? AppColors.success : AppColors.warning,
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const VerificationPage()),
+                MaterialPageRoute(builder: (context) => const VerificationPage(isVerified: false)),
               ),
             ),
             _MenuItem(
               icon: Icons.location_on_outlined,
               title: '위치 설정',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const LocationSettingsPage()),
+                MaterialPageRoute(builder: (context) => const LocationSettingsPage(currentLocation: '김제시 금구면')),
               ),
             ),
           ],
@@ -481,7 +481,7 @@ class _MenuSection extends StatelessWidget {
               icon: Icons.work_outline,
               title: '내 작업',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const MyJobsPage()),
+                MaterialPageRoute(builder: (context) => const MyJobsPage(completedJobs: 47)),
               ),
             ),
             _MenuItem(
@@ -495,7 +495,7 @@ class _MenuSection extends StatelessWidget {
               icon: Icons.star_outline,
               title: '리뷰',
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ReviewsPage()),
+                MaterialPageRoute(builder: (context) => const ReviewsPage(rating: 4.8)),
               ),
             ),
           ],

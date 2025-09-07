@@ -46,7 +46,7 @@ class _MessagesBodyState extends State<MessagesBody> {
         
         // Messages List
         filteredChats.isEmpty
-            ? const _EmptyState()
+            ? _EmptyState()
             : Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(AppSpacing.lg),
@@ -291,7 +291,7 @@ class _ChatCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
                           ),
                           child: Icon(
-                            chatTypeIcon(chat.type),
+                            _getChatTypeIcon(chat.type),
                             color: typeColor,
                             size: AppSpacing.iconLarge,
                           ),
@@ -311,7 +311,7 @@ class _ChatCard extends StatelessWidget {
                               ),
                               const SizedBox(height: AppSpacing.xs),
                               Text(
-                                chat.subtitle,
+                                chat.employerName,
                                 style: AppTypography.bodySmall.copyWith(
                                   color: AppColors.secondary,
                                   fontWeight: FontWeight.w500,
@@ -469,6 +469,20 @@ class _EmptyState extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// 채팅 타입에 따른 아이콘 반환 함수
+IconData _getChatTypeIcon(ChatType type) {
+  switch (type) {
+    case ChatType.job:
+      return Icons.work_outline;
+    case ChatType.contract:
+      return Icons.description_outlined;
+    case ChatType.support:
+      return Icons.support_agent;
+    case ChatType.general:
+      return Icons.chat_bubble_outline;
   }
 }
 
