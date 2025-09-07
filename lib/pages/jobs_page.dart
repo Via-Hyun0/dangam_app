@@ -127,144 +127,86 @@ class _JobsBodyState extends State<JobsBody> {
               final Job job = _filteredJobs[index];
               final Color primary = Theme.of(context).colorScheme.primary;
               return Container(
-                margin: const EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 16),
                 child: Material(
                   elevation: 0,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(16),
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => JobDetailPage(job: job)),
                       );
                     },
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(16),
                     child: Container(
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.white,
-                            Colors.grey.shade50,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(24),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color: primary.withOpacity(0.1),
-                          width: 1.5,
+                          width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: primary.withOpacity(0.08),
-                            blurRadius: 24,
-                            offset: const Offset(0, 12),
-                            spreadRadius: 0,
-                          ),
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.04),
+                            color: Colors.black.withOpacity(0.06),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
-                            spreadRadius: 0,
                           ),
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Header with icon and status
+                            // Header with title and distance
                             Row(
                               children: [
-                                Container(
-                                  width: 64,
-                                  height: 64,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        primary,
-                                        primary.withOpacity(0.8),
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: primary.withOpacity(0.3),
-                                        blurRadius: 16,
-                                        offset: const Offset(0, 6),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.work_outline,
-                                    color: Colors.white,
-                                    size: 32,
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         job.title,
-                                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                           fontWeight: FontWeight.w800,
                                           color: const Color(0xFF503123),
                                           height: 1.2,
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 8,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: primary.withOpacity(0.1),
-                                          borderRadius: BorderRadius.circular(24),
-                                          border: Border.all(
-                                            color: primary.withOpacity(0.2),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          jobTypeLabel(job.type),
-                                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                            color: primary,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        jobTypeLabel(job.type),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: primary,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
+                                const SizedBox(width: 16),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
+                                    horizontal: 12,
+                                    vertical: 8,
                                   ),
                                   decoration: BoxDecoration(
                                     color: primary.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: primary.withOpacity(0.2),
-                                      width: 1,
-                                    ),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Column(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(
                                         Icons.location_on_outlined,
                                         color: primary,
-                                        size: 20,
+                                        size: 16,
                                       ),
-                                      const SizedBox(height: 4),
+                                      const SizedBox(width: 4),
                                       Text(
                                         '${job.distanceKm.toStringAsFixed(1)}km',
-                                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                           color: primary,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -275,40 +217,40 @@ class _JobsBodyState extends State<JobsBody> {
                               ],
                             ),
                             
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 16),
                             
-                            // Job details
+                            // Key information
                             Row(
                               children: [
                                 Expanded(
-                                  child: _DetailChip(
+                                  child: _InfoItem(
                                     icon: Icons.agriculture_outlined,
-                                    label: job.crop,
-                                    color: const Color(0xFFa48e7b),
+                                    label: '작물',
+                                    value: job.crop,
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 16),
                                 Expanded(
-                                  child: _DetailChip(
+                                  child: _InfoItem(
                                     icon: Icons.straighten_outlined,
-                                    label: '${job.areaHectares.toStringAsFixed(1)} ha',
-                                    color: const Color(0xFFa48e7b),
+                                    label: '면적',
+                                    value: '${job.areaHectares.toStringAsFixed(1)} ha',
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 16),
                                 Expanded(
-                                  child: _DetailChip(
+                                  child: _InfoItem(
                                     icon: Icons.calendar_today_outlined,
-                                    label: job.scheduledDate != null 
+                                    label: '날짜',
+                                    value: job.scheduledDate != null 
                                         ? _formatDate(job.scheduledDate!)
-                                        : 'TBD',
-                                    color: const Color(0xFFa48e7b),
+                                        : '미정',
                                   ),
                                 ),
                               ],
                             ),
                             
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 16),
                             
                             // Location
                             Row(
@@ -316,13 +258,13 @@ class _JobsBodyState extends State<JobsBody> {
                                 Icon(
                                   Icons.place_outlined,
                                   color: const Color(0xFFa48e7b),
-                                  size: 20,
+                                  size: 18,
                                 ),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
                                     job.location,
-                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: const Color(0xFFa48e7b),
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -331,42 +273,25 @@ class _JobsBodyState extends State<JobsBody> {
                               ],
                             ),
                             
-                            // Equipment tags
+                            // Equipment tags (only if not empty)
                             if (job.requiredEquipment.isNotEmpty) ...[
-                              const SizedBox(height: 20),
-                              Text(
-                                '필요 장비',
-                                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                  color: const Color(0xFF503123),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 16),
                               Wrap(
-                                spacing: 10,
-                                runSpacing: 10,
+                                spacing: 8,
+                                runSpacing: 8,
                                 children: job.requiredEquipment
                                     .map((equipment) => Container(
                                           padding: const EdgeInsets.symmetric(
-                                            horizontal: 16,
-                                            vertical: 10,
+                                            horizontal: 12,
+                                            vertical: 6,
                                           ),
                                           decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                primary.withOpacity(0.1),
-                                                primary.withOpacity(0.05),
-                                              ],
-                                            ),
-                                            borderRadius: BorderRadius.circular(20),
-                                            border: Border.all(
-                                              color: primary.withOpacity(0.2),
-                                              width: 1,
-                                            ),
+                                            color: primary.withOpacity(0.1),
+                                            borderRadius: BorderRadius.circular(16),
                                           ),
                                           child: Text(
                                             equipment,
-                                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                               color: primary,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -375,63 +300,6 @@ class _JobsBodyState extends State<JobsBody> {
                                     .toList(),
                               ),
                             ],
-                            
-                            const SizedBox(height: 24),
-                            
-                            // Action button
-                            Container(
-                              width: double.infinity,
-                              height: 56,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    primary,
-                                    primary.withOpacity(0.8),
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: primary.withOpacity(0.3),
-                                    blurRadius: 16,
-                                    offset: const Offset(0, 6),
-                                  ),
-                                ],
-                              ),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (_) => JobDetailPage(job: job)),
-                                    );
-                                  },
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '자세히 보기',
-                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 18,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -452,50 +320,49 @@ String _formatDate(DateTime d) {
   return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 }
 
-class _DetailChip extends StatelessWidget {
+class _InfoItem extends StatelessWidget {
   final IconData icon;
   final String label;
-  final Color color;
+  final String value;
 
-  const _DetailChip({
+  const _InfoItem({
     required this.icon,
     required this.label,
-    required this.color,
+    required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withOpacity(0.2),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: color,
-            size: 16,
-          ),
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              icon,
+              color: const Color(0xFFa48e7b),
+              size: 16,
+            ),
+            const SizedBox(width: 6),
+            Text(
               label,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: color,
-                fontWeight: FontWeight.w600,
+                color: const Color(0xFFa48e7b),
+                fontWeight: FontWeight.w500,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: const Color(0xFF503123),
+            fontWeight: FontWeight.w600,
           ),
-        ],
-      ),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
     );
   }
 }
