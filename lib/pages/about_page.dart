@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
+/// 앱 정보 페이지
+/// 
+/// 디자이너 가이드:
+/// - 이 페이지는 앱에 대한 정보를 표시합니다
+/// - 앱 로고, 버전, 개발자 정보, 라이선스 등을 포함합니다
+/// - 일관된 디자인을 위해 테마 시스템을 사용합니다
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
 
@@ -10,61 +19,69 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text('앱 정보'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
       ),
-      backgroundColor: const Color(0xFFfdfdfd),
+      backgroundColor: AppColors.background,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           children: [
             // 앱 로고 및 정보
-            _buildAppInfo(primary),
+            _buildAppInfo(),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             
-            // 앱 정보
-            _buildAppDetails(primary),
+            // 앱 기능 소개
+            _buildAppFeatures(),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             
-            // 개발팀 정보
-            _buildTeamInfo(primary),
+            // 개발자 정보
+            _buildDeveloperInfo(),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
             
-            // 라이선스 및 약관
-            _buildLegalInfo(primary),
+            // 라이선스 및 법적 정보
+            _buildLegalInfo(),
+            
+            const SizedBox(height: AppSpacing.xl),
+            
+            // 연락처
+            _buildContactInfo(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAppInfo(Color primary) {
+  /// 앱 로고 및 기본 정보 위젯
+  /// 
+  /// 디자이너 가이드:
+  /// - 이 위젯은 앱의 로고와 기본 정보를 표시합니다
+  /// - 앱 이름, 버전, 설명을 포함합니다
+  Widget _buildAppInfo() {
     return Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(AppSpacing.xl),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(26, 199, 93, 49),
-            Color.fromARGB(13, 199, 93, 49),
+            AppColors.primaryLighter,
+            AppColors.primaryLight,
           ],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(26, 199, 93, 49),
+            color: AppColors.primaryLighter,
             blurRadius: 20,
-            offset: const Offset(0, 8),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -72,61 +89,65 @@ class _AboutPageState extends State<AboutPage> {
         children: [
           // 앱 로고
           Container(
-            width: 80,
-            height: 80,
+            width: AppSpacing.iconHuge * 2,
+            height: AppSpacing.iconHuge * 2,
             decoration: BoxDecoration(
-              color: primary,
-              borderRadius: BorderRadius.circular(20),
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppSpacing.radiusCircular),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(77, 199, 93, 49),
+                  color: AppColors.shadowLight,
                   blurRadius: 10,
-                  offset: const Offset(0, 4),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
-            child: const Icon(
+            child: Icon(
               Icons.agriculture,
-              color: Colors.white,
-              size: 40,
+              size: AppSpacing.iconHuge,
+              color: AppColors.primary,
             ),
           ),
           
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.lg),
           
           // 앱 이름
           Text(
             '단감',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            style: AppTypography.headlineLarge.copyWith(
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF503123),
+              color: AppColors.darkAccent,
             ),
           ),
           
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           
           // 앱 설명
           Text(
-            '농작업 연결 플랫폼',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: const Color(0xFFa48e7b),
+            '농업 근로자와 농장주를 연결하는 플랫폼',
+            style: AppTypography.bodyLarge.copyWith(
+              color: AppColors.secondary,
               fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
           ),
           
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           
           // 버전 정보
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.sm,
+              vertical: AppSpacing.xs,
+            ),
             decoration: BoxDecoration(
-              color: Color.fromARGB(26, 199, 93, 49),
-              borderRadius: BorderRadius.circular(20),
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
             ),
             child: Text(
               '버전 1.0.0',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: primary,
+              style: AppTypography.labelMedium.copyWith(
+                color: AppColors.primary,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -136,328 +157,300 @@ class _AboutPageState extends State<AboutPage> {
     );
   }
 
-  Widget _buildAppDetails(Color primary) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '앱 정보',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildInfoItem(
-            context,
-            icon: Icons.description_outlined,
-            title: '앱 설명',
-            content: '농업 근로자와 농장주를 연결하는 플랫폼입니다. 효율적인 농작업 매칭을 통해 농업 생산성을 높이고, 근로자에게 안정적인 일자리를 제공합니다.',
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildInfoItem(
-            context,
-            icon: Icons.update_outlined,
-            title: '최근 업데이트',
-            content: '• 프로필 관리 기능 개선\n• 실시간 채팅 시스템 추가\n• 지도 기반 작업 검색 기능\n• 결제 시스템 통합',
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildInfoItem(
-            context,
-            icon: Icons.security_outlined,
-            title: '보안 및 개인정보',
-            content: '모든 개인정보는 암호화되어 안전하게 보호됩니다. 사용자 인증 시스템을 통해 신뢰할 수 있는 플랫폼을 제공합니다.',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTeamInfo(Color primary) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '개발팀',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildTeamMember(
-            context,
-            name: '김개발',
-            role: '개발팀장',
-            email: 'dev@dangam.com',
-          ),
-          
-          const SizedBox(height: 12),
-          
-          _buildTeamMember(
-            context,
-            name: '이디자인',
-            role: 'UI/UX 디자이너',
-            email: 'design@dangam.com',
-          ),
-          
-          const SizedBox(height: 12),
-          
-          _buildTeamMember(
-            context,
-            name: '박마케팅',
-            role: '마케팅 매니저',
-            email: 'marketing@dangam.com',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTeamMember(BuildContext context, {
-    required String name,
-    required String role,
-    required String email,
-  }) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(26, 199, 93, 49),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Icon(
-            Icons.person,
-            color: primary,
-            size: 20,
-          ),
+  /// 앱 기능 소개 위젯
+  /// 
+  /// 디자이너 가이드:
+  /// - 이 위젯은 앱의 주요 기능들을 소개합니다
+  /// - 아이콘과 설명을 함께 표시합니다
+  Widget _buildAppFeatures() {
+    return _InfoSection(
+      title: '주요 기능',
+      items: [
+        _FeatureItem(
+          icon: Icons.work_outline,
+          title: '작업 매칭',
+          description: '농업 근로자와 농장주를 연결하여 작업을 매칭합니다',
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF503123),
-                ),
-              ),
-              Text(
-                role,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFFa48e7b),
-                ),
-              ),
-            ],
-          ),
+        _FeatureItem(
+          icon: Icons.location_on_outlined,
+          title: '위치 기반 검색',
+          description: '근처의 작업 기회를 쉽게 찾을 수 있습니다',
         ),
-        Text(
-          email,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: primary,
-            fontWeight: FontWeight.w500,
-          ),
+        _FeatureItem(
+          icon: Icons.chat_bubble_outline,
+          title: '실시간 채팅',
+          description: '작업자와 농장주가 직접 소통할 수 있습니다',
+        ),
+        _FeatureItem(
+          icon: Icons.verified_user_outlined,
+          title: '신뢰성 검증',
+          description: '검증된 사용자들만 참여할 수 있습니다',
         ),
       ],
     );
   }
 
-  Widget _buildLegalInfo(Color primary) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '법적 정보',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildLegalItem(
-            context,
-            title: '이용약관',
-            onTap: () => _showLegalDialog(context, '이용약관', '이용약관 내용입니다...'),
-          ),
-          
-          const SizedBox(height: 12),
-          
-          _buildLegalItem(
-            context,
-            title: '개인정보처리방침',
-            onTap: () => _showLegalDialog(context, '개인정보처리방침', '개인정보처리방침 내용입니다...'),
-          ),
-          
-          const SizedBox(height: 12),
-          
-          _buildLegalItem(
-            context,
-            title: '서비스 약관',
-            onTap: () => _showLegalDialog(context, '서비스 약관', '서비스 약관 내용입니다...'),
-          ),
-          
-          const SizedBox(height: 16),
-          
-          const Divider(),
-          
-          const SizedBox(height: 16),
-          
-          Text(
-            '© 2024 단감. All rights reserved.',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Colors.grey.shade500,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
+  /// 개발자 정보 위젯
+  /// 
+  /// 디자이너 가이드:
+  /// - 이 위젯은 개발팀 정보를 표시합니다
+  /// - 개발자 이름, 연락처, 소셜 미디어를 포함합니다
+  Widget _buildDeveloperInfo() {
+    return _InfoSection(
+      title: '개발팀',
+      items: [
+        _InfoItem(
+          icon: Icons.person_outline,
+          title: '개발자',
+          value: '단감 개발팀',
+        ),
+        _InfoItem(
+          icon: Icons.email_outlined,
+          title: '이메일',
+          value: 'contact@dangam.app',
+        ),
+        _InfoItem(
+          icon: Icons.language,
+          title: '웹사이트',
+          value: 'www.dangam.app',
+        ),
+        _InfoItem(
+          icon: Icons.calendar_today_outlined,
+          title: '개발 시작일',
+          value: '2024년 1월',
+        ),
+      ],
     );
   }
 
-  Widget _buildInfoItem(BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String content,
-  }) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
-    return Row(
+  /// 법적 정보 위젯
+  /// 
+  /// 디자이너 가이드:
+  /// - 이 위젯은 라이선스 및 법적 정보를 표시합니다
+  /// - 이용약관, 개인정보처리방침, 라이선스를 포함합니다
+  Widget _buildLegalInfo() {
+    return _InfoSection(
+      title: '법적 정보',
+      items: [
+        _InfoItem(
+          icon: Icons.description_outlined,
+          title: '이용약관',
+          value: '최신 버전',
+        ),
+        _InfoItem(
+          icon: Icons.privacy_tip_outlined,
+          title: '개인정보처리방침',
+          value: '최신 버전',
+        ),
+        _InfoItem(
+          icon: Icons.copyright_outlined,
+          title: '라이선스',
+          value: 'MIT License',
+        ),
+        _InfoItem(
+          icon: Icons.security_outlined,
+          title: '보안 정책',
+          value: '최신 버전',
+        ),
+      ],
+    );
+  }
+
+  /// 연락처 정보 위젯
+  /// 
+  /// 디자이너 가이드:
+  /// - 이 위젯은 고객 지원 연락처를 표시합니다
+  /// - 이메일, 전화번호, 운영시간을 포함합니다
+  Widget _buildContactInfo() {
+    return _InfoSection(
+      title: '고객 지원',
+      items: [
+        _InfoItem(
+          icon: Icons.support_agent,
+          title: '고객센터',
+          value: '1588-0000',
+        ),
+        _InfoItem(
+          icon: Icons.schedule,
+          title: '운영시간',
+          value: '평일 09:00 - 18:00',
+        ),
+        _InfoItem(
+          icon: Icons.email,
+          title: '이메일 지원',
+          value: 'support@dangam.app',
+        ),
+        _InfoItem(
+          icon: Icons.chat,
+          title: '실시간 채팅',
+          value: '앱 내 채팅 지원',
+        ),
+      ],
+    );
+  }
+}
+
+/// 정보 섹션 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 관련된 정보들을 그룹화하여 표시합니다
+/// - 섹션 제목과 정보 항목들을 포함합니다
+class _InfoSection extends StatelessWidget {
+  final String title;
+  final List<Widget> items;
+
+  const _InfoSection({
+    required this.title,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          color: primary,
-          size: 20,
+        Text(
+          title,
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkAccent,
+          ),
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF503123),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                content,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFFa48e7b),
-                  height: 1.5,
-                ),
+        const SizedBox(height: AppSpacing.lg),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.shadowLight,
+                blurRadius: 10,
+                offset: const Offset(0, 2),
               ),
             ],
+          ),
+          child: Column(
+            children: items,
           ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildLegalItem(BuildContext context, {
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: primary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Spacer(),
-              Icon(
-                Icons.chevron_right,
-                color: Colors.grey.shade400,
-                size: 20,
-              ),
-            ],
+/// 기능 아이템 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 개별 기능을 표시합니다
+/// - 아이콘, 제목, 설명을 포함합니다
+class _FeatureItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String description;
+
+  const _FeatureItem({
+    required this.icon,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Row(
+        children: [
+          Container(
+            width: AppSpacing.iconLarge + AppSpacing.md,
+            height: AppSpacing.iconLarge + AppSpacing.md,
+            decoration: BoxDecoration(
+              color: AppColors.primaryLighter,
+              borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+            ),
+            child: Icon(
+              icon,
+              color: AppColors.primary,
+              size: AppSpacing.iconMedium,
+            ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.lg),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.titleMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.darkAccent,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  description,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  void _showLegalDialog(BuildContext context, String title, String content) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: SingleChildScrollView(
-          child: Text(content),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('확인'),
+/// 정보 아이템 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 개별 정보를 표시합니다
+/// - 아이콘, 제목, 값을 포함합니다
+class _InfoItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
+
+  const _InfoItem({
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: AppColors.secondary,
+            size: AppSpacing.iconMedium,
+          ),
+          const SizedBox(width: AppSpacing.lg),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  value,
+                  style: AppTypography.titleMedium.copyWith(
+                    color: AppColors.darkAccent,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
