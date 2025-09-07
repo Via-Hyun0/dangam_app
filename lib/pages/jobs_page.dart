@@ -143,7 +143,7 @@ class _JobsBodyState extends State<JobsBody> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: primary.withOpacity(0.1),
+                          color: Color.fromARGB(26, 199, 93, 49),
                           width: 1,
                         ),
                         boxShadow: [
@@ -191,10 +191,10 @@ class _JobsBodyState extends State<JobsBody> {
                                               vertical: 4,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: jobStatusColor(job.status).withOpacity(0.1),
+                                              color: Color.fromARGB(26, 76, 175, 80),
                                               borderRadius: BorderRadius.circular(8),
                                               border: Border.all(
-                                                color: jobStatusColor(job.status).withOpacity(0.3),
+                                                color: Color.fromARGB(77, 76, 175, 80),
                                                 width: 1,
                                               ),
                                             ),
@@ -218,7 +218,7 @@ class _JobsBodyState extends State<JobsBody> {
                                     vertical: 8,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: primary.withOpacity(0.1),
+                                    color: Color.fromARGB(26, 199, 93, 49),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Row(
@@ -312,7 +312,7 @@ class _JobsBodyState extends State<JobsBody> {
                                             vertical: 6,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: primary.withOpacity(0.1),
+                                            color: Color.fromARGB(26, 199, 93, 49),
                                             borderRadius: BorderRadius.circular(16),
                                           ),
                                           child: Text(

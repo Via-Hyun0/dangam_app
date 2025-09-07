@@ -78,14 +78,14 @@ class _ReviewsPageState extends State<ReviewsPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            primary.withOpacity(0.1),
-            primary.withOpacity(0.05),
+            Color.fromARGB(26, 199, 93, 49),
+            Color.fromARGB(13, 199, 93, 49),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.1),
+            color: Color.fromARGB(26, 199, 93, 49),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -291,10 +291,10 @@ class _ReviewsPageState extends State<ReviewsPage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: primary.withOpacity(0.05),
+                color: Color.fromARGB(13, 199, 93, 49),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: primary.withOpacity(0.2),
+                  color: Color.fromARGB(51, 199, 93, 49),
                   width: 1,
                 ),
               ),
