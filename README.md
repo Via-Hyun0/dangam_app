@@ -1,6 +1,6 @@
-# farm_work_app
+# 단감 (Dangam)
 
-A new Flutter project.
+농작업 연결 플랫폼 - Flutter 앱
 
 ## Getting Started
 
