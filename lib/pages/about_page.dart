@@ -159,6 +159,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16),
           
           _buildInfoItem(
+            context,
             icon: Icons.description_outlined,
             title: '앱 설명',
             content: '농업 근로자와 농장주를 연결하는 플랫폼입니다. 효율적인 농작업 매칭을 통해 농업 생산성을 높이고, 근로자에게 안정적인 일자리를 제공합니다.',
@@ -167,6 +168,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16),
           
           _buildInfoItem(
+            context,
             icon: Icons.update_outlined,
             title: '최근 업데이트',
             content: '• 프로필 관리 기능 개선\n• 실시간 채팅 시스템 추가\n• 지도 기반 작업 검색 기능\n• 결제 시스템 통합',
@@ -175,6 +177,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16),
           
           _buildInfoItem(
+            context,
             icon: Icons.security_outlined,
             title: '보안 및 개인정보',
             content: '모든 개인정보는 암호화되어 안전하게 보호됩니다. 사용자 인증 시스템을 통해 신뢰할 수 있는 플랫폼을 제공합니다.',
@@ -212,6 +215,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16),
           
           _buildTeamMember(
+            context,
             name: '김개발',
             role: '개발팀장',
             email: 'dev@dangam.com',
@@ -220,6 +224,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 12),
           
           _buildTeamMember(
+            context,
             name: '이디자인',
             role: 'UI/UX 디자이너',
             email: 'design@dangam.com',
@@ -228,6 +233,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 12),
           
           _buildTeamMember(
+            context,
             name: '박마케팅',
             role: '마케팅 매니저',
             email: 'marketing@dangam.com',
@@ -237,7 +243,7 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTeamMember({
+  Widget _buildTeamMember(BuildContext context, {
     required String name,
     required String role,
     required String email,
@@ -319,22 +325,25 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16),
           
           _buildLegalItem(
+            context,
             title: '이용약관',
-            onTap: () => _showLegalDialog('이용약관', '이용약관 내용입니다...'),
+            onTap: () => _showLegalDialog(context, '이용약관', '이용약관 내용입니다...'),
           ),
           
           const SizedBox(height: 12),
           
           _buildLegalItem(
+            context,
             title: '개인정보처리방침',
-            onTap: () => _showLegalDialog('개인정보처리방침', '개인정보처리방침 내용입니다...'),
+            onTap: () => _showLegalDialog(context, '개인정보처리방침', '개인정보처리방침 내용입니다...'),
           ),
           
           const SizedBox(height: 12),
           
           _buildLegalItem(
+            context,
             title: '서비스 약관',
-            onTap: () => _showLegalDialog('서비스 약관', '서비스 약관 내용입니다...'),
+            onTap: () => _showLegalDialog(context, '서비스 약관', '서비스 약관 내용입니다...'),
           ),
           
           const SizedBox(height: 16),
@@ -355,7 +364,7 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoItem({
+  Widget _buildInfoItem(BuildContext context, {
     required IconData icon,
     required String title,
     required String content,
@@ -397,7 +406,7 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLegalItem({
+  Widget _buildLegalItem(BuildContext context, {
     required String title,
     required VoidCallback onTap,
   }) {
@@ -432,7 +441,7 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  void _showLegalDialog(String title, String content) {
+  void _showLegalDialog(BuildContext context, String title, String content) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
