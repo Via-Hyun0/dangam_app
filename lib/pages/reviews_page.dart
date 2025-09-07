@@ -58,7 +58,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
         child: Column(
         children: [
           // 평점 요약
-          _buildRatingSummary(context, primary),
+          _buildRatingSummary(context, primary, reviews),
           
           const SizedBox(height: 24),
           
@@ -70,7 +70,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
     );
   }
 
-  Widget _buildRatingSummary(BuildContext context, Color primary) {
+  Widget _buildRatingSummary(BuildContext context, Color primary, List<Map<String, dynamic>> reviews) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(

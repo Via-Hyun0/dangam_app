@@ -212,7 +212,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: _StatCard(
-                        icon: Icons.schedule_outline,
+                            icon: Icons.schedule,
                         label: '응답률',
                         value: '$_responseRate%',
                         color: Colors.blue,
