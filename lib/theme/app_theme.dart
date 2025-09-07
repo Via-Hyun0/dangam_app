@@ -237,7 +237,7 @@ class AppTheme {
   );
   
   /// 카드 테마
-  static const CardThemeData _cardTheme = CardThemeData(
+  static const CardTheme _cardTheme = CardTheme(
     color: AppColors.white,
     elevation: 2,
     shadowColor: AppColors.shadowLight,
@@ -387,7 +387,7 @@ class AppTheme {
   }
   
   /// 다이얼로그 테마
-  static const DialogThemeData _dialogTheme = DialogThemeData(
+  static const DialogTheme _dialogTheme = DialogTheme(
     backgroundColor: AppColors.white,
     elevation: 8,
     shape: RoundedRectangleBorder(
