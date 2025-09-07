@@ -113,14 +113,14 @@ class _VerificationPageState extends State<VerificationPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
-            Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
+            Color.fromARGB(26, primary.red, primary.green, primary.blue),
+            Color.fromARGB(13, primary.red, primary.green, primary.blue),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -208,7 +208,7 @@ class _VerificationPageState extends State<VerificationPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -228,8 +228,8 @@ class _VerificationPageState extends State<VerificationPage> {
                   height: 50,
                   decoration: BoxDecoration(
                     color: isVerified 
-                        ? Color.fromRGBO(76, 175, 80, 0.1)
-                        : Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                        ? Color.fromARGB(26, 76, 175, 80)
+                        : Color.fromARGB(26, primary.red, primary.green, primary.blue),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -272,13 +272,13 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                   decoration: BoxDecoration(
                     color: isVerified 
-                        ? Color.fromRGBO(76, 175, 80, 0.1)
-                        : Color.fromRGBO(255, 152, 0, 0.1),
+                        ? Color.fromARGB(26, 76, 175, 80)
+                        : Color.fromARGB(26, 255, 152, 0),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: isVerified 
-                          ? Color.fromRGBO(76, 175, 80, 0.3)
-                          : Color.fromRGBO(255, 152, 0, 0.3),
+                          ? Color.fromARGB(77, 76, 175, 80)
+                          : Color.fromARGB(77, 255, 152, 0),
                       width: 1,
                     ),
                   ),
@@ -313,7 +313,7 @@ class _VerificationPageState extends State<VerificationPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
+            color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
