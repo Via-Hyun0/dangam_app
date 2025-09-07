@@ -113,14 +113,14 @@ class _VerificationPageState extends State<VerificationPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(26, primary.red, primary.green, primary.blue),
-            Color.fromARGB(13, primary.red, primary.green, primary.blue),
+            primary.withOpacity(0.1),
+            primary.withOpacity(0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+            color: primary.withOpacity(0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -229,7 +229,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   decoration: BoxDecoration(
                     color: isVerified 
                         ? Color.fromARGB(26, 76, 175, 80)
-                        : Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                        : primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(

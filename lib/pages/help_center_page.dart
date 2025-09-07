@@ -194,7 +194,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                  color: primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -335,10 +335,10 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Color.fromARGB(13, primary.red, primary.green, primary.blue),
+        color: primary.withOpacity(0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Color.fromARGB(51, primary.red, primary.green, primary.blue),
+          color: primary.withOpacity(0.2),
           width: 1,
         ),
       ),

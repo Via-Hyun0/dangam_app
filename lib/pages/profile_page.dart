@@ -43,14 +43,14 @@ class _ProfileBodyState extends State<ProfileBody> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color.fromARGB(26, primary.red, primary.green, primary.blue),
-                  Color.fromARGB(13, primary.red, primary.green, primary.blue),
+                  primary.withOpacity(0.1),
+                  primary.withOpacity(0.05),
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                  color: primary.withOpacity(0.1),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),
@@ -66,10 +66,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                        color: primary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(40),
                         border: Border.all(
-                          color: Color.fromARGB(77, primary.red, primary.green, primary.blue),
+                          color: primary.withOpacity(0.3),
                           width: 2,
                         ),
                       ),
@@ -178,7 +178,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                         color: primary,
                       ),
                       style: IconButton.styleFrom(
-                        backgroundColor: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                        backgroundColor: primary.withOpacity(0.1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -483,10 +483,10 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color.fromARGB(26, color.red, color.green, color.blue),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Color.fromARGB(77, color.red, color.green, color.blue),
+          color: color.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -576,7 +576,7 @@ class _MenuSection extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Color.fromARGB(26, primary.red, primary.green, primary.blue),
+                color: primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
