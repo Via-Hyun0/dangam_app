@@ -137,35 +137,38 @@ class HelpCenterPage extends StatelessWidget {
           const SizedBox(height: 16),
           
           _buildQuickHelpItem(
+            context,
             icon: Icons.phone_outlined,
             title: '전화 문의',
             subtitle: '평일 09:00-18:00',
-            onTap: () => _showContactDialog('전화 문의', '1588-1234'),
+            onTap: () => _showContactDialog(context, '전화 문의', '1588-1234'),
           ),
           
           const SizedBox(height: 12),
           
           _buildQuickHelpItem(
+            context,
             icon: Icons.chat_bubble_outline,
             title: '채팅 문의',
             subtitle: '실시간 상담',
-            onTap: () => _showContactDialog('채팅 문의', '실시간 채팅을 시작합니다'),
+            onTap: () => _showContactDialog(context, '채팅 문의', '실시간 채팅을 시작합니다'),
           ),
           
           const SizedBox(height: 12),
           
           _buildQuickHelpItem(
+            context,
             icon: Icons.email_outlined,
             title: '이메일 문의',
             subtitle: 'support@dangam.com',
-            onTap: () => _showContactDialog('이메일 문의', 'support@dangam.com'),
+            onTap: () => _showContactDialog(context, '이메일 문의', 'support@dangam.com'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildQuickHelpItem({
+  Widget _buildQuickHelpItem(BuildContext context, {
     required IconData icon,
     required String title,
     required String subtitle,
@@ -389,7 +392,7 @@ class HelpCenterPage extends StatelessWidget {
     );
   }
 
-  void _showContactDialog(String title, String content) {
+  void _showContactDialog(BuildContext context, String title, String content) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

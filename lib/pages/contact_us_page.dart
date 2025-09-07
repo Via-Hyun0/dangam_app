@@ -178,6 +178,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           const SizedBox(height: 16),
           
           _buildTextField(
+            context,
             controller: _nameController,
             label: '이름',
             hint: '이름을 입력하세요',
@@ -193,6 +194,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           const SizedBox(height: 16),
           
           _buildTextField(
+            context,
             controller: _emailController,
             label: '이메일',
             hint: 'example@email.com',
@@ -212,6 +214,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           const SizedBox(height: 16),
           
           _buildTextField(
+            context,
             controller: _subjectController,
             label: '제목',
             hint: '문의 제목을 입력하세요',
@@ -227,6 +230,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           const SizedBox(height: 16),
           
           _buildTextField(
+            context,
             controller: _messageController,
             label: '내용',
             hint: '문의 내용을 자세히 입력해주세요',
@@ -247,7 +251,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
     );
   }
 
-  Widget _buildTextField({
+  Widget _buildTextField(BuildContext context, {
     required TextEditingController controller,
     required String label,
     required String hint,
@@ -256,6 +260,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
     int maxLines = 1,
     String? Function(String?)? validator,
   }) {
+    final Color primary = Theme.of(context).colorScheme.primary;
+    
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
