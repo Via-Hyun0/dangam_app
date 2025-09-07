@@ -70,7 +70,7 @@ class _WelcomeHeader extends StatelessWidget {
           Text(
             '다음 농작업 기회를 찾아보세요!',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.white.withOpacity(0.9),
+              color: Color.fromRGBO(255, 255, 255, 0.9),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -135,7 +135,7 @@ class _StatItem extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: color.withOpacity(0.9),
+            color: Color.fromRGBO(color.red, color.green, color.blue, 0.9),
             fontWeight: FontWeight.w500,
           ),
         ),

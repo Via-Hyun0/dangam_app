@@ -43,14 +43,14 @@ class _ProfileBodyState extends State<ProfileBody> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  primary.withOpacity(0.1),
-                  primary.withOpacity(0.05),
+                  Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
+                  Color.fromRGBO(primary.red, primary.green, primary.blue, 0.05),
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: primary.withOpacity(0.1),
+                  color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),
@@ -66,10 +66,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: primary.withOpacity(0.1),
+                        color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                         borderRadius: BorderRadius.circular(40),
                         border: Border.all(
-                          color: primary.withOpacity(0.3),
+                          color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.3),
                           width: 2,
                         ),
                       ),
@@ -178,7 +178,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                         color: primary,
                       ),
                       style: IconButton.styleFrom(
-                        backgroundColor: primary.withOpacity(0.1),
+                        backgroundColor: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -483,10 +483,10 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: Color.fromRGBO(color.red, color.green, color.blue, 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: Color.fromRGBO(color.red, color.green, color.blue, 0.3),
           width: 1,
         ),
       ),
@@ -576,7 +576,7 @@ class _MenuSection extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: primary.withOpacity(0.1),
+                color: Color.fromRGBO(primary.red, primary.green, primary.blue, 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -618,10 +618,10 @@ class _MenuSection extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: (item.badgeColor ?? primary).withOpacity(0.1),
+                  color: Color.fromRGBO((item.badgeColor ?? primary).red, (item.badgeColor ?? primary).green, (item.badgeColor ?? primary).blue, 0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: (item.badgeColor ?? primary).withOpacity(0.3),
+                    color: Color.fromRGBO((item.badgeColor ?? primary).red, (item.badgeColor ?? primary).green, (item.badgeColor ?? primary).blue, 0.3),
                     width: 1,
                   ),
                 ),
