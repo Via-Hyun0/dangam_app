@@ -16,8 +16,8 @@ class _WorkMapPageState extends State<WorkMapPage> {
   String _selectedFilter = 'all';
   double _searchRadius = 10.0; // km
 
-  // Mock user location (Sydney, Australia)
-  static const LatLng _userLocation = LatLng(-33.8688, 151.2093);
+  // 김제 중심 위치
+  static const LatLng _userLocation = LatLng(35.8019, 126.8888);
 
   @override
   void initState() {
@@ -79,6 +79,8 @@ class _WorkMapPageState extends State<WorkMapPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Color primary = Theme.of(context).colorScheme.primary;
+    
     return Scaffold(
       body: Stack(
         children: [
@@ -86,7 +88,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
           GoogleMap(
             initialCameraPosition: const CameraPosition(
               target: _userLocation,
-              zoom: 12,
+              zoom: 13,
             ),
             onMapCreated: (GoogleMapController controller) {
               // Map controller is available if needed for future features
@@ -97,19 +99,24 @@ class _WorkMapPageState extends State<WorkMapPage> {
             mapType: MapType.normal,
           ),
 
-          // Top controls
+          // Top search and filter bar
           Positioned(
             top: MediaQuery.of(context).padding.top + 16,
             left: 16,
             right: 16,
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: primary.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 2),
                   ),
@@ -118,52 +125,88 @@ class _WorkMapPageState extends State<WorkMapPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Search radius slider
+                  // Search radius
                   Row(
                     children: [
-                      const Icon(Icons.location_on, size: 20),
-                      const SizedBox(width: 8),
-                      const Text('Search radius:'),
-                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: primary,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        '검색 반경',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF503123),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
                       Expanded(
-                        child: Slider(
-                          value: _searchRadius,
-                          min: 1.0,
-                          max: 50.0,
-                          divisions: 49,
-                          label: '${_searchRadius.round()} km',
-                          onChanged: (value) {
-                            setState(() {
-                              _searchRadius = value;
-                            });
-                          },
+                        child: SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: primary,
+                            inactiveTrackColor: primary.withOpacity(0.2),
+                            thumbColor: primary,
+                            overlayColor: primary.withOpacity(0.1),
+                          ),
+                          child: Slider(
+                            value: _searchRadius,
+                            min: 1.0,
+                            max: 50.0,
+                            divisions: 49,
+                            label: '${_searchRadius.round()}km',
+                            onChanged: (value) {
+                              setState(() {
+                                _searchRadius = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          '${_searchRadius.round()}km',
+                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: primary,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
 
-                  // Filter dropdown
-                  DropdownButtonFormField<String>(
-                    value: _selectedFilter,
-                    decoration: const InputDecoration(
-                      labelText: 'Filter by job type',
-                      border: OutlineInputBorder(),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  // Filter chips
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _FilterChip(
+                          label: '전체',
+                          isSelected: _selectedFilter == 'all',
+                          onTap: () => _onFilterChanged('all'),
+                        ),
+                        const SizedBox(width: 8),
+                        ...JobType.values.take(5).map((type) => Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: _FilterChip(
+                            label: jobTypeLabel(type),
+                            isSelected: _selectedFilter == type.toString().split('.').last,
+                            onTap: () => _onFilterChanged(type.toString().split('.').last),
+                          ),
+                        )),
+                      ],
                     ),
-                    items: [
-                      const DropdownMenuItem(
-                        value: 'all',
-                        child: Text('All types'),
-                      ),
-                      ...JobType.values.map((type) => DropdownMenuItem(
-                            value: type.toString().split('.').last,
-                            child: Text(jobTypeLabel(type)),
-                          )),
-                    ],
-                    onChanged: _onFilterChanged,
                   ),
                 ],
               ),
@@ -176,14 +219,25 @@ class _WorkMapPageState extends State<WorkMapPage> {
             left: 0,
             right: 0,
             child: Container(
-              height: 200,
+              height: 280,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(20)),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Colors.grey.shade50,
+                  ],
+                ),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: primary.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, -8),
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
                     blurRadius: 10,
                     offset: const Offset(0, -2),
                   ),
@@ -193,77 +247,150 @@ class _WorkMapPageState extends State<WorkMapPage> {
                 children: [
                   // Handle bar
                   Container(
-                    width: 40,
-                    height: 4,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    width: 50,
+                    height: 5,
+                    margin: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(2),
+                      color: primary.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
+
+                  // Header
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          '근처 작업',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xFF503123),
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            '${_markers.length}개',
+                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color: primary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
 
                   // Job list
                   Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       itemCount: _markers.length,
                       itemBuilder: (context, index) {
                         final job = mockJobs[index];
                         return Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          child: InkWell(
-                            onTap: () => _showJobDetails(job),
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[50],
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey[200]!),
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Icon(
-                                      Icons.work_outline,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
+                          margin: const EdgeInsets.only(bottom: 12),
+                          child: Material(
+                            elevation: 0,
+                            borderRadius: BorderRadius.circular(16),
+                            child: InkWell(
+                              onTap: () => _showJobDetails(job),
+                              borderRadius: BorderRadius.circular(16),
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: primary.withOpacity(0.1),
+                                    width: 1,
                                   ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          job.title,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          '${jobTypeLabel(job.type)} • ${job.distanceKm.toStringAsFixed(1)} km',
-                                          style: const TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 12,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.04),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 48,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        color: primary.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Icon(
+                                        Icons.work_outline,
+                                        color: primary,
+                                        size: 24,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            job.title,
+                                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF503123),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          const SizedBox(height: 4),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                  vertical: 4,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: jobStatusColor(job.status).withOpacity(0.1),
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                child: Text(
+                                                  jobStatusLabel(job.status),
+                                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                                    color: jobStatusColor(job.status),
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                '${job.distanceKm.toStringAsFixed(1)}km',
+                                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                                  color: const Color(0xFFa48e7b),
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const Icon(Icons.chevron_right,
-                                      color: Colors.grey),
-                                ],
+                                    Icon(
+                                      Icons.chevron_right,
+                                      color: primary.withOpacity(0.6),
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -276,6 +403,45 @@ class _WorkMapPageState extends State<WorkMapPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _FilterChip extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _FilterChip({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final Color primary = Theme.of(context).colorScheme.primary;
+    
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? primary : primary.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? primary : primary.withOpacity(0.3),
+            width: 1,
+          ),
+        ),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: isSelected ? Colors.white : primary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }
