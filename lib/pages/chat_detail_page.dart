@@ -377,9 +377,7 @@ class _MessageBubble extends StatelessWidget {
                 if (message.type == MessageType.contract)
                   _ContractCard(
                     contractData: message.contractData!,
-                    onAction: (action) {
-                      // 계약 액션 처리
-                    },
+                    onAction: _handleContractAction,
                   )
                 else
                   Container(
