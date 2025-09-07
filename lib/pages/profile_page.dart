@@ -44,19 +44,19 @@ class ProfileBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 // Name and Title
-                const Text(
+                Text(
                   '김농부',
-                  style: TextStyle(
-                    fontSize: 24,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w800,
+                    color: const Color(0xFF503123),
                   ),
                 ),
                 const SizedBox(height: 4),
-                const Text(
+                Text(
                   '농업 근로자 • 5년 경력',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: const Color(0xFFa48e7b),
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -177,17 +177,17 @@ class _StatItem extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 20,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w800,
+            color: const Color(0xFF503123),
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: const Color(0xFFa48e7b),
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

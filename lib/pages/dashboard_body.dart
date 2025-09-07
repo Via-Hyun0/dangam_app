@@ -59,20 +59,19 @@ class _WelcomeHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             '안녕하세요!',
-            style: TextStyle(
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               color: Colors.white,
-              fontSize: 24,
               fontWeight: FontWeight.w800,
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          const SizedBox(height: 12),
+          Text(
             '다음 농작업 기회를 찾아보세요!',
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Colors.white.withOpacity(0.9),
+              fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 20),
@@ -123,21 +122,21 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, color: color, size: 20),
-        const SizedBox(height: 4),
+        Icon(icon, color: color, size: 24),
+        const SizedBox(height: 6),
         Text(
           value,
-          style: TextStyle(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: color,
-            fontSize: 18,
             fontWeight: FontWeight.w800,
           ),
         ),
+        const SizedBox(height: 2),
         Text(
           label,
-          style: TextStyle(
-            color: color.withValues(alpha: 0.8),
-            fontSize: 11,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: color.withOpacity(0.9),
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -153,7 +152,10 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        color: const Color(0xFF503123),
+      ),
     );
   }
 }
@@ -310,9 +312,8 @@ class _NoticesList extends StatelessWidget {
                           ),
                           child: Text(
                             noticeTypeLabel(notice.type),
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: noticeTypeColor(notice.type),
-                              fontSize: 10,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -320,20 +321,27 @@ class _NoticesList extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           _formatDate(notice.publishedAt),
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 11),
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: const Color(0xFFa48e7b),
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 6),
                     Text(
                       notice.title,
-                      style: const TextStyle(fontWeight: FontWeight.w700),
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF503123),
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       notice.content,
-                      style: const TextStyle(color: Colors.grey, fontSize: 13),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: const Color(0xFFa48e7b),
+                        height: 1.4,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
