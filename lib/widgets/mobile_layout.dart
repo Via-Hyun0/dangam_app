@@ -32,9 +32,6 @@ class _MobileLayoutState extends State<MobileLayout> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 1.0,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

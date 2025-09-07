@@ -9,9 +9,14 @@ class JobsBody extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, index) {
         return ListTile(
-          leading: const Icon(Icons.agriculture_outlined, color: Colors.green),
-          title: Text('Farm Job #${index + 1}'),
-          subtitle: const Text('Location: Nearby • Pay: Negotiable'),
+          leading: CircleAvatar(
+            backgroundColor:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            child: Icon(Icons.work_outline,
+                color: Theme.of(context).colorScheme.primary),
+          ),
+          title: Text('Opportunity #${index + 1}'),
+          subtitle: const Text('Nearby • Details on tap'),
           trailing: const Icon(Icons.chevron_right),
           onTap: () {},
         );
