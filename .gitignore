@@ -17,6 +17,16 @@ build/
 .flutter-plugins-dependencies
 coverage/
 
+# Flutter platform build folders
+android/.gradle/
+android/build/
+android/app/build/
+ios/build/
+macos/Build/
+macos/build/
+linux/build/
+windows/build/
+
 # iOS / Xcode
 ios/Pods/
 ios/.symlinks/
