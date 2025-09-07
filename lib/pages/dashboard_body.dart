@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_notices.dart';
 import 'package:dangam_app/data/mock_jobs.dart';
 import 'package:dangam_app/models/job.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
 class DashboardBody extends StatelessWidget {
   const DashboardBody({super.key});
@@ -9,31 +12,31 @@ class DashboardBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(AppSpacing.pagePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Welcome header with stats
           _WelcomeHeader(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
 
           const _SectionTitle('공지사항'),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.sm),
           const _NoticesList(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
 
           const _SectionTitle('진행중인 계약'),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.sm),
           _OngoingContractsList(),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
 
           const _SectionTitle('근처 작업 기회'),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.sm),
           const _HorizontalChipsCarousel(kind: _CarouselKind.opportunity),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xl),
 
           const _SectionTitle('근처 제공자'),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.sm),
           const _HorizontalChipsCarousel(kind: _CarouselKind.provider),
         ],
       ),
@@ -41,61 +44,65 @@ class DashboardBody extends StatelessWidget {
   }
 }
 
+/// 대시보드의 환영 헤더 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 사용자에게 환영 메시지와 주요 통계를 보여줍니다
+/// - 그라데이션 배경과 카드 스타일을 사용합니다
+/// - 통계 아이템들은 동일한 간격으로 배치됩니다
 class _WelcomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [primary, primary.withValues(alpha: 0.8)],
+        gradient: const LinearGradient(
+          colors: [AppColors.primary, AppColors.primaryOverlay],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '안녕하세요!',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: Colors.white,
+            style: AppTypography.headlineMedium.copyWith(
+              color: AppColors.white,
               fontWeight: FontWeight.w800,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             '다음 농작업 기회를 찾아보세요!',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Color.fromARGB(230, 255, 255, 255),
+            style: AppTypography.bodyLarge.copyWith(
+              color: AppColors.whiteLight,
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
               _StatItem(
                 icon: Icons.assignment_turned_in,
                 label: '진행중인 계약',
                 value: '2',
-                color: Colors.white,
+                color: AppColors.white,
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: AppSpacing.lg),
               _StatItem(
                 icon: Icons.work_outline,
                 label: '가능한 작업',
                 value: '${mockJobs.length}',
-                color: Colors.white,
+                color: AppColors.white,
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: AppSpacing.lg),
               _StatItem(
                 icon: Icons.location_on,
                 label: '근처',
                 value: '5',
-                color: Colors.white,
+                color: AppColors.white,
               ),
             ],
           ),
@@ -122,20 +129,24 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 6),
+        Icon(
+          icon, 
+          color: color, 
+          size: AppSpacing.iconLarge,
+        ),
+        const SizedBox(height: AppSpacing.xs),
         Text(
           value,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          style: AppTypography.titleLarge.copyWith(
             color: color,
             fontWeight: FontWeight.w800,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: AppSpacing.xs),
         Text(
           label,
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: Color.fromRGBO(color.red, color.green, color.blue, 0.9),
+          style: AppTypography.labelMedium.copyWith(
+            color: color.withOpacity(0.9),
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -144,6 +155,12 @@ class _StatItem extends StatelessWidget {
   }
 }
 
+/// 섹션 제목 위젯
+/// 
+/// 디자이너 가이드:
+/// - 이 위젯은 각 섹션의 제목을 표시합니다
+/// - 일관된 스타일을 위해 AppTypography를 사용합니다
+/// - 색상은 AppColors.darkAccent를 사용합니다
 class _SectionTitle extends StatelessWidget {
   final String text;
   const _SectionTitle(this.text);
@@ -152,9 +169,9 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+      style: AppTypography.titleLarge.copyWith(
         fontWeight: FontWeight.w700,
-        color: const Color(0xFF503123),
+        color: AppColors.darkAccent,
       ),
     );
   }
