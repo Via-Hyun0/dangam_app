@@ -1,4 +1,4 @@
-package com.example.dangam_app
+package com.viasofts.dangam_app
 
 import io.flutter.embedding.android.FlutterActivity
 
