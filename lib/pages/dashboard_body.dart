@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_notices.dart';
 import 'package:dangam_app/data/mock_jobs.dart';
 import 'package:dangam_app/models/job.dart';
+import 'package:dangam_app/pages/job_request_page.dart';
 import 'package:dangam_app/theme/app_colors.dart';
 import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
+import 'package:dangam_app/theme/app_icons.dart';
 
 class DashboardBody extends StatelessWidget {
   const DashboardBody({super.key});
@@ -18,6 +20,12 @@ class DashboardBody extends StatelessWidget {
         children: [
           // Welcome header with stats
           _WelcomeHeader(),
+          const SizedBox(height: AppSpacing.xl),
+
+          // Quick actions
+          const _SectionTitle('빠른 액션'),
+          const SizedBox(height: AppSpacing.sm),
+          const _QuickActionsSection(),
           const SizedBox(height: AppSpacing.xl),
 
           const _SectionTitle('공지사항'),
@@ -557,6 +565,208 @@ String _formatJobDate(DateTime date) {
   if (difference == 1) return 'Tomorrow';
   if (difference < 7) return 'In $difference days';
   return '${date.month}/${date.day}';
+}
+
+/// 빠른 액션 섹션 위젯
+///
+/// 디자이너 가이드:
+/// - 이 위젯은 사용자가 자주 사용하는 기능들에 빠르게 접근할 수 있게 해줍니다
+/// - 새로운 작업 요청, 작업 검색, 프로필 편집 등의 기능을 포함합니다
+class _QuickActionsSection extends StatelessWidget {
+  const _QuickActionsSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+        boxShadow: const [
+          BoxShadow(
+            color: AppColors.shadowLight,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: _QuickActionButton(
+                  icon: AppIcons.add,
+                  title: '새 작업 요청',
+                  subtitle: '작업을 등록하세요',
+                  color: AppColors.primary,
+                  onTap: () => _navigateToJobRequest(context),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: _QuickActionButton(
+                  icon: AppIcons.search,
+                  title: '작업 검색',
+                  subtitle: '작업을 찾아보세요',
+                  color: AppColors.info,
+                  onTap: () => _navigateToJobs(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: _QuickActionButton(
+                  icon: AppIcons.locationOutline,
+                  title: '위치 설정',
+                  subtitle: '근무 지역을 설정하세요',
+                  color: AppColors.success,
+                  onTap: () => _navigateToLocationSettings(context),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: _QuickActionButton(
+                  icon: AppIcons.userOutline,
+                  title: '프로필 편집',
+                  subtitle: '프로필을 업데이트하세요',
+                  color: AppColors.warning,
+                  onTap: () => _navigateToProfile(context),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToJobRequest(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const JobRequestPage(),
+      ),
+    );
+  }
+
+  void _navigateToJobs(BuildContext context) {
+    // TODO: 작업 탭으로 이동하는 로직
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '작업 탭으로 이동합니다',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  void _navigateToLocationSettings(BuildContext context) {
+    // TODO: 위치 설정 페이지로 이동하는 로직
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '위치 설정 페이지로 이동합니다',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        backgroundColor: AppColors.success,
+      ),
+    );
+  }
+
+  void _navigateToProfile(BuildContext context) {
+    // TODO: 프로필 편집 페이지로 이동하는 로직
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '프로필 편집 페이지로 이동합니다',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        backgroundColor: AppColors.warning,
+      ),
+    );
+  }
+}
+
+/// 빠른 액션 버튼 위젯
+///
+/// 디자이너 가이드:
+/// - 이 위젯은 개별 빠른 액션을 표시합니다
+/// - 아이콘, 제목, 부제목을 포함합니다
+class _QuickActionButton extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _QuickActionButton({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+            border: Border.all(
+              color: color.withValues(alpha: 0.3),
+              width: 1,
+            ),
+          ),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: color,
+                size: AppSpacing.iconLarge,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                title,
+                style: AppTypography.labelMedium.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.darkAccent,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                subtitle,
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.grey,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // Removed _TrustPillarsRow (not used currently)

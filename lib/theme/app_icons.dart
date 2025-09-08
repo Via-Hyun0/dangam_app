@@ -264,4 +264,20 @@ class AppIcons {
 
   /// 로그아웃 아이콘
   static const IconData logout = Icons.logout;
+
+  // ============================================================================
+  // 추가 아이콘들
+  // ============================================================================
+
+  /// 추가 아이콘
+  static const IconData add = Icons.add;
+
+  /// 설명 아이콘
+  static const IconData description = Icons.description;
+
+  /// 전구 (아웃라인) 아이콘
+  static const IconData lightbulbOutline = Icons.lightbulb_outline;
+
+  /// 달력 오늘 아이콘
+  static const IconData calendarToday = Icons.calendar_today;
 }

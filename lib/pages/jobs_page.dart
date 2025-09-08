@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_jobs.dart';
 import 'package:dangam_app/models/job.dart';
 import 'package:dangam_app/pages/job_detail_page.dart';
+import 'package:dangam_app/pages/job_request_page.dart';
 import 'package:dangam_app/theme/app_colors.dart';
 import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
+import 'package:dangam_app/theme/app_icons.dart';
 
 /// 작업 목록 페이지
 ///
@@ -67,16 +69,43 @@ class _JobsBodyState extends State<JobsBody> {
         ),
         // Jobs List
         Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            itemBuilder: (context, index) {
-              final Job job = _filteredJobs[index];
-              return _JobCard(job: job);
-            },
-            itemCount: _filteredJobs.length,
+          child: Stack(
+            children: [
+              ListView.builder(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                itemBuilder: (context, index) {
+                  final Job job = _filteredJobs[index];
+                  return _JobCard(job: job);
+                },
+                itemCount: _filteredJobs.length,
+              ),
+              // Floating Action Button
+              Positioned(
+                bottom: AppSpacing.lg,
+                right: AppSpacing.lg,
+                child: FloatingActionButton(
+                  onPressed: () => _navigateToJobRequest(context),
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.white,
+                  elevation: 8,
+                  child: const Icon(
+                    AppIcons.add,
+                    size: AppSpacing.iconLarge,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+
+  void _navigateToJobRequest(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const JobRequestPage(),
+      ),
     );
   }
 }
