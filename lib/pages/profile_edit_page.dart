@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
 class ProfileEditPage extends StatefulWidget {
   final String userName;
@@ -62,7 +64,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('프로필 편집'),
+        title: Text(
+          '프로필 편집',
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkAccent,
+          ),
+        ),
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.darkAccent,
         elevation: 0,
@@ -71,10 +79,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             onPressed: _saveProfile,
             child: Text(
               '저장',
-              style: TextStyle(
-                color: primary,
+              style: AppTypography.labelLarge.copyWith(
+                color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
               ),
             ),
           ),
@@ -84,13 +91,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             children: [
               // 프로필 이미지
               _buildProfileImageSection(primary),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
 
               // 기본 정보
               _buildSection(
@@ -108,7 +115,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.md),
                   _buildTextField(
                     controller: _titleController,
                     label: '직업/경력',
@@ -121,7 +128,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.md),
                   _buildDropdownField(
                     label: '성별',
                     value: _selectedGender,
@@ -133,7 +140,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     },
                     icon: Icons.person_outline,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.md),
                   _buildDropdownField(
                     label: '경력',
                     value: _selectedExperience,
@@ -148,7 +155,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 ],
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
 
               // 연락처 정보
               _buildSection(
@@ -167,7 +174,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.md),
                   _buildTextField(
                     controller: _emailController,
                     label: '이메일',
@@ -187,7 +194,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 ],
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
 
               // 위치 정보
               _buildSection(
@@ -208,7 +215,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 ],
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
 
               // 자기소개
               _buildSection(
@@ -330,10 +337,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     required List<Widget> children,
   }) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
         boxShadow: const [
           BoxShadow(
             color: AppColors.shadowLight,
@@ -347,12 +354,12 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.darkAccent,
-                ),
+            style: AppTypography.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AppColors.darkAccent,
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           ...children,
         ],
       ),
@@ -368,31 +375,50 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     int maxLines = 1,
     String? Function(String?)? validator,
   }) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       maxLines: maxLines,
       validator: validator,
+      style: AppTypography.bodyMedium,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        prefixIcon: Icon(icon, color: primary),
+        labelStyle: AppTypography.labelMedium.copyWith(
+          color: AppColors.grey,
+          fontWeight: FontWeight.w500,
+        ),
+        hintStyle: AppTypography.bodyMedium.copyWith(
+          color: AppColors.grey,
+          fontWeight: FontWeight.w400,
+        ),
+        prefixIcon: Icon(
+          icon,
+          color: AppColors.primary,
+          size: AppSpacing.iconMedium,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
           borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
           borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: primary, width: 2),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+          borderSide: const BorderSide(color: AppColors.error),
         ),
         filled: true,
         fillColor: AppColors.background,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.md,
+        ),
       ),
     );
   }
@@ -404,33 +430,54 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     required ValueChanged<String?> onChanged,
     required IconData icon,
   }) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-
     return DropdownButtonFormField<String>(
       initialValue: value,
       onChanged: onChanged,
+      style: AppTypography.bodyMedium,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: primary),
+        labelStyle: AppTypography.labelMedium.copyWith(
+          color: AppColors.grey,
+          fontWeight: FontWeight.w500,
+        ),
+        prefixIcon: Icon(
+          icon,
+          color: AppColors.primary,
+          size: AppSpacing.iconMedium,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
           borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
           borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: primary, width: 2),
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+          borderSide: const BorderSide(color: AppColors.error),
         ),
         filled: true,
         fillColor: AppColors.background,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.md,
+        ),
       ),
       items: items.map((String item) {
         return DropdownMenuItem<String>(
           value: item,
-          child: Text(item),
+          child: Text(
+            item,
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppColors.darkAccent,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         );
       }).toList(),
     );
@@ -440,8 +487,21 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('프로필 사진'),
-        content: const Text('프로필 사진을 선택하세요'),
+        backgroundColor: AppColors.white,
+        title: Text(
+          '프로필 사진',
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkAccent,
+          ),
+        ),
+        content: Text(
+          '프로필 사진을 선택하세요',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.grey,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -451,9 +511,15 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 _profileImage = 'https://via.placeholder.com/150';
               });
             },
-            child: const Text('갤러리에서 선택'),
+            child: Text(
+              '갤러리에서 선택',
+              style: AppTypography.labelLarge.copyWith(
+                color: AppColors.grey,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
               // 실제 앱에서는 카메라로 촬영
@@ -461,7 +527,16 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 _profileImage = 'https://via.placeholder.com/150';
               });
             },
-            child: const Text('카메라로 촬영'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+            ),
+            child: Text(
+              '카메라로 촬영',
+              style: AppTypography.labelLarge.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),
@@ -478,9 +553,19 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('프로필이 저장되었습니다'),
+        SnackBar(
+          content: Text(
+            '프로필이 저장되었습니다',
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           backgroundColor: AppColors.success,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+          ),
         ),
       );
 

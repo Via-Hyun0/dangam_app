@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
 
 class LocationSettingsPage extends StatefulWidget {
   final String currentLocation;
@@ -46,7 +47,13 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('위치 설정'),
+        title: Text(
+          '위치 설정',
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkAccent,
+          ),
+        ),
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.darkAccent,
         elevation: 0,
@@ -55,10 +62,9 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
             onPressed: _saveLocation,
             child: Text(
               '저장',
-              style: TextStyle(
-                color: primary,
+              style: AppTypography.labelLarge.copyWith(
+                color: AppColors.primary,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
               ),
             ),
           ),

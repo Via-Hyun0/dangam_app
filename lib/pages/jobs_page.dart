@@ -121,13 +121,25 @@ class _FilterSortBar extends StatelessWidget {
                   value: filterType,
                   isExpanded: true,
                   items: [
-                    const DropdownMenuItem(
+                    DropdownMenuItem(
                       value: 'all',
-                      child: Text('모든 유형'),
+                      child: Text(
+                        '모든 유형',
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppColors.darkAccent,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                     ...JobType.values.map((type) => DropdownMenuItem(
                           value: type.toString().split('.').last,
-                          child: Text(jobTypeLabel(type)),
+                          child: Text(
+                            jobTypeLabel(type),
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: AppColors.darkAccent,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         )),
                   ],
                   onChanged: (value) => onFilterChanged(value!),
@@ -144,9 +156,36 @@ class _FilterSortBar extends StatelessWidget {
                   value: sortBy,
                   isExpanded: true,
                   items: const [
-                    DropdownMenuItem(value: 'distance', child: Text('거리')),
-                    DropdownMenuItem(value: 'date', child: Text('날짜')),
-                    DropdownMenuItem(value: 'type', child: Text('유형')),
+                    DropdownMenuItem(
+                      value: 'distance',
+                      child: Text(
+                        '거리',
+                        style: TextStyle(
+                          color: AppColors.darkAccent,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: 'date',
+                      child: Text(
+                        '날짜',
+                        style: TextStyle(
+                          color: AppColors.darkAccent,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: 'type',
+                      child: Text(
+                        '유형',
+                        style: TextStyle(
+                          color: AppColors.darkAccent,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   ],
                   onChanged: (value) => onSortChanged(value!),
                 ),
