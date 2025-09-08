@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:dangam_app/data/mock_messages.dart';
 import 'package:dangam_app/models/chat_message.dart';
 import 'package:dangam_app/pages/contract_edit_modal.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
+import 'package:dangam_app/theme/app_icons.dart';
 
 class ChatDetailPage extends StatefulWidget {
   final Chat chat;
-  
+
   const ChatDetailPage({
     super.key,
     required this.chat,
@@ -41,7 +45,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         isFromUser: false,
         type: MessageType.text,
       ),
-      
+
       // 사용자 응답
       ChatMessage(
         id: 'm2',
@@ -50,7 +54,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         isFromUser: true,
         type: MessageType.text,
       ),
-      
+
       // 계약 제안
       ChatMessage(
         id: 'm3',
@@ -60,7 +64,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         type: MessageType.contract,
         contractData: ContractData(
           jobTitle: widget.chat.jobTitle,
-          jobDescription: '${widget.chat.jobTitle} 작업을 진행합니다. 경험이 있는 분을 찾고 있습니다.',
+          jobDescription:
+              '${widget.chat.jobTitle} 작업을 진행합니다. 경험이 있는 분을 찾고 있습니다.',
           hourlyRate: 15000.0,
           estimatedHours: 8,
           startDate: DateTime.now().add(const Duration(days: 2)),
@@ -70,7 +75,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           notes: '날씨가 좋을 때 진행 예정입니다.',
         ),
       ),
-      
+
       // 사용자 질문
       ChatMessage(
         id: 'm4',
@@ -79,7 +84,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         isFromUser: true,
         type: MessageType.text,
       ),
-      
+
       // 답변
       ChatMessage(
         id: 'm5',
@@ -88,7 +93,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         isFromUser: false,
         type: MessageType.text,
       ),
-      
+
       // 최근 메시지
       ChatMessage(
         id: 'm6',
@@ -102,7 +107,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
   void _sendMessage() {
     if (_messageController.text.trim().isEmpty) return;
-    
+
     final message = ChatMessage(
       id: 'm${DateTime.now().millisecondsSinceEpoch}',
       content: _messageController.text.trim(),
@@ -110,11 +115,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       isFromUser: true,
       type: MessageType.text,
     );
-    
+
     setState(() {
       _messages.add(message);
     });
-    
+
     _messageController.clear();
     _scrollToBottom();
   }
@@ -145,11 +150,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         type: MessageType.contract,
         contractData: _messages.last.contractData?.copyWith(status: action),
       );
-      
+
       setState(() {
         _messages.add(message);
       });
-      
+
       _scrollToBottom();
     }
   }
@@ -159,7 +164,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       (msg) => msg.type == MessageType.contract,
       orElse: () => _messages.first,
     );
-    
+
     if (lastContractMessage.contractData != null) {
       showDialog(
         context: context,
@@ -174,11 +179,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               type: MessageType.contract,
               contractData: updatedContract,
             );
-            
+
             setState(() {
               _messages.add(message);
             });
-            
+
             _scrollToBottom();
           },
           onCancel: () {
@@ -204,32 +209,30 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               widget.chat.title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: AppTypography.titleMedium.copyWith(
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: AppColors.white,
               ),
             ),
             Text(
               widget.chat.employerName,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Color.fromARGB(204, 255, 255, 255),
+              style: AppTypography.bodySmall.copyWith(
+                color: AppColors.white.withValues(alpha: 0.8),
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -246,28 +249,28 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                        final message = _messages[index];
-                        return _MessageBubble(
-                          message: message,
-                          onContractAction: _handleContractAction,
-                        );
-                      },
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return _MessageBubble(
+                  message: message,
+                  onContractAction: _handleContractAction,
+                );
+              },
             ),
           ),
-          
+
           // 메시지 입력
           Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            decoration: const BoxDecoration(
+              color: AppColors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(13, 0, 0, 0),
+                  color: AppColors.shadowLight,
                   blurRadius: 10,
-                  offset: const Offset(0, -2),
+                  offset: Offset(0, -2),
                 ),
               ],
             ),
@@ -278,36 +281,39 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     controller: _messageController,
                     decoration: InputDecoration(
                       hintText: '메시지를 입력하세요...',
-                      hintStyle: TextStyle(
-                        color: Colors.grey.shade500,
+                      hintStyle: AppTypography.bodyMedium.copyWith(
+                        color: AppColors.grey,
                         fontWeight: FontWeight.w500,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius:
+                            BorderRadius.circular(AppSpacing.radiusCircular),
                         borderSide: BorderSide(
-                          color: Color.fromARGB(51, 199, 93, 49),
+                          color: AppColors.primary.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius:
+                            BorderRadius.circular(AppSpacing.radiusCircular),
                         borderSide: BorderSide(
-                          color: Color.fromARGB(51, 199, 93, 49),
+                          color: AppColors.primary.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                        borderSide: BorderSide(
-                          color: primary,
+                        borderRadius:
+                            BorderRadius.circular(AppSpacing.radiusCircular),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
                           width: 2,
                         ),
                       ),
                       filled: true,
-                      fillColor: Colors.grey.shade50,
+                      fillColor: AppColors.background,
                       contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
+                        horizontal: AppSpacing.lg,
+                        vertical: AppSpacing.md,
                       ),
                     ),
                     maxLines: null,
@@ -315,14 +321,15 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Container(
                   decoration: BoxDecoration(
-                    color: primary,
-                    borderRadius: BorderRadius.circular(24),
+                    color: AppColors.primary,
+                    borderRadius:
+                        BorderRadius.circular(AppSpacing.radiusCircular),
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.send, color: Colors.white),
+                    icon: const Icon(Icons.send, color: AppColors.white),
                     onPressed: _sendMessage,
                   ),
                 ),
@@ -338,7 +345,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 class _MessageBubble extends StatelessWidget {
   final ChatMessage message;
   final Function(ContractStatus) onContractAction;
-  
+
   const _MessageBubble({
     required this.message,
     required this.onContractAction,
@@ -346,13 +353,11 @@ class _MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
-    
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: Row(
-        mainAxisAlignment: message.isFromUser 
-            ? MainAxisAlignment.end 
+        mainAxisAlignment: message.isFromUser
+            ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -362,23 +367,23 @@ class _MessageBubble extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: Color.fromARGB(26, 199, 93, 49),
+                color: AppColors.primaryLighter,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(
-                Icons.person_outline,
-                color: primary,
+              child: const Icon(
+                AppIcons.userOutline,
+                color: AppColors.primary,
                 size: 18,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.xs),
           ],
-          
+
           // 메시지 내용
           Flexible(
             child: Column(
-              crossAxisAlignment: message.isFromUser 
-                  ? CrossAxisAlignment.end 
+              crossAxisAlignment: message.isFromUser
+                  ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start,
               children: [
                 if (message.type == MessageType.contract)
@@ -389,67 +394,69 @@ class _MessageBubble extends StatelessWidget {
                 else
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
                     ),
                     decoration: BoxDecoration(
-                      color: message.isFromUser 
-                          ? primary 
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(20).copyWith(
-                        bottomLeft: message.isFromUser 
-                            ? const Radius.circular(20) 
-                            : const Radius.circular(4),
-                        bottomRight: message.isFromUser 
-                            ? const Radius.circular(4) 
-                            : const Radius.circular(20),
+                      color: message.isFromUser
+                          ? AppColors.primary
+                          : AppColors.white,
+                      borderRadius:
+                          BorderRadius.circular(AppSpacing.radiusLarge)
+                              .copyWith(
+                        bottomLeft: message.isFromUser
+                            ? const Radius.circular(AppSpacing.radiusLarge)
+                            : const Radius.circular(AppSpacing.radiusSmall),
+                        bottomRight: message.isFromUser
+                            ? const Radius.circular(AppSpacing.radiusSmall)
+                            : const Radius.circular(AppSpacing.radiusLarge),
                       ),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
-                          color: Color.fromARGB(13, 0, 0, 0),
+                          color: AppColors.shadowLight,
                           blurRadius: 8,
-                          offset: const Offset(0, 2),
+                          offset: Offset(0, 2),
                         ),
                       ],
                     ),
                     child: Text(
                       message.content,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: message.isFromUser 
-                            ? Colors.white 
-                            : const Color(0xFF503123),
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: message.isFromUser
+                            ? AppColors.white
+                            : AppColors.darkAccent,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
-                
+
                 const SizedBox(height: 4),
-                
+
                 // 시간
                 Text(
                   _formatTime(message.timestamp),
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Colors.grey.shade500,
+                  style: AppTypography.labelSmall.copyWith(
+                    color: AppColors.grey,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
           ),
-          
+
           if (message.isFromUser) ...[
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.xs),
             // 사용자 아바타
             Container(
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: primary,
+                color: AppColors.primary,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: const Icon(
-                Icons.person,
-                color: Colors.white,
+                AppIcons.user,
+                color: AppColors.white,
                 size: 18,
               ),
             ),
@@ -478,7 +485,7 @@ class _MessageBubble extends StatelessWidget {
 class _ContractCard extends StatelessWidget {
   final ContractData contractData;
   final Function(ContractStatus) onAction;
-  
+
   const _ContractCard({
     required this.contractData,
     required this.onAction,
@@ -486,22 +493,21 @@ class _ContractCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color primary = Theme.of(context).colorScheme.primary;
     final Color statusColor = contractStatusColor(contractData.status);
-    
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
         border: Border.all(
-          color: Color.fromARGB(77, 76, 175, 80),
+          color: AppColors.success.withValues(alpha: 0.3),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(26, 76, 175, 80),
+            color: AppColors.success.withValues(alpha: 0.2),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -516,80 +522,81 @@ class _ContractCard extends StatelessWidget {
               Icon(
                 contractStatusIcon(contractData.status),
                 color: statusColor,
-                size: 24,
+                size: AppSpacing.iconLarge,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.md),
               Text(
                 contractStatusLabel(contractData.status),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: AppTypography.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: statusColor,
                 ),
               ),
             ],
           ),
-          
-          const SizedBox(height: 16),
-          
+
+          const SizedBox(height: AppSpacing.lg),
+
           // 작업 정보
           _ContractInfoItem(
-            icon: Icons.work_outline,
+            icon: AppIcons.workOutline,
             label: '작업명',
             value: contractData.jobTitle,
           ),
-          
+
           _ContractInfoItem(
             icon: Icons.description_outlined,
             label: '작업 설명',
             value: contractData.jobDescription,
           ),
-          
+
           _ContractInfoItem(
             icon: Icons.attach_money_outlined,
             label: '시급',
             value: '${contractData.hourlyRate.toStringAsFixed(0)}원',
           ),
-          
+
           _ContractInfoItem(
-            icon: Icons.schedule_outlined,
+            icon: AppIcons.schedule,
             label: '예상 시간',
             value: '${contractData.estimatedHours}시간',
           ),
-          
+
           _ContractInfoItem(
             icon: Icons.calendar_today_outlined,
             label: '작업 기간',
-            value: '${_formatDate(contractData.startDate)} ~ ${_formatDate(contractData.endDate)}',
+            value:
+                '${_formatDate(contractData.startDate)} ~ ${_formatDate(contractData.endDate)}',
           ),
-          
+
           // 요구사항
           if (contractData.requirements.isNotEmpty) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               '요구사항',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              style: AppTypography.titleSmall.copyWith(
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF503123),
+                color: AppColors.darkAccent,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.xs),
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
               children: contractData.requirements
                   .map((req) => Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.xs,
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(26, 199, 93, 49),
-                          borderRadius: BorderRadius.circular(12),
+                          color: AppColors.primaryLighter,
+                          borderRadius: BorderRadius.circular(AppSpacing.md),
                         ),
                         child: Text(
                           req,
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: primary,
+                          style: AppTypography.labelSmall.copyWith(
+                            color: AppColors.primary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -597,68 +604,68 @@ class _ContractCard extends StatelessWidget {
                   .toList(),
             ),
           ],
-          
+
           // 메모
           if (contractData.notes != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               '메모',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              style: AppTypography.titleSmall.copyWith(
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF503123),
+                color: AppColors.darkAccent,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               contractData.notes!,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: const Color(0xFFa48e7b),
+              style: AppTypography.bodySmall.copyWith(
+                color: AppColors.secondary,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
-          
+
           // 액션 버튼
           if (contractData.status == ContractStatus.proposed) ...[
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => onAction(ContractStatus.accepted),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
+                      backgroundColor: AppColors.success,
+                      foregroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppSpacing.md),
                       ),
                     ),
                     child: const Text('수락'),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => onAction(ContractStatus.rejected),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.red,
-                      side: const BorderSide(color: Colors.red),
+                      foregroundColor: AppColors.error,
+                      side: const BorderSide(color: AppColors.error),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppSpacing.md),
                       ),
                     ),
                     child: const Text('거절'),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => onAction(ContractStatus.modified),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: primary,
-                      side: BorderSide(color: primary),
+                      foregroundColor: AppColors.primary,
+                      side: const BorderSide(color: AppColors.primary),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(AppSpacing.md),
                       ),
                     ),
                     child: const Text('수정'),
@@ -681,7 +688,7 @@ class _ContractInfoItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
-  
+
   const _ContractInfoItem({
     required this.icon,
     required this.label,
@@ -691,27 +698,27 @@ class _ContractInfoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Row(
         children: [
           Icon(
             icon,
-            color: const Color(0xFFa48e7b),
-            size: 16,
+            color: AppColors.secondary,
+            size: AppSpacing.iconSmall,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.xs),
           Text(
             '$label: ',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: const Color(0xFFa48e7b),
+            style: AppTypography.bodySmall.copyWith(
+              color: AppColors.secondary,
               fontWeight: FontWeight.w500,
             ),
           ),
           Expanded(
             child: Text(
               value,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: const Color(0xFF503123),
+              style: AppTypography.bodySmall.copyWith(
+                color: AppColors.darkAccent,
                 fontWeight: FontWeight.w600,
               ),
             ),

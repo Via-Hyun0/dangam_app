@@ -7,7 +7,7 @@ import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
 
 /// 작업 목록 페이지
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 페이지는 모든 작업 목록을 표시합니다
 /// - 필터링과 정렬 기능을 제공합니다
@@ -82,7 +82,7 @@ class _JobsBodyState extends State<JobsBody> {
 }
 
 /// 필터 및 정렬 바 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 작업 목록의 필터링과 정렬을 담당합니다
 /// - 드롭다운 메뉴를 사용하여 사용자 선택을 받습니다
@@ -104,7 +104,7 @@ class _FilterSortBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg, 
+        horizontal: AppSpacing.lg,
         vertical: AppSpacing.sm,
       ),
       decoration: const BoxDecoration(
@@ -122,7 +122,7 @@ class _FilterSortBar extends StatelessWidget {
                   isExpanded: true,
                   items: [
                     const DropdownMenuItem(
-                      value: 'all', 
+                      value: 'all',
                       child: Text('모든 유형'),
                     ),
                     ...JobType.values.map((type) => DropdownMenuItem(
@@ -160,7 +160,7 @@ class _FilterSortBar extends StatelessWidget {
 }
 
 /// 드롭다운 컨테이너 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 드롭다운 메뉴의 공통 스타일을 제공합니다
 /// - 일관된 패딩, 색상, 테두리를 사용합니다
@@ -184,7 +184,7 @@ class _DropdownContainer extends StatelessWidget {
 }
 
 /// 작업 카드 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 개별 작업을 카드 형태로 표시합니다
 /// - 작업의 모든 중요한 정보를 포함합니다
@@ -216,11 +216,11 @@ class _JobCard extends StatelessWidget {
                 color: AppColors.primaryLighter,
                 width: 1,
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: AppColors.shadowLight,
                   blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
             ),
@@ -231,17 +231,17 @@ class _JobCard extends StatelessWidget {
                 children: [
                   // Header with title and status
                   _JobHeader(job: job),
-                  
+
                   const SizedBox(height: AppSpacing.lg),
-                  
+
                   // Key information
                   _JobInfoRow(job: job),
-                  
+
                   const SizedBox(height: AppSpacing.lg),
-                  
+
                   // Location
                   _JobLocation(job: job),
-                  
+
                   // Equipment tags (only if not empty)
                   if (job.requiredEquipment.isNotEmpty) ...[
                     const SizedBox(height: AppSpacing.lg),
@@ -258,7 +258,7 @@ class _JobCard extends StatelessWidget {
 }
 
 /// 작업 헤더 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 작업의 제목, 유형, 상태를 표시합니다
 /// - 거리 정보도 함께 표시합니다
@@ -308,7 +308,7 @@ class _JobHeader extends StatelessWidget {
 }
 
 /// 상태 배지 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 작업의 상태를 배지 형태로 표시합니다
 /// - 상태에 따라 다른 색상을 사용합니다
@@ -344,7 +344,7 @@ class _StatusBadge extends StatelessWidget {
 }
 
 /// 거리 배지 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 작업까지의 거리를 표시합니다
 /// - 중요한 정보이므로 눈에 띄는 스타일을 사용합니다
@@ -367,7 +367,7 @@ class _DistanceBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.location_on_outlined,
             color: AppColors.primary,
             size: AppSpacing.iconSmall,
@@ -387,7 +387,7 @@ class _DistanceBadge extends StatelessWidget {
 }
 
 /// 작업 정보 행 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 작업의 주요 정보를 가로로 배치합니다
 /// - 작물, 면적, 날짜 정보를 포함합니다
@@ -420,7 +420,7 @@ class _JobInfoRow extends StatelessWidget {
           child: _InfoItem(
             icon: Icons.calendar_today_outlined,
             label: '날짜',
-            value: job.scheduledDate != null 
+            value: job.scheduledDate != null
                 ? _formatDate(job.scheduledDate!)
                 : '미정',
           ),
@@ -431,7 +431,7 @@ class _JobInfoRow extends StatelessWidget {
 }
 
 /// 작업 위치 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 작업의 위치 정보를 표시합니다
 /// - 아이콘과 텍스트를 함께 표시합니다
@@ -444,7 +444,7 @@ class _JobLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.place_outlined,
           color: AppColors.secondary,
           size: AppSpacing.iconMedium,
@@ -465,7 +465,7 @@ class _JobLocation extends StatelessWidget {
 }
 
 /// 장비 태그 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 필요한 장비를 태그 형태로 표시합니다
 /// - 여러 태그를 가로로 배치합니다
@@ -503,7 +503,7 @@ class _EquipmentTags extends StatelessWidget {
 }
 
 /// 정보 아이템 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 아이콘, 라벨, 값을 세로로 배치합니다
 /// - 일관된 스타일을 사용합니다

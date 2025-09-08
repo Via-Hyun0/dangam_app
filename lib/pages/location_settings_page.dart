@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
 
 class LocationSettingsPage extends StatefulWidget {
   final String currentLocation;
@@ -42,12 +43,12 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('위치 설정'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
         actions: [
           TextButton(
@@ -63,13 +64,13 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xFFfdfdfd),
+      backgroundColor: AppColors.background,
       body: Column(
         children: [
           // 검색 바
           Container(
             padding: const EdgeInsets.all(20),
-            color: Colors.white,
+            color: AppColors.white,
             child: TextField(
               controller: _searchController,
               onChanged: _onSearchChanged,
@@ -82,26 +83,26 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderSide: const BorderSide(color: AppColors.divider),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderSide: const BorderSide(color: AppColors.divider),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(color: primary, width: 2),
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade50,
+                fillColor: AppColors.background,
               ),
             ),
           ),
-          
+
           // 현재 위치
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            color: Colors.white,
+            color: AppColors.white,
             child: Row(
               children: [
                 Icon(
@@ -113,16 +114,16 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
                 Text(
                   '현재 위치: $_selectedLocation',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF503123),
-                  ),
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.darkAccent,
+                      ),
                 ),
               ],
             ),
           ),
-          
+
           const Divider(height: 1),
-          
+
           // 검색 결과 또는 저장된 위치
           Expanded(
             child: _searchController.text.isNotEmpty
@@ -167,14 +168,14 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
               Text(
                 '저장된 위치',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFF503123),
-                ),
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.darkAccent,
+                    ),
               ),
             ],
           ),
         ),
-        
+
         // 저장된 위치 목록
         Expanded(
           child: ListView.builder(
@@ -191,7 +192,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
             },
           ),
         ),
-        
+
         // 인기 지역
         Container(
           padding: const EdgeInsets.all(20),
@@ -209,9 +210,9 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
                   Text(
                     '인기 지역',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: const Color(0xFF503123),
-                    ),
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.darkAccent,
+                        ),
                   ),
                 ],
               ),
@@ -242,21 +243,21 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
     VoidCallback? onDelete,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: isSelected ? Color.fromARGB(26, 199, 93, 49) : Colors.white,
+        color: isSelected ? AppColors.primaryLighter : AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? primary : Colors.grey.shade200,
+          color: isSelected ? primary : AppColors.divider,
           width: isSelected ? 2 : 1,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -270,8 +271,10 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
             child: Row(
               children: [
                 Icon(
-                  isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-                  color: isSelected ? primary : Colors.grey.shade400,
+                  isSelected
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  color: isSelected ? primary : AppColors.grey,
                   size: 20,
                 ),
                 const SizedBox(width: 12),
@@ -279,9 +282,9 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
                   child: Text(
                     location,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF503123),
-                    ),
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.darkAccent,
+                        ),
                   ),
                 ),
                 if (onDelete != null)
@@ -303,25 +306,25 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
 
   Widget _buildLocationChip(String location) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return GestureDetector(
       onTap: () => _selectLocation(location),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: Color.fromARGB(26, 199, 93, 49),
+          color: AppColors.primaryLighter,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: Color.fromARGB(77, 199, 93, 49),
+            color: AppColors.primaryLight,
             width: 1,
           ),
         ),
         child: Text(
           location,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: primary,
-            fontWeight: FontWeight.w600,
-          ),
+                color: primary,
+                fontWeight: FontWeight.w600,
+              ),
         ),
       ),
     );
@@ -333,7 +336,8 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
         _searchResults = [];
       } else {
         _searchResults = _savedLocations
-            .where((location) => location.toLowerCase().contains(query.toLowerCase()))
+            .where((location) =>
+                location.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
     });
@@ -349,7 +353,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
     setState(() {
       _savedLocations.remove(location);
     });
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('$location이 삭제되었습니다'),
@@ -363,7 +367,7 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
     setState(() {
       _selectedLocation = '김제시 금구면';
     });
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('현재 위치를 가져왔습니다'),
@@ -375,20 +379,20 @@ class _LocationSettingsPageState extends State<LocationSettingsPage> {
   void _saveLocation() {
     if (_selectedLocation.isNotEmpty) {
       widget.onLocationUpdated(_selectedLocation);
-      
+
       if (!_savedLocations.contains(_selectedLocation)) {
         setState(() {
           _savedLocations.insert(0, _selectedLocation);
         });
       }
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('위치가 저장되었습니다'),
           backgroundColor: Colors.green,
         ),
       );
-      
+
       Navigator.of(context).pop();
     }
   }

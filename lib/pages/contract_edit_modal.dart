@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/models/chat_message.dart';
+import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
 
 class ContractEditModal extends StatefulWidget {
   final ContractData contractData;
@@ -30,11 +32,16 @@ class _ContractEditModalState extends State<ContractEditModal> {
   @override
   void initState() {
     super.initState();
-    _jobTitleController = TextEditingController(text: widget.contractData.jobTitle);
-    _jobDescriptionController = TextEditingController(text: widget.contractData.jobDescription);
-    _hourlyRateController = TextEditingController(text: widget.contractData.hourlyRate.toStringAsFixed(0));
-    _estimatedHoursController = TextEditingController(text: widget.contractData.estimatedHours.toString());
-    _notesController = TextEditingController(text: widget.contractData.notes ?? '');
+    _jobTitleController =
+        TextEditingController(text: widget.contractData.jobTitle);
+    _jobDescriptionController =
+        TextEditingController(text: widget.contractData.jobDescription);
+    _hourlyRateController = TextEditingController(
+        text: widget.contractData.hourlyRate.toStringAsFixed(0));
+    _estimatedHoursController = TextEditingController(
+        text: widget.contractData.estimatedHours.toString());
+    _notesController =
+        TextEditingController(text: widget.contractData.notes ?? '');
     _startDate = widget.contractData.startDate;
     _endDate = widget.contractData.endDate;
     _requirements = List.from(widget.contractData.requirements);
@@ -61,9 +68,11 @@ class _ContractEditModalState extends State<ContractEditModal> {
         endDate: _endDate,
         requirements: _requirements,
         status: ContractStatus.modified,
-        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
+        notes: _notesController.text.trim().isEmpty
+            ? null
+            : _notesController.text.trim(),
       );
-      
+
       widget.onSave(updatedContract);
       Navigator.of(context).pop();
     }
@@ -86,32 +95,37 @@ class _ContractEditModalState extends State<ContractEditModal> {
       _showError('예상 시간을 입력해주세요.');
       return false;
     }
-    
+
     final hourlyRate = double.tryParse(_hourlyRateController.text);
     if (hourlyRate == null || hourlyRate <= 0) {
       _showError('올바른 시급을 입력해주세요.');
       return false;
     }
-    
+
     final estimatedHours = int.tryParse(_estimatedHoursController.text);
     if (estimatedHours == null || estimatedHours <= 0) {
       _showError('올바른 예상 시간을 입력해주세요.');
       return false;
     }
-    
+
     if (_startDate.isAfter(_endDate)) {
       _showError('시작일은 종료일보다 이전이어야 합니다.');
       return false;
     }
-    
+
     return true;
   }
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
+        content: Text(
+          message,
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        backgroundColor: AppColors.error,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -160,7 +174,7 @@ class _ContractEditModalState extends State<ContractEditModal> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -182,9 +196,9 @@ class _ContractEditModalState extends State<ContractEditModal> {
                 Text(
                   '계약 수정',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF503123),
-                  ),
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.darkAccent,
+                      ),
                 ),
                 const Spacer(),
                 IconButton(
@@ -194,9 +208,9 @@ class _ContractEditModalState extends State<ContractEditModal> {
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // 스크롤 가능한 폼
             Expanded(
               child: SingleChildScrollView(
@@ -210,9 +224,9 @@ class _ContractEditModalState extends State<ContractEditModal> {
                       hintText: '작업명을 입력하세요',
                       icon: Icons.work_outline,
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // 작업 설명
                     _FormField(
                       controller: _jobDescriptionController,
@@ -221,9 +235,9 @@ class _ContractEditModalState extends State<ContractEditModal> {
                       icon: Icons.description_outlined,
                       maxLines: 3,
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // 시급과 예상 시간
                     Row(
                       children: [
@@ -248,9 +262,9 @@ class _ContractEditModalState extends State<ContractEditModal> {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // 작업 기간
                     Row(
                       children: [
@@ -273,18 +287,18 @@ class _ContractEditModalState extends State<ContractEditModal> {
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // 요구사항
                     _RequirementsField(
                       requirements: _requirements,
                       onAdd: _addRequirement,
                       onRemove: _removeRequirement,
                     ),
-                    
+
                     const SizedBox(height: 16),
-                    
+
                     // 메모
                     _FormField(
                       controller: _notesController,
@@ -297,9 +311,9 @@ class _ContractEditModalState extends State<ContractEditModal> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // 액션 버튼
             Row(
               children: [
@@ -361,16 +375,16 @@ class _FormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF503123),
-          ),
+                fontWeight: FontWeight.w600,
+                color: AppColors.darkAccent,
+              ),
         ),
         const SizedBox(height: 8),
         TextField(
@@ -379,8 +393,8 @@ class _FormField extends StatelessWidget {
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
-              color: Colors.grey.shade500,
+            hintStyle: const TextStyle(
+              color: AppColors.grey,
               fontWeight: FontWeight.w500,
             ),
             prefixIcon: Icon(
@@ -390,27 +404,27 @@ class _FormField extends StatelessWidget {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: Color.fromARGB(51, 199, 93, 49),
+              borderSide: const BorderSide(
+                color: AppColors.primaryLightest,
                 width: 1,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: Color.fromARGB(51, 199, 93, 49),
+              borderSide: const BorderSide(
+                color: AppColors.primaryLightest,
                 width: 1,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: primary,
+              borderSide: const BorderSide(
+                color: AppColors.primary,
                 width: 2,
               ),
             ),
             filled: true,
-            fillColor: Colors.grey.shade50,
+            fillColor: AppColors.background,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 12,
@@ -438,16 +452,16 @@ class _DateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF503123),
-          ),
+                fontWeight: FontWeight.w600,
+                color: AppColors.darkAccent,
+              ),
         ),
         const SizedBox(height: 8),
         InkWell(
@@ -455,10 +469,10 @@ class _DateField extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.grey.shade50,
+              color: AppColors.background,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Color.fromARGB(51, 199, 93, 49),
+                color: AppColors.primaryLightest,
                 width: 1,
               ),
             ),
@@ -473,9 +487,9 @@ class _DateField extends StatelessWidget {
                 Text(
                   '${date.month}/${date.day}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFF503123),
-                    fontWeight: FontWeight.w500,
-                  ),
+                        color: AppColors.darkAccent,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const Spacer(),
                 Icon(
@@ -505,7 +519,7 @@ class _RequirementsField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -514,9 +528,9 @@ class _RequirementsField extends StatelessWidget {
             Text(
               '요구사항',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFF503123),
-              ),
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.darkAccent,
+                  ),
             ),
             const Spacer(),
             TextButton.icon(
@@ -542,19 +556,19 @@ class _RequirementsField extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.grey.shade50,
+              color: AppColors.background,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Color.fromARGB(51, 199, 93, 49),
+                color: AppColors.primaryLightest,
                 width: 1,
               ),
             ),
             child: Text(
               '요구사항이 없습니다. 추가 버튼을 눌러 요구사항을 추가하세요.',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-              ),
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
           )
         else
@@ -565,12 +579,13 @@ class _RequirementsField extends StatelessWidget {
               final index = entry.key;
               final requirement = entry.value;
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(26, 199, 93, 49),
+                  color: AppColors.primaryLighter,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Color.fromARGB(77, 199, 93, 49),
+                    color: AppColors.primaryLight,
                     width: 1,
                   ),
                 ),
@@ -580,9 +595,9 @@ class _RequirementsField extends StatelessWidget {
                     Text(
                       requirement,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                            color: primary,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                     const SizedBox(width: 8),
                     GestureDetector(
@@ -624,7 +639,7 @@ class _AddRequirementDialogState extends State<_AddRequirementDialog> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -637,9 +652,9 @@ class _AddRequirementDialogState extends State<_AddRequirementDialog> {
             Text(
               '요구사항 추가',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF503123),
-              ),
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.darkAccent,
+                  ),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -650,7 +665,7 @@ class _AddRequirementDialogState extends State<_AddRequirementDialog> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade50,
+                fillColor: AppColors.background,
               ),
               autofocus: true,
             ),

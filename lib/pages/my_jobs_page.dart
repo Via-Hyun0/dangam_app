@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
 
 class MyJobsPage extends StatefulWidget {
   final int completedJobs;
@@ -14,12 +15,13 @@ class MyJobsPage extends StatefulWidget {
   State<MyJobsPage> createState() => _MyJobsPageState();
 }
 
-class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateMixin {
+class _MyJobsPageState extends State<MyJobsPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String _selectedFilter = '전체';
-  
+
   final List<String> _filters = ['전체', '진행중', '완료', '취소됨'];
-  
+
   // 모의 작업 데이터
   final List<Map<String, dynamic>> _jobs = [
     {
@@ -83,17 +85,17 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('내 작업'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
         bottom: TabBar(
           controller: _tabController,
           labelColor: primary,
-          unselectedLabelColor: Colors.grey.shade600,
+          unselectedLabelColor: AppColors.grey,
           indicatorColor: primary,
           tabs: const [
             Tab(text: '전체'),
@@ -102,15 +104,15 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           ],
         ),
       ),
-      backgroundColor: const Color(0xFFfdfdfd),
+      backgroundColor: AppColors.background,
       body: Column(
         children: [
           // 통계 카드
           _buildStatsCard(primary),
-          
+
           // 필터
           _buildFilterBar(),
-          
+
           // 작업 목록
           Expanded(
             child: TabBarView(
@@ -132,20 +134,20 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(26, 199, 93, 49),
-            Color.fromARGB(13, 199, 93, 49),
+            AppColors.primaryLighter,
+            AppColors.primaryLight,
           ],
         ),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(26, 199, 93, 49),
+            color: AppColors.primaryLighter,
             blurRadius: 20,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -162,7 +164,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Container(
             width: 1,
             height: 40,
-            color: Color.fromARGB(51, 199, 93, 49),
+            color: AppColors.primaryLightest,
           ),
           Expanded(
             child: _buildStatItem(
@@ -175,7 +177,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Container(
             width: 1,
             height: 40,
-            color: Color.fromARGB(51, 199, 93, 49),
+            color: AppColors.primaryLightest,
           ),
           Expanded(
             child: _buildStatItem(
@@ -207,17 +209,17 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
         Text(
           value,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w800,
-            color: const Color(0xFF503123),
-          ),
+                fontWeight: FontWeight.w800,
+                color: AppColors.darkAccent,
+              ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: const Color(0xFFa48e7b),
-            fontWeight: FontWeight.w500,
-          ),
+                color: AppColors.secondary,
+                fontWeight: FontWeight.w500,
+              ),
           textAlign: TextAlign.center,
         ),
       ],
@@ -235,7 +237,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           final filter = _filters[index];
           final isSelected = filter == _selectedFilter;
           final Color primary = Theme.of(context).colorScheme.primary;
-          
+
           return Container(
             margin: const EdgeInsets.only(right: 8),
             child: FilterChip(
@@ -246,10 +248,10 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                   _selectedFilter = filter;
                 });
               },
-              selectedColor: Color.fromARGB(51, 199, 93, 49),
+              selectedColor: AppColors.primaryLightest,
               checkmarkColor: primary,
               labelStyle: TextStyle(
-                color: isSelected ? primary : Colors.grey.shade600,
+                color: isSelected ? primary : AppColors.grey,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -260,14 +262,14 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
   }
 
   Widget _buildJobList(String status) {
-    final filteredJobs = status == '전체' 
-        ? _jobs 
+    final filteredJobs = status == '전체'
+        ? _jobs
         : _jobs.where((job) => job['status'] == status).toList();
-    
+
     if (filteredJobs.isEmpty) {
       return _buildEmptyState();
     }
-    
+
     return ListView.builder(
       padding: const EdgeInsets.all(20),
       itemCount: filteredJobs.length,
@@ -283,25 +285,25 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.work_outline,
             size: 64,
-            color: Colors.grey.shade400,
+            color: AppColors.grey,
           ),
           const SizedBox(height: 16),
           Text(
             '작업이 없습니다',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Colors.grey.shade600,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           const SizedBox(height: 8),
           Text(
             '새로운 작업을 찾아보세요',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.grey.shade500,
-            ),
+                  color: AppColors.grey,
+                ),
           ),
         ],
       ),
@@ -312,17 +314,17 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
     final Color primary = Theme.of(context).colorScheme.primary;
     final String status = job['status'];
     final Color statusColor = _getStatusColor(status);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -342,10 +344,11 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                     Expanded(
                       child: Text(
                         job['title'],
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF503123),
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.darkAccent,
+                                ),
                       ),
                     ),
                     Container(
@@ -354,26 +357,26 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(26, 76, 175, 80),
+                        color: AppColors.successLight,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Color.fromARGB(77, 76, 175, 80),
+                          color: AppColors.successLight,
                           width: 1,
                         ),
                       ),
                       child: Text(
                         status,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: statusColor,
-                          fontWeight: FontWeight.w600,
-                        ),
+                              color: statusColor,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 12),
-                
+
                 // 고용주 정보
                 Row(
                   children: [
@@ -386,9 +389,9 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                     Text(
                       job['employer'],
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                        fontWeight: FontWeight.w500,
-                      ),
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                     const SizedBox(width: 16),
                     Icon(
@@ -400,15 +403,15 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                     Text(
                       job['location'],
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                        fontWeight: FontWeight.w500,
-                      ),
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 12),
-                
+
                 // 작업 정보
                 Row(
                   children: [
@@ -431,13 +434,13 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                     ),
                   ],
                 ),
-                
+
                 // 평점
                 if (job['rating'] != null) ...[
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star,
                         color: Colors.amber,
                         size: 16,
@@ -446,9 +449,9 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
                       Text(
                         job['rating'].toString(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.amber.shade700,
-                          fontWeight: FontWeight.w600,
-                        ),
+                              color: Colors.amber.shade700,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ],
                   ),
@@ -469,7 +472,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Color.fromARGB(26, 76, 175, 80),
+        color: AppColors.successLight,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -484,9 +487,9 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
           Text(
             label,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: color,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ],
       ),
@@ -520,8 +523,7 @@ class _MyJobsPageState extends State<MyJobsPage> with SingleTickerProviderStateM
             Text('날짜: ${job['date']}'),
             Text('소요시간: ${job['duration']}'),
             Text('급여: ₩${job['payment']}'),
-            if (job['rating'] != null)
-              Text('평점: ${job['rating']}'),
+            if (job['rating'] != null) Text('평점: ${job['rating']}'),
           ],
         ),
         actions: [

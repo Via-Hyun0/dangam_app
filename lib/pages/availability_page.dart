@@ -79,7 +79,7 @@ class _AvailabilityPageState extends State<AvailabilityPage> {
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     AppIcons.infoOutline,
                     color: AppColors.primary,
                     size: AppSpacing.iconLarge,

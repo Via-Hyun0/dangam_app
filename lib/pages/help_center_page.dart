@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({super.key});
@@ -11,7 +12,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     final List<Map<String, dynamic>> faqItems = [
       {
         'category': '계정 관리',
@@ -57,30 +58,30 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('도움말'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
       ),
-      backgroundColor: const Color(0xFFfdfdfd),
+      backgroundColor: AppColors.background,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             // 검색 바
             _buildSearchBar(primary),
-            
+
             const SizedBox(height: 24),
-            
+
             // 빠른 도움말
             _buildQuickHelp(primary),
-            
+
             const SizedBox(height: 24),
-            
+
             // FAQ
             _buildFAQ(faqItems, primary),
-            
+
             const SizedBox(height: 24),
-            
+
             // 문의하기
             _buildContactSection(primary),
           ],
@@ -93,13 +94,13 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -118,13 +119,13 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -134,13 +135,11 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
           Text(
             '빠른 도움말',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.darkAccent,
+                ),
           ),
-          
           const SizedBox(height: 16),
-          
           _buildQuickHelpItem(
             context,
             icon: Icons.phone_outlined,
@@ -148,9 +147,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
             subtitle: '평일 09:00-18:00',
             onTap: () => _showContactDialog(context, '전화 문의', '1588-1234'),
           ),
-          
           const SizedBox(height: 12),
-          
           _buildQuickHelpItem(
             context,
             icon: Icons.chat_bubble_outline,
@@ -158,29 +155,29 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
             subtitle: '실시간 상담',
             onTap: () => _showContactDialog(context, '채팅 문의', '실시간 채팅을 시작합니다'),
           ),
-          
           const SizedBox(height: 12),
-          
           _buildQuickHelpItem(
             context,
             icon: Icons.email_outlined,
             title: '이메일 문의',
             subtitle: 'support@dangam.com',
-            onTap: () => _showContactDialog(context, '이메일 문의', 'support@dangam.com'),
+            onTap: () =>
+                _showContactDialog(context, '이메일 문의', 'support@dangam.com'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildQuickHelpItem(BuildContext context, {
+  Widget _buildQuickHelpItem(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String subtitle,
     required VoidCallback onTap,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -194,7 +191,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(26, 199, 93, 49),
+                  color: AppColors.primaryLighter,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -211,15 +208,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF503123),
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.darkAccent,
+                          ),
                     ),
                     Text(
                       subtitle,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                      ),
+                            color: AppColors.secondary,
+                          ),
                     ),
                   ],
                 ),
@@ -243,13 +240,11 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         Text(
           '자주 묻는 질문',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: const Color(0xFF503123),
-          ),
+                fontWeight: FontWeight.w700,
+                color: AppColors.darkAccent,
+              ),
         ),
-        
         const SizedBox(height: 16),
-        
         ...faqItems.map((category) => _buildFAQCategory(category, primary)),
       ],
     );
@@ -259,13 +254,13 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -285,16 +280,17 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                 Text(
                   category['category'],
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF503123),
-                  ),
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.darkAccent,
+                      ),
                 ),
               ],
             ),
           ),
-          
+
           // 질문 목록
-          ...category['questions'].map<Widget>((question) => _buildFAQItem(question, primary)),
+          ...category['questions']
+              .map<Widget>((question) => _buildFAQItem(question, primary)),
         ],
       ),
     );
@@ -311,9 +307,9 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         title: Text(
           question['question'],
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF503123),
-          ),
+                fontWeight: FontWeight.w600,
+                color: AppColors.darkAccent,
+              ),
         ),
         children: [
           Padding(
@@ -321,9 +317,9 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
             child: Text(
               question['answer'],
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFFa48e7b),
-                height: 1.5,
-              ),
+                    color: AppColors.secondary,
+                    height: 1.5,
+                  ),
             ),
           ),
         ],
@@ -335,10 +331,10 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Color.fromARGB(13, 199, 93, 49),
+        color: AppColors.primaryLight,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Color.fromARGB(51, 199, 93, 49),
+          color: AppColors.primaryLightest,
           width: 1,
         ),
       ),
@@ -349,33 +345,28 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
             color: primary,
             size: 32,
           ),
-          
           const SizedBox(height: 12),
-          
           Text(
             '더 도움이 필요하신가요?',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.darkAccent,
+                ),
           ),
-          
           const SizedBox(height: 8),
-          
           Text(
             '문의하기를 통해 직접 상담받으실 수 있습니다.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFFa48e7b),
-            ),
+                  color: AppColors.secondary,
+                ),
             textAlign: TextAlign.center,
           ),
-          
           const SizedBox(height: 16),
-          
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => _showContactDialog(context, '문의하기', '문의하기 페이지로 이동합니다'),
+              onPressed: () =>
+                  _showContactDialog(context, '문의하기', '문의하기 페이지로 이동합니다'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: primary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -386,9 +377,9 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
               child: Text(
                 '문의하기',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ),
           ),

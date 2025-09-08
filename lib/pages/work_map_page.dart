@@ -8,7 +8,7 @@ import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
 
 /// 작업 지도 페이지
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 페이지는 지도에서 작업 위치를 표시합니다
 /// - 필터링과 검색 기능을 제공합니다
@@ -39,9 +39,9 @@ class _WorkMapPageState extends State<WorkMapPage> {
 
     for (int i = 0; i < mockJobs.length; i++) {
       final job = mockJobs[i];
-      
+
       // 필터링
-      if (_selectedFilter != 'all' && 
+      if (_selectedFilter != 'all' &&
           job.type.toString().split('.').last != _selectedFilter) {
         continue;
       }
@@ -99,7 +99,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
               // 지도 생성 완료
             },
           ),
-          
+
           // 상단 필터 바
           Positioned(
             top: MediaQuery.of(context).padding.top + AppSpacing.lg,
@@ -122,7 +122,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
               },
             ),
           ),
-          
+
           // 하단 작업 목록
           Positioned(
             bottom: 0,
@@ -140,7 +140,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
 
   List<Job> _getFilteredJobs() {
     return mockJobs.where((job) {
-      final matchesFilter = _selectedFilter == 'all' || 
+      final matchesFilter = _selectedFilter == 'all' ||
           job.type.toString().split('.').last == _selectedFilter;
       final matchesRadius = job.distanceKm <= _searchRadius;
       return matchesFilter && matchesRadius;
@@ -149,7 +149,7 @@ class _WorkMapPageState extends State<WorkMapPage> {
 }
 
 /// 필터 바 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 지도의 필터링 옵션을 제공합니다
 /// - 작업 유형과 검색 반경을 설정할 수 있습니다
@@ -173,11 +173,11 @@ class _FilterBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.shadowLight,
             blurRadius: 20,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -187,7 +187,7 @@ class _FilterBar extends StatelessWidget {
           // 검색 반경 슬라이더
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.location_searching,
                 color: AppColors.primary,
                 size: AppSpacing.iconMedium,
@@ -231,9 +231,9 @@ class _FilterBar extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: AppSpacing.lg),
-          
+
           // 작업 유형 필터
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -246,13 +246,15 @@ class _FilterBar extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.md),
                 ...JobType.values.take(5).map((type) => Padding(
-                  padding: const EdgeInsets.only(right: AppSpacing.md),
-                  child: _FilterChip(
-                    label: jobTypeLabel(type),
-                    isSelected: selectedFilter == type.toString().split('.').last,
-                    onTap: () => onFilterChanged(type.toString().split('.').last),
-                  ),
-                )),
+                      padding: const EdgeInsets.only(right: AppSpacing.md),
+                      child: _FilterChip(
+                        label: jobTypeLabel(type),
+                        isSelected:
+                            selectedFilter == type.toString().split('.').last,
+                        onTap: () =>
+                            onFilterChanged(type.toString().split('.').last),
+                      ),
+                    )),
               ],
             ),
           ),
@@ -263,7 +265,7 @@ class _FilterBar extends StatelessWidget {
 }
 
 /// 필터 칩 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 필터 옵션을 칩 형태로 표시합니다
 /// - 선택된 상태와 선택되지 않은 상태를 구분합니다
@@ -308,7 +310,7 @@ class _FilterChip extends StatelessWidget {
 }
 
 /// 작업 목록 하단 시트 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 하단에서 작업 목록을 표시합니다
 /// - 드래그하여 크기를 조절할 수 있습니다
@@ -334,7 +336,8 @@ class _JobListBottomSheet extends StatelessWidget {
             AppColors.background,
           ],
         ),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppSpacing.xl)),
+        borderRadius:
+            BorderRadius.vertical(top: Radius.circular(AppSpacing.xl)),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowLight,
@@ -355,7 +358,7 @@ class _JobListBottomSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSpacing.radiusSmall),
             ),
           ),
-          
+
           // 헤더
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
@@ -389,9 +392,9 @@ class _JobListBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          
+
           const SizedBox(height: AppSpacing.lg),
-          
+
           // 작업 목록
           Expanded(
             child: ListView.builder(
@@ -406,21 +409,23 @@ class _JobListBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
                     child: InkWell(
                       onTap: () => onJobTap(job),
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+                      borderRadius:
+                          BorderRadius.circular(AppSpacing.radiusLarge),
                       child: Container(
                         padding: const EdgeInsets.all(AppSpacing.lg),
                         decoration: BoxDecoration(
                           color: AppColors.white,
-                          borderRadius: BorderRadius.circular(AppSpacing.radiusLarge),
+                          borderRadius:
+                              BorderRadius.circular(AppSpacing.radiusLarge),
                           border: Border.all(
                             color: AppColors.primaryLighter,
                             width: 1,
                           ),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: AppColors.shadowLight,
                               blurRadius: 8,
-                              offset: const Offset(0, 2),
+                              offset: Offset(0, 2),
                             ),
                           ],
                         ),
@@ -432,9 +437,10 @@ class _JobListBottomSheet extends StatelessWidget {
                               height: AppSpacing.iconLarge + AppSpacing.md,
                               decoration: BoxDecoration(
                                 color: AppColors.primaryLighter,
-                                borderRadius: BorderRadius.circular(AppSpacing.sm),
+                                borderRadius:
+                                    BorderRadius.circular(AppSpacing.sm),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.work_outline,
                                 color: AppColors.primary,
                                 size: AppSpacing.iconMedium,
@@ -464,11 +470,13 @@ class _JobListBottomSheet extends StatelessWidget {
                                         ),
                                         decoration: BoxDecoration(
                                           color: AppColors.successLight,
-                                          borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
+                                          borderRadius: BorderRadius.circular(
+                                              AppSpacing.radiusMedium),
                                         ),
                                         child: Text(
                                           jobStatusLabel(job.status),
-                                          style: AppTypography.labelSmall.copyWith(
+                                          style:
+                                              AppTypography.labelSmall.copyWith(
                                             color: jobStatusColor(job.status),
                                             fontWeight: FontWeight.w600,
                                           ),

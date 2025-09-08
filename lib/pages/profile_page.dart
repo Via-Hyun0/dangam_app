@@ -658,11 +658,11 @@ class _MenuGroup extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(AppSpacing.sm),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: AppColors.shadowLight,
                 blurRadius: 10,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -741,12 +741,12 @@ class _MenuItemWidget extends StatelessWidget {
                     vertical: AppSpacing.xs,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        (item.badgeColor ?? AppColors.primary).withOpacity(0.1),
+                    color: (item.badgeColor ?? AppColors.primary)
+                        .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppSpacing.sm),
                     border: Border.all(
                       color: (item.badgeColor ?? AppColors.primary)
-                          .withOpacity(0.3),
+                          .withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -760,7 +760,7 @@ class _MenuItemWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.md),
               ],
-              Icon(
+              const Icon(
                 AppIcons.chevronRight,
                 color: AppColors.grey,
                 size: AppSpacing.iconMedium,

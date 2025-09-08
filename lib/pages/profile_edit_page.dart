@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
 
 class ProfileEditPage extends StatefulWidget {
   final String userName;
@@ -25,7 +26,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _bioController;
-  
+
   final _formKey = GlobalKey<FormState>();
   String _selectedGender = '남성';
   String _selectedExperience = '3-5년';
@@ -39,7 +40,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     _locationController = TextEditingController(text: widget.userLocation);
     _phoneController = TextEditingController(text: '010-1234-5678');
     _emailController = TextEditingController(text: 'kimfarmer@example.com');
-    _bioController = TextEditingController(text: '5년간 다양한 농작물 재배 경험을 가지고 있습니다. 포도, 딸기, 토마토 재배에 특화되어 있으며, 정확하고 신뢰할 수 있는 작업을 제공합니다.');
+    _bioController = TextEditingController(
+        text:
+            '5년간 다양한 농작물 재배 경험을 가지고 있습니다. 포도, 딸기, 토마토 재배에 특화되어 있으며, 정확하고 신뢰할 수 있는 작업을 제공합니다.');
   }
 
   @override
@@ -56,12 +59,12 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('프로필 편집'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
         actions: [
           TextButton(
@@ -77,7 +80,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xFFfdfdfd),
+      backgroundColor: AppColors.background,
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -86,9 +89,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             children: [
               // 프로필 이미지
               _buildProfileImageSection(primary),
-              
+
               const SizedBox(height: 24),
-              
+
               // 기본 정보
               _buildSection(
                 title: '기본 정보',
@@ -144,9 +147,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // 연락처 정보
               _buildSection(
                 title: '연락처 정보',
@@ -183,9 +186,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // 위치 정보
               _buildSection(
                 title: '위치 정보',
@@ -204,9 +207,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // 자기소개
               _buildSection(
                 title: '자기소개',
@@ -226,9 +229,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 32),
-              
+
               // 저장 버튼
               SizedBox(
                 width: double.infinity,
@@ -244,9 +247,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   child: Text(
                     '프로필 저장',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ),
@@ -261,13 +264,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -280,10 +283,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: Color.fromARGB(26, 199, 93, 49),
+                color: AppColors.primaryLighter,
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                  color: Color.fromARGB(77, 199, 93, 49),
+                  color: AppColors.primaryLightest,
                   width: 2,
                 ),
               ),
@@ -313,9 +316,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           Text(
             '프로필 사진 변경',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: primary,
-              fontWeight: FontWeight.w600,
-            ),
+                  color: primary,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ],
       ),
@@ -329,13 +332,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -345,9 +348,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           Text(
             title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.darkAccent,
+                ),
           ),
           const SizedBox(height: 16),
           ...children,
@@ -366,7 +369,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     String? Function(String?)? validator,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -378,18 +381,18 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         prefixIcon: Icon(icon, color: primary),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: primary, width: 2),
         ),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: AppColors.background,
       ),
     );
   }
@@ -402,27 +405,27 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     required IconData icon,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       onChanged: onChanged,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon, color: primary),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: primary, width: 2),
         ),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: AppColors.background,
       ),
       items: items.map((String item) {
         return DropdownMenuItem<String>(
@@ -473,14 +476,14 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         _locationController.text,
         _profileImage,
       );
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('프로필이 저장되었습니다'),
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.success,
         ),
       );
-      
+
       Navigator.of(context).pop();
     }
   }

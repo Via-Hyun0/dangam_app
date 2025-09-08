@@ -45,7 +45,7 @@ class DashboardBody extends StatelessWidget {
 }
 
 /// 대시보드의 환영 헤더 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 사용자에게 환영 메시지와 주요 통계를 보여줍니다
 /// - 그라데이션 배경과 카드 스타일을 사용합니다
@@ -84,7 +84,7 @@ class _WelcomeHeader extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
-              _StatItem(
+              const _StatItem(
                 icon: Icons.assignment_turned_in,
                 label: '진행중인 계약',
                 value: '2',
@@ -98,7 +98,7 @@ class _WelcomeHeader extends StatelessWidget {
                 color: AppColors.white,
               ),
               const SizedBox(width: AppSpacing.lg),
-              _StatItem(
+              const _StatItem(
                 icon: Icons.location_on,
                 label: '근처',
                 value: '5',
@@ -130,8 +130,8 @@ class _StatItem extends StatelessWidget {
     return Column(
       children: [
         Icon(
-          icon, 
-          color: color, 
+          icon,
+          color: color,
           size: AppSpacing.iconLarge,
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -146,7 +146,7 @@ class _StatItem extends StatelessWidget {
         Text(
           label,
           style: AppTypography.labelMedium.copyWith(
-            color: color.withOpacity(0.9),
+            color: color.withValues(alpha: 0.9),
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -156,7 +156,7 @@ class _StatItem extends StatelessWidget {
 }
 
 /// 섹션 제목 위젯
-/// 
+///
 /// 디자이너 가이드:
 /// - 이 위젯은 각 섹션의 제목을 표시합니다
 /// - 일관된 스타일을 위해 AppTypography를 사용합니다
@@ -329,18 +329,22 @@ class _NoticesList extends StatelessWidget {
                           ),
                           child: Text(
                             noticeTypeLabel(notice.type),
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: noticeTypeColor(notice.type),
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                  color: noticeTypeColor(notice.type),
+                                  fontWeight: FontWeight.w700,
+                                ),
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           _formatDate(notice.publishedAt),
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: const Color(0xFFa48e7b),
-                          ),
+                          style:
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: const Color(0xFFa48e7b),
+                                  ),
                         ),
                       ],
                     ),
@@ -348,17 +352,17 @@ class _NoticesList extends StatelessWidget {
                     Text(
                       notice.title,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFF503123),
-                      ),
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF503123),
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       notice.content,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                        height: 1.4,
-                      ),
+                            color: const Color(0xFFa48e7b),
+                            height: 1.4,
+                          ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
