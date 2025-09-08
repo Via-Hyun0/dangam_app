@@ -1,9 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:dangam_app/models/job.dart';
 
+/// 목업 작업 데이터
+///
+/// TODO::LUKA - Firebase 구현체로 교체
+/// - 이 파일은 Firebase 연결 후 제거 예정
+/// - 모든 데이터는 Firestore에서 관리
+/// - Cloud Functions로 데이터 초기화
 final List<Job> mockJobs = [
   // 과일 수확 작업
   Job(
-    id: 'j1',
+    jobId: 'j1',
     title: '포도 수확팀',
     crop: '포도',
     location: '김제시 금구면',
@@ -14,9 +21,12 @@ final List<Job> mockJobs = [
     distanceKm: 2.1,
     employerName: '김제 포도농장',
     status: JobStatus.applied,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+    createdBy: 'employer_001',
   ),
   Job(
-    id: 'j2',
+    jobId: 'j2',
     title: '사과 수확 - 홍로',
     crop: '사과',
     location: '김제시 봉남면',
@@ -27,9 +37,12 @@ final List<Job> mockJobs = [
     distanceKm: 6.4,
     employerName: '봉남 과수원',
     status: JobStatus.interested,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+    createdBy: 'employer_002',
   ),
   Job(
-    id: 'j3',
+    jobId: 'j3',
     title: '딸기 수확',
     crop: '딸기',
     location: '김제시 성덕면',
@@ -39,9 +52,13 @@ final List<Job> mockJobs = [
     type: JobType.fruitPicking,
     distanceKm: 4.2,
     employerName: '성덕 딸기농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 12)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 12)),
+    createdBy: 'employer_003',
   ),
   Job(
-    id: 'j4',
+    jobId: 'j4',
     title: '감귤 수확팀',
     crop: '감귤',
     location: '김제시 부량면',
@@ -51,11 +68,15 @@ final List<Job> mockJobs = [
     type: JobType.fruitPicking,
     distanceKm: 8.3,
     employerName: '부량 감귤농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 3)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 3)),
+    createdBy: 'employer_004',
   ),
 
   // 트랙터 작업
   Job(
-    id: 'j5',
+    jobId: 'j5',
     title: '트랙터 제초 (과수원)',
     crop: '사과',
     location: '김제시 봉남면',
@@ -65,9 +86,13 @@ final List<Job> mockJobs = [
     type: JobType.tractorMowing,
     distanceKm: 6.4,
     employerName: '봉남 과수원',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 6)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 6)),
+    createdBy: 'employer_002',
   ),
   Job(
-    id: 'j6',
+    jobId: 'j6',
     title: '트랙터 밭갈이 작업',
     crop: '밀',
     location: 'Wimmera',
@@ -77,9 +102,13 @@ final List<Job> mockJobs = [
     type: JobType.tractorMowing,
     distanceKm: 15.2,
     employerName: 'Wheatfield Agriculture',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+    createdBy: 'employer_005',
   ),
   Job(
-    id: 'j7',
+    jobId: 'j7',
     title: '목초지 예초 작업',
     crop: '목초',
     location: 'Gippsland',
@@ -89,24 +118,31 @@ final List<Job> mockJobs = [
     type: JobType.tractorMowing,
     distanceKm: 9.7,
     employerName: 'Green Pastures Ltd',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+    createdBy: 'employer_006',
   ),
 
   // 관개 시설
-  const Job(
-    id: 'j8',
+  Job(
+    jobId: 'j8',
     title: '밭작물 관개 시설 설치',
     crop: '상추',
     location: '김제시 성덕면',
     areaHectares: 1.8,
-    requiredEquipment: ['관수 파이프', '펌프'],
+    requiredEquipment: const ['관수 파이프', '펌프'],
     scheduledDate: null,
     type: JobType.irrigationSetup,
     distanceKm: 1.3,
     employerName: '성덕 농산물',
     status: JobStatus.interested,
+    createdAt: DateTime.now().subtract(const Duration(days: 4)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 4)),
+    createdBy: 'employer_003',
   ),
   Job(
-    id: 'j9',
+    jobId: 'j9',
     title: '적하 관개 시설 설치',
     crop: '토마토',
     location: 'Lockyer Valley',
@@ -116,9 +152,13 @@ final List<Job> mockJobs = [
     type: JobType.irrigationSetup,
     distanceKm: 5.8,
     employerName: 'Tomato Growers Inc',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 8)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 8)),
+    createdBy: 'employer_007',
   ),
   Job(
-    id: 'j10',
+    jobId: 'j10',
     title: '스프링클러 시스템 점검',
     crop: '옥수수',
     location: 'Darling Downs',
@@ -128,11 +168,15 @@ final List<Job> mockJobs = [
     type: JobType.irrigationSetup,
     distanceKm: 12.4,
     employerName: 'Cornfield Enterprises',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 4)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 4)),
+    createdBy: 'employer_008',
   ),
 
-  // Planting
+  // 심기 작업
   Job(
-    id: 'j11',
+    jobId: 'j11',
     title: '옥수수 종자 파종',
     crop: '옥수수',
     location: 'Darling Downs',
@@ -142,9 +186,13 @@ final List<Job> mockJobs = [
     type: JobType.planting,
     distanceKm: 12.4,
     employerName: 'Cornfield Enterprises',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+    createdBy: 'employer_008',
   ),
   Job(
-    id: 'j12',
+    jobId: 'j12',
     title: '유칼립투스 나무 심기',
     crop: '유칼립투스',
     location: 'Blue Mountains',
@@ -154,9 +202,13 @@ final List<Job> mockJobs = [
     type: JobType.planting,
     distanceKm: 18.6,
     employerName: 'Forest Restoration Co.',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+    createdBy: 'employer_009',
   ),
   Job(
-    id: 'j13',
+    jobId: 'j13',
     title: '채소 모종 이식',
     crop: '양배추',
     location: 'Lockyer Valley',
@@ -166,11 +218,15 @@ final List<Job> mockJobs = [
     type: JobType.planting,
     distanceKm: 5.8,
     employerName: 'Fresh Veggie Farms',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 10)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 10)),
+    createdBy: 'employer_010',
   ),
 
-  // Harvesting
+  // 수확 작업
   Job(
-    id: 'j14',
+    jobId: 'j14',
     title: '밀 수확',
     crop: '밀',
     location: '김제시 금구면',
@@ -180,9 +236,13 @@ final List<Job> mockJobs = [
     type: JobType.harvesting,
     distanceKm: 15.2,
     employerName: '금구 밀농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 3)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 3)),
+    createdBy: 'employer_011',
   ),
   Job(
-    id: 'j15',
+    jobId: 'j15',
     title: '감자 수확',
     crop: '감자',
     location: '김제시 성덕면',
@@ -192,9 +252,13 @@ final List<Job> mockJobs = [
     type: JobType.harvesting,
     distanceKm: 22.1,
     employerName: '성덕 감자농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+    createdBy: 'employer_012',
   ),
   Job(
-    id: 'j16',
+    jobId: 'j16',
     title: '면화 수확',
     crop: '면화',
     location: '김제시 봉남면',
@@ -204,11 +268,15 @@ final List<Job> mockJobs = [
     type: JobType.harvesting,
     distanceKm: 45.3,
     employerName: '봉남 면화농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 4)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 4)),
+    createdBy: 'employer_013',
   ),
 
   // 토양 준비
   Job(
-    id: 'j17',
+    jobId: 'j17',
     title: '채소용 토양 준비',
     crop: '당근',
     location: '김제시 부량면',
@@ -218,9 +286,13 @@ final List<Job> mockJobs = [
     type: JobType.soilPreparation,
     distanceKm: 5.8,
     employerName: '부량 채소농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 6)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 6)),
+    createdBy: 'employer_004',
   ),
   Job(
-    id: 'j18',
+    jobId: 'j18',
     title: '밭 갈기',
     crop: '콩',
     location: '김제시 금구면',
@@ -230,11 +302,15 @@ final List<Job> mockJobs = [
     type: JobType.soilPreparation,
     distanceKm: 12.4,
     employerName: '금구 콩농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+    createdBy: 'employer_011',
   ),
 
   // 가지치기
   Job(
-    id: 'j19',
+    jobId: 'j19',
     title: '포도 덩굴 가지치기',
     crop: '포도',
     location: '김제시 봉남면',
@@ -244,9 +320,13 @@ final List<Job> mockJobs = [
     type: JobType.pruning,
     distanceKm: 7.2,
     employerName: '봉남 포도농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+    createdBy: 'employer_014',
   ),
   Job(
-    id: 'j20',
+    jobId: 'j20',
     title: '과수원 가지치기',
     crop: '복숭아',
     location: '김제시 성덕면',
@@ -256,11 +336,15 @@ final List<Job> mockJobs = [
     type: JobType.pruning,
     distanceKm: 13.8,
     employerName: '성덕 복숭아농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 3)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 3)),
+    createdBy: 'employer_015',
   ),
 
   // 비료 주기
   Job(
-    id: 'j21',
+    jobId: 'j21',
     title: '비료 시용',
     crop: '밀',
     location: '김제시 금구면',
@@ -270,9 +354,13 @@ final List<Job> mockJobs = [
     type: JobType.fertilizing,
     distanceKm: 15.2,
     employerName: '금구 밀농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+    createdBy: 'employer_011',
   ),
   Job(
-    id: 'j22',
+    jobId: 'j22',
     title: '유기 퇴비 살포',
     crop: '상추',
     location: '김제시 부량면',
@@ -282,11 +370,15 @@ final List<Job> mockJobs = [
     type: JobType.fertilizing,
     distanceKm: 1.3,
     employerName: '부량 채소농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 8)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 8)),
+    createdBy: 'employer_004',
   ),
 
   // 해충 방제
   Job(
-    id: 'j23',
+    jobId: 'j23',
     title: '해충 방제 살포',
     crop: '면화',
     location: '김제시 봉남면',
@@ -296,9 +388,13 @@ final List<Job> mockJobs = [
     type: JobType.pestControl,
     distanceKm: 45.3,
     employerName: '봉남 면화농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+    createdBy: 'employer_013',
   ),
   Job(
-    id: 'j24',
+    jobId: 'j24',
     title: '종합 해충 관리',
     crop: '토마토',
     location: '김제시 부량면',
@@ -308,11 +404,15 @@ final List<Job> mockJobs = [
     type: JobType.pestControl,
     distanceKm: 5.8,
     employerName: '부량 토마토농장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(hours: 12)),
+    updatedAt: DateTime.now().subtract(const Duration(hours: 12)),
+    createdBy: 'employer_016',
   ),
 
   // 울타리 설치
   Job(
-    id: 'j25',
+    jobId: 'j25',
     title: '농장 울타리 수리',
     crop: '소',
     location: '김제시 금구면',
@@ -322,5 +422,77 @@ final List<Job> mockJobs = [
     type: JobType.fencing,
     distanceKm: 28.7,
     employerName: '금구 목장',
+    status: JobStatus.available,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+    createdBy: 'employer_017',
   ),
 ];
+
+/// 작업 타입 라벨 함수
+///
+/// TODO::LUKA - 다국어 지원으로 교체
+/// - Flutter의 intl 패키지 사용
+/// - 다국어 리소스 파일 관리
+String jobTypeLabel(JobType type) {
+  switch (type) {
+    case JobType.fruitPicking:
+      return '과일 수확';
+    case JobType.tractorMowing:
+      return '트랙터 작업';
+    case JobType.irrigationSetup:
+      return '관개 시설';
+    case JobType.planting:
+      return '심기';
+    case JobType.harvesting:
+      return '수확';
+    case JobType.soilPreparation:
+      return '토양 준비';
+    case JobType.pruning:
+      return '가지치기';
+    case JobType.fertilizing:
+      return '비료 주기';
+    case JobType.pestControl:
+      return '해충 방제';
+    case JobType.fencing:
+      return '울타리 설치';
+  }
+}
+
+/// 작업 상태 라벨 함수
+///
+/// TODO::LUKA - 다국어 지원으로 교체
+String jobStatusLabel(JobStatus status) {
+  switch (status) {
+    case JobStatus.available:
+      return '모집중';
+    case JobStatus.applied:
+      return '지원함';
+    case JobStatus.interested:
+      return '관심있음';
+    case JobStatus.inProgress:
+      return '진행중';
+    case JobStatus.completed:
+      return '완료';
+    case JobStatus.cancelled:
+      return '취소됨';
+  }
+}
+
+/// 작업 상태 색상 함수
+Color jobStatusColor(JobStatus status) {
+  switch (status) {
+    case JobStatus.available:
+      return const Color(0xFF4CAF50); // 초록색
+    case JobStatus.applied:
+      return const Color(0xFF2196F3); // 파란색
+    case JobStatus.interested:
+      return const Color(0xFFFF9800); // 주황색
+    case JobStatus.inProgress:
+      return const Color(0xFF9C27B0); // 보라색
+    case JobStatus.completed:
+      return const Color(0xFF607D8B); // 회색
+    case JobStatus.cancelled:
+      return const Color(0xFFF44336); // 빨간색
+  }
+}
