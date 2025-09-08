@@ -241,18 +241,26 @@ class _OngoingContractsList extends StatelessWidget {
                       children: [
                         Text(
                           contract['title'],
-                          style: const TextStyle(fontWeight: FontWeight.w700),
+                          style: AppTypography.titleMedium.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.darkAccent,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           '${contract['status']} • ${contract['daysLeft']}일 남음',
-                          style: const TextStyle(color: Colors.grey),
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.grey,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           '${contract['employer']} • ${contract['type']}',
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: AppTypography.bodySmall.copyWith(
+                            color: AppColors.grey,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
@@ -269,8 +277,11 @@ class _OngoingContractsList extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${(contract['progress'] * 100).round()}% complete',
-                  style: const TextStyle(color: Colors.grey, fontSize: 11),
+                  '${(contract['progress'] * 100).round()}% 완료',
+                  style: AppTypography.labelSmall.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ],
@@ -329,40 +340,38 @@ class _NoticesList extends StatelessWidget {
                           ),
                           child: Text(
                             noticeTypeLabel(notice.type),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                  color: noticeTypeColor(notice.type),
-                                  fontWeight: FontWeight.w700,
-                                ),
+                            style: AppTypography.labelSmall.copyWith(
+                              color: noticeTypeColor(notice.type),
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           _formatDate(notice.publishedAt),
-                          style:
-                              Theme.of(context).textTheme.labelSmall?.copyWith(
-                                    color: const Color(0xFFa48e7b),
-                                  ),
+                          style: AppTypography.labelMedium.copyWith(
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 6),
                     Text(
                       notice.title,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF503123),
-                          ),
+                      style: AppTypography.titleMedium.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.darkAccent,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       notice.content,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: const Color(0xFFa48e7b),
-                            height: 1.4,
-                          ),
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: AppColors.secondary,
+                        height: 1.4,
+                        fontWeight: FontWeight.w500,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -445,10 +454,10 @@ class _HorizontalChipsCarousel extends StatelessWidget {
                         kind == _CarouselKind.opportunity
                             ? jobTypeLabel(item.type)
                             : item['type'],
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 11),
+                        style: AppTypography.labelSmall.copyWith(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -458,10 +467,10 @@ class _HorizontalChipsCarousel extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   kind == _CarouselKind.opportunity ? item.title : item['name'],
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13),
+                  style: AppTypography.bodySmall.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -470,7 +479,10 @@ class _HorizontalChipsCarousel extends StatelessWidget {
                   kind == _CarouselKind.opportunity
                       ? '${item.location} • ${item.distanceKm.toStringAsFixed(1)} km'
                       : '${item['location']} • ${item['rating']}★',
-                  style: const TextStyle(color: Colors.white70, fontSize: 10),
+                  style: AppTypography.labelSmall.copyWith(
+                    color: AppColors.white.withValues(alpha: 0.7),
+                    fontWeight: FontWeight.w500,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -478,8 +490,11 @@ class _HorizontalChipsCarousel extends StatelessWidget {
                     item.scheduledDate != null) ...[
                   const SizedBox(height: 2),
                   Text(
-                    'Due: ${_formatJobDate(item.scheduledDate!)}',
-                    style: const TextStyle(color: Colors.white60, fontSize: 9),
+                    '마감: ${_formatJobDate(item.scheduledDate!)}',
+                    style: AppTypography.labelSmall.copyWith(
+                      color: AppColors.white.withValues(alpha: 0.6),
+                      fontWeight: FontWeight.w500,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

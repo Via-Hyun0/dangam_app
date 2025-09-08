@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/theme/app_colors.dart';
+import 'package:dangam_app/theme/app_typography.dart';
+import 'package:dangam_app/theme/app_spacing.dart';
 
 class VerificationPage extends StatefulWidget {
   final bool isVerified;
@@ -33,20 +35,26 @@ class _VerificationPageState extends State<VerificationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('인증 관리'),
+        title: Text(
+          '인증 관리',
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w700,
+            color: AppColors.darkAccent,
+          ),
+        ),
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.darkAccent,
         elevation: 0,
       ),
-      backgroundColor: const Color(0xFFfdfdfd),
+      backgroundColor: AppColors.background,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           children: [
             // 인증 상태 요약
             _buildVerificationSummary(primary),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xl),
 
             // 신분증 인증
             _buildVerificationCard(
@@ -57,7 +65,7 @@ class _VerificationPageState extends State<VerificationPage> {
               onTap: () => _showIdVerificationDialog(),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
 
             // 전화번호 인증
             _buildVerificationCard(
@@ -68,7 +76,7 @@ class _VerificationPageState extends State<VerificationPage> {
               onTap: () => _showPhoneVerificationDialog(),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
 
             // 기술 인증
             _buildVerificationCard(
@@ -79,7 +87,7 @@ class _VerificationPageState extends State<VerificationPage> {
               onTap: () => _showSkillVerificationDialog(),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
 
             // 신원 조회
             _buildVerificationCard(
