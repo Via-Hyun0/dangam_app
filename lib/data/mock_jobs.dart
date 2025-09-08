@@ -92,13 +92,13 @@ final List<Job> mockJobs = [
   ),
 
   // 관개 시설
-  Job(
+  const Job(
     id: 'j8',
     title: '밭작물 관개 시설 설치',
     crop: '상추',
     location: '김제시 성덕면',
     areaHectares: 1.8,
-    requiredEquipment: const ['관수 파이프', '펌프'],
+    requiredEquipment: ['관수 파이프', '펌프'],
     scheduledDate: null,
     type: JobType.irrigationSetup,
     distanceKm: 1.3,

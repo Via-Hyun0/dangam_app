@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
 
 class VerificationPage extends StatefulWidget {
   final bool isVerified;
@@ -29,12 +30,12 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('인증 관리'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
       ),
       backgroundColor: const Color(0xFFfdfdfd),
@@ -44,9 +45,9 @@ class _VerificationPageState extends State<VerificationPage> {
           children: [
             // 인증 상태 요약
             _buildVerificationSummary(primary),
-            
+
             const SizedBox(height: 24),
-            
+
             // 신분증 인증
             _buildVerificationCard(
               title: '신분증 인증',
@@ -55,9 +56,9 @@ class _VerificationPageState extends State<VerificationPage> {
               isVerified: _idVerified,
               onTap: () => _showIdVerificationDialog(),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // 전화번호 인증
             _buildVerificationCard(
               title: '전화번호 인증',
@@ -66,9 +67,9 @@ class _VerificationPageState extends State<VerificationPage> {
               isVerified: _phoneVerified,
               onTap: () => _showPhoneVerificationDialog(),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // 기술 인증
             _buildVerificationCard(
               title: '기술 인증',
@@ -77,9 +78,9 @@ class _VerificationPageState extends State<VerificationPage> {
               isVerified: _skillVerified,
               onTap: () => _showSkillVerificationDialog(),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // 신원 조회
             _buildVerificationCard(
               title: '신원 조회',
@@ -88,9 +89,9 @@ class _VerificationPageState extends State<VerificationPage> {
               isVerified: _backgroundCheckVerified,
               onTap: () => _showBackgroundCheckDialog(),
             ),
-            
+
             const SizedBox(height: 32),
-            
+
             // 인증 혜택 안내
             _buildBenefitsCard(primary),
           ],
@@ -100,29 +101,32 @@ class _VerificationPageState extends State<VerificationPage> {
   }
 
   Widget _buildVerificationSummary(Color primary) {
-    final int verifiedCount = [_idVerified, _phoneVerified, _skillVerified, _backgroundCheckVerified]
-        .where((verified) => verified)
-        .length;
-    final int totalCount = 4;
+    const int totalCount = 4;
+    final int verifiedCount = [
+      _idVerified,
+      _phoneVerified,
+      _skillVerified,
+      _backgroundCheckVerified
+    ].where((verified) => verified).length;
     final double progress = verifiedCount / totalCount;
-    
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(26, 199, 93, 49),
-            Color.fromARGB(13, 199, 93, 49),
+            AppColors.primaryLighter,
+            AppColors.primaryLight,
           ],
         ),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(26, 199, 93, 49),
+            color: AppColors.primaryLighter,
             blurRadius: 20,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -143,17 +147,17 @@ class _VerificationPageState extends State<VerificationPage> {
                     Text(
                       '인증 진행률',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFF503123),
-                      ),
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.darkAccent,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '$verifiedCount/$totalCount 완료',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                        fontWeight: FontWeight.w500,
-                      ),
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ],
                 ),
@@ -170,20 +174,20 @@ class _VerificationPageState extends State<VerificationPage> {
                 child: Text(
                   '${(progress * 100).toInt()}%',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
             ],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // 진행률 바
           LinearProgressIndicator(
             value: progress,
-            backgroundColor: Colors.grey.shade200,
+            backgroundColor: AppColors.divider,
             valueColor: AlwaysStoppedAnimation<Color>(primary),
             borderRadius: BorderRadius.circular(10),
             minHeight: 8,
@@ -201,16 +205,16 @@ class _VerificationPageState extends State<VerificationPage> {
     required VoidCallback onTap,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -227,43 +231,44 @@ class _VerificationPageState extends State<VerificationPage> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: isVerified 
-                        ? Color.fromARGB(26, 76, 175, 80)
-                        : Color.fromARGB(26, 199, 93, 49),
+                    color: isVerified
+                        ? AppColors.successLight
+                        : AppColors.primaryLighter,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     isVerified ? Icons.check_circle : icon,
-                    color: isVerified ? Colors.green : primary,
+                    color: isVerified ? AppColors.success : primary,
                     size: 24,
                   ),
                 ),
-                
+
                 const SizedBox(width: 16),
-                
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF503123),
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.darkAccent,
+                                ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         description,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: const Color(0xFFa48e7b),
-                          fontWeight: FontWeight.w500,
-                        ),
+                              color: AppColors.secondary,
+                              fontWeight: FontWeight.w500,
+                            ),
                       ),
                     ],
                   ),
                 ),
-                
+
                 // 상태 표시
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -271,31 +276,33 @@ class _VerificationPageState extends State<VerificationPage> {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: isVerified 
-                        ? Color.fromARGB(26, 76, 175, 80)
-                        : Color.fromARGB(26, 255, 152, 0),
+                    color: isVerified
+                        ? AppColors.successLight
+                        : AppColors.warningLight,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: isVerified 
-                          ? Color.fromARGB(77, 76, 175, 80)
-                          : Color.fromARGB(77, 255, 152, 0),
+                      color: isVerified
+                          ? AppColors.successMuted
+                          : AppColors.warningMuted,
                       width: 1,
                     ),
                   ),
                   child: Text(
                     isVerified ? '완료' : '필요',
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: isVerified ? Colors.green : Colors.orange,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: isVerified
+                              ? AppColors.success
+                              : AppColors.warning,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
-                
+
                 const SizedBox(width: 8),
-                
-                Icon(
+
+                const Icon(
                   Icons.chevron_right,
-                  color: Colors.grey.shade400,
+                  color: AppColors.grey,
                 ),
               ],
             ),
@@ -309,13 +316,13 @@ class _VerificationPageState extends State<VerificationPage> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -333,31 +340,25 @@ class _VerificationPageState extends State<VerificationPage> {
               Text(
                 '인증 혜택',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFF503123),
-                ),
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.darkAccent,
+                    ),
               ),
             ],
           ),
-          
           const SizedBox(height: 16),
-          
           _buildBenefitItem(
             icon: Icons.visibility_outlined,
             title: '프로필 우선 노출',
             description: '인증된 사용자가 검색 결과 상단에 표시됩니다',
           ),
-          
           const SizedBox(height: 12),
-          
           _buildBenefitItem(
             icon: Icons.verified_user_outlined,
             title: '신뢰도 향상',
             description: '고용주가 더 신뢰할 수 있는 프로필이 됩니다',
           ),
-          
           const SizedBox(height: 12),
-          
           _buildBenefitItem(
             icon: Icons.work_outline,
             title: '더 많은 작업 기회',
@@ -374,7 +375,7 @@ class _VerificationPageState extends State<VerificationPage> {
     required String description,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Row(
       children: [
         Icon(
@@ -390,15 +391,15 @@ class _VerificationPageState extends State<VerificationPage> {
               Text(
                 title,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF503123),
-                ),
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.darkAccent,
+                    ),
               ),
               Text(
                 description,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFFa48e7b),
-                ),
+                      color: AppColors.secondary,
+                    ),
               ),
             ],
           ),
@@ -516,7 +517,10 @@ class _VerificationPageState extends State<VerificationPage> {
   }
 
   void _updateVerificationStatus() {
-    final bool allVerified = _idVerified && _phoneVerified && _skillVerified && _backgroundCheckVerified;
+    final bool allVerified = _idVerified &&
+        _phoneVerified &&
+        _skillVerified &&
+        _backgroundCheckVerified;
     widget.onVerificationUpdated(allVerified);
   }
 
@@ -524,7 +528,7 @@ class _VerificationPageState extends State<VerificationPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.success,
       ),
     );
   }

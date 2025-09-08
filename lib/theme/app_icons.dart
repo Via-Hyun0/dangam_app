@@ -217,7 +217,7 @@ class AppIcons {
   static const IconData agricultureOutline = Icons.agriculture_outlined;
 
   /// 식물 아이콘
-  static const IconData local_florist = Icons.local_florist;
+  static const IconData localFlorist = Icons.local_florist;
 
   /// 자연 아이콘
   static const IconData nature = Icons.nature;

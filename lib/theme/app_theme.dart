@@ -404,13 +404,13 @@ class AppTheme {
   /// 체크박스 테마
   static CheckboxThemeData get _checkboxTheme {
     return CheckboxThemeData(
-      fillColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      fillColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary;
         }
         return AppColors.white;
       }),
-      checkColor: MaterialStateProperty.all(AppColors.white),
+      checkColor: WidgetStateProperty.all(AppColors.white),
       side: const BorderSide(color: AppColors.divider),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSpacing.radiusSmall),
@@ -421,14 +421,14 @@ class AppTheme {
   /// 스위치 테마
   static SwitchThemeData get _switchTheme {
     return SwitchThemeData(
-      thumbColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary;
         }
         return AppColors.grey;
       }),
-      trackColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primaryLighter;
         }
         return AppColors.divider;

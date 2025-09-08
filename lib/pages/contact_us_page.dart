@@ -13,7 +13,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   final _emailController = TextEditingController();
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
-  
+
   String _selectedCategory = '일반 문의';
   final List<String> _categories = [
     '일반 문의',
@@ -36,7 +36,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('문의하기'),
@@ -66,14 +66,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
             children: [
               // 문의 유형
               _buildCategorySection(primary),
-              
+
               const SizedBox(height: 24),
-              
+
               // 문의 양식
               _buildFormSection(primary),
-              
+
               const SizedBox(height: 24),
-              
+
               // 연락처 정보
               _buildContactInfo(primary),
             ],
@@ -86,14 +86,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
   Widget _buildCategorySection(Color primary) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -103,17 +103,17 @@ class _ContactUsPageState extends State<ContactUsPage> {
           Text(
             '문의 유형',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF503123),
+                ),
           ),
-          
           const SizedBox(height: 16),
-          
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: _categories.map((category) => _buildCategoryChip(category, primary)).toList(),
+            children: _categories
+                .map((category) => _buildCategoryChip(category, primary))
+                .toList(),
           ),
         ],
       ),
@@ -122,7 +122,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
 
   Widget _buildCategoryChip(String category, Color primary) {
     final bool isSelected = category == _selectedCategory;
-    
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -132,19 +132,19 @@ class _ContactUsPageState extends State<ContactUsPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primary : Color.fromARGB(26, 199, 93, 49),
+          color: isSelected ? primary : const Color.fromARGB(26, 199, 93, 49),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? primary : Color.fromARGB(77, 199, 93, 49),
+            color: isSelected ? primary : const Color.fromARGB(77, 199, 93, 49),
             width: 1,
           ),
         ),
         child: Text(
           category,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: isSelected ? Colors.white : primary,
-            fontWeight: FontWeight.w600,
-          ),
+                color: isSelected ? Colors.white : primary,
+                fontWeight: FontWeight.w600,
+              ),
         ),
       ),
     );
@@ -153,14 +153,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
   Widget _buildFormSection(Color primary) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(10, 0, 0, 0),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -170,13 +170,11 @@ class _ContactUsPageState extends State<ContactUsPage> {
           Text(
             '문의 내용',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF503123),
+                ),
           ),
-          
           const SizedBox(height: 16),
-          
           _buildTextField(
             context,
             controller: _nameController,
@@ -190,9 +188,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               return null;
             },
           ),
-          
           const SizedBox(height: 16),
-          
           _buildTextField(
             context,
             controller: _emailController,
@@ -210,9 +206,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               return null;
             },
           ),
-          
           const SizedBox(height: 16),
-          
           _buildTextField(
             context,
             controller: _subjectController,
@@ -226,9 +220,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               return null;
             },
           ),
-          
           const SizedBox(height: 16),
-          
           _buildTextField(
             context,
             controller: _messageController,
@@ -251,7 +243,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
     );
   }
 
-  Widget _buildTextField(BuildContext context, {
+  Widget _buildTextField(
+    BuildContext context, {
     required TextEditingController controller,
     required String label,
     required String hint,
@@ -261,7 +254,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
     String? Function(String?)? validator,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -292,12 +285,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
   Widget _buildContactInfo(Color primary) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color.fromARGB(13, 199, 93, 49),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Color.fromARGB(51, 199, 93, 49),
-          width: 1,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: Color.fromARGB(51, 199, 93, 49),
+            width: 1,
+          ),
         ),
       ),
       child: Column(
@@ -307,42 +302,35 @@ class _ContactUsPageState extends State<ContactUsPage> {
             color: primary,
             size: 32,
           ),
-          
           const SizedBox(height: 12),
-          
           Text(
             '다른 연락 방법',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF503123),
-            ),
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF503123),
+                ),
           ),
-          
           const SizedBox(height: 16),
-          
           _buildContactMethod(
             icon: Icons.phone_outlined,
             title: '전화 문의',
             subtitle: '1588-1234',
             onTap: () => _showContactDialog('전화 문의', '1588-1234로 전화주세요'),
           ),
-          
           const SizedBox(height: 12),
-          
           _buildContactMethod(
             icon: Icons.chat_bubble_outline,
             title: '실시간 채팅',
             subtitle: '평일 09:00-18:00',
             onTap: () => _showContactDialog('실시간 채팅', '채팅 상담을 시작합니다'),
           ),
-          
           const SizedBox(height: 12),
-          
           _buildContactMethod(
             icon: Icons.email_outlined,
             title: '이메일',
             subtitle: 'support@dangam.com',
-            onTap: () => _showContactDialog('이메일', 'support@dangam.com으로 문의하세요'),
+            onTap: () =>
+                _showContactDialog('이메일', 'support@dangam.com으로 문의하세요'),
           ),
         ],
       ),
@@ -356,7 +344,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
     required VoidCallback onTap,
   }) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -369,9 +357,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
               Container(
                 width: 40,
                 height: 40,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromARGB(26, 199, 93, 49),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 child: Icon(
                   icon,
@@ -387,15 +375,15 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF503123),
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF503123),
+                          ),
                     ),
                     Text(
                       subtitle,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                      ),
+                            color: const Color(0xFFa48e7b),
+                          ),
                     ),
                   ],
                 ),
@@ -421,7 +409,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
           backgroundColor: Colors.green,
         ),
       );
-      
+
       // 폼 초기화
       _nameController.clear();
       _emailController.clear();

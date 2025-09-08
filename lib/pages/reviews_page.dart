@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dangam_app/theme/app_colors.dart';
 
 class ReviewsPage extends StatefulWidget {
   final double rating;
@@ -16,7 +17,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).colorScheme.primary;
-    
+
     // 모의 리뷰 데이터
     final List<Map<String, dynamic>> reviews = [
       {
@@ -48,46 +49,47 @@ class _ReviewsPageState extends State<ReviewsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('리뷰'),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF503123),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
         elevation: 0,
       ),
       backgroundColor: const Color(0xFFfdfdfd),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
-        children: [
-          // 평점 요약
-          _buildRatingSummary(context, primary, reviews),
-          
-          const SizedBox(height: 24),
-          
-          // 리뷰 목록
-          _buildReviewsList(context, reviews, primary),
-        ],
+          children: [
+            // 평점 요약
+            _buildRatingSummary(context, primary, reviews),
+
+            const SizedBox(height: 24),
+
+            // 리뷰 목록
+            _buildReviewsList(context, reviews, primary),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildRatingSummary(BuildContext context, Color primary, List<Map<String, dynamic>> reviews) {
+  Widget _buildRatingSummary(
+      BuildContext context, Color primary, List<Map<String, dynamic>> reviews) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(26, 199, 93, 49),
-            Color.fromARGB(13, 199, 93, 49),
+            AppColors.primaryLighter,
+            AppColors.primaryLight,
           ],
         ),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(26, 199, 93, 49),
+            color: AppColors.primaryLighter,
             blurRadius: 20,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -99,9 +101,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
               Text(
                 widget.rating.toString(),
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: const Color(0xFF503123),
-                ),
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.darkAccent,
+                    ),
               ),
               const SizedBox(width: 16),
               Column(
@@ -110,7 +112,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   Row(
                     children: List.generate(5, (index) {
                       return Icon(
-                        index < widget.rating.floor() ? Icons.star : Icons.star_border,
+                        index < widget.rating.floor()
+                            ? Icons.star
+                            : Icons.star_border,
                         color: Colors.amber,
                         size: 24,
                       );
@@ -120,17 +124,17 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   Text(
                     '${reviews.length}개의 리뷰',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFFa48e7b),
-                      fontWeight: FontWeight.w500,
-                    ),
+                          color: AppColors.secondary,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                 ],
               ),
             ],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // 평점 분포
           _buildRatingDistribution(context),
         ],
@@ -146,7 +150,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
       2: 0,
       1: 0,
     };
-    
+
     return Column(
       children: [
         for (int rating = 5; rating >= 1; rating--) ...[
@@ -155,12 +159,12 @@ class _ReviewsPageState extends State<ReviewsPage> {
               Text(
                 '$rating',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF503123),
-                ),
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.darkAccent,
+                    ),
               ),
               const SizedBox(width: 8),
-              Icon(
+              const Icon(
                 Icons.star,
                 color: Colors.amber,
                 size: 16,
@@ -169,8 +173,8 @@ class _ReviewsPageState extends State<ReviewsPage> {
               Expanded(
                 child: LinearProgressIndicator(
                   value: ratingCounts[rating]! / 11,
-                  backgroundColor: Colors.grey.shade200,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                  backgroundColor: AppColors.divider,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
                   borderRadius: BorderRadius.circular(4),
                   minHeight: 8,
                 ),
@@ -179,9 +183,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
               Text(
                 '${ratingCounts[rating]}',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF503123),
-                ),
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.darkAccent,
+                    ),
               ),
             ],
           ),
@@ -191,24 +195,28 @@ class _ReviewsPageState extends State<ReviewsPage> {
     );
   }
 
-  Widget _buildReviewsList(BuildContext context, List<Map<String, dynamic>> reviews, Color primary) {
+  Widget _buildReviewsList(
+      BuildContext context, List<Map<String, dynamic>> reviews, Color primary) {
     return Column(
-      children: reviews.map((review) => _buildReviewCard(context, review, primary)).toList(),
+      children: reviews
+          .map((review) => _buildReviewCard(context, review, primary))
+          .toList(),
     );
   }
 
-  Widget _buildReviewCard(BuildContext context, Map<String, dynamic> review, Color primary) {
+  Widget _buildReviewCard(
+      BuildContext context, Map<String, dynamic> review, Color primary) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(10, 0, 0, 0),
+            color: AppColors.shadowLight,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -225,17 +233,17 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     Text(
                       review['employer'],
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFF503123),
-                      ),
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.darkAccent,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       review['job'],
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFa48e7b),
-                        fontWeight: FontWeight.w500,
-                      ),
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ],
                 ),
@@ -245,7 +253,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
                 children: [
                   ...List.generate(5, (index) {
                     return Icon(
-                      index < review['rating'].floor() ? Icons.star : Icons.star_border,
+                      index < review['rating'].floor()
+                          ? Icons.star
+                          : Icons.star_border,
                       color: Colors.amber,
                       size: 16,
                     );
@@ -254,47 +264,47 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   Text(
                     review['rating'].toString(),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF503123),
-                    ),
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.darkAccent,
+                        ),
                   ),
                 ],
               ),
             ],
           ),
-          
+
           const SizedBox(height: 12),
-          
+
           // 리뷰 내용
           Text(
             review['comment'],
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFF503123),
-              height: 1.5,
-            ),
+                  color: AppColors.darkAccent,
+                  height: 1.5,
+                ),
           ),
-          
+
           const SizedBox(height: 12),
-          
+
           // 날짜
           Text(
             review['date'],
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Colors.grey.shade500,
-              fontWeight: FontWeight.w500,
-            ),
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
           ),
-          
+
           // 답글
           if (review['response'] != null) ...[
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Color.fromARGB(13, 199, 93, 49),
+                color: AppColors.primaryLight,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: Color.fromARGB(51, 199, 93, 49),
+                  color: AppColors.primaryLightest,
                   width: 1,
                 ),
               ),
@@ -310,9 +320,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     child: Text(
                       review['response'],
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFF503123),
-                        fontWeight: FontWeight.w500,
-                      ),
+                            color: AppColors.darkAccent,
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
                   ),
                 ],
