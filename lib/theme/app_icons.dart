@@ -243,4 +243,25 @@ class AppIcons {
 
   /// 더보기 (세로) 아이콘
   static const IconData moreVertical = Icons.more_vert;
+
+  /// 알림 아이콘
+  static const IconData notifications = Icons.notifications;
+
+  /// 공지사항 아이콘
+  static const IconData announcement = Icons.campaign;
+
+  /// 계약 아이콘
+  static const IconData contract = Icons.description;
+
+  /// 진동 아이콘
+  static const IconData vibration = Icons.vibration;
+
+  /// 다크 모드 아이콘
+  static const IconData darkMode = Icons.dark_mode;
+
+  /// 반경 아이콘
+  static const IconData radius = Icons.radio_button_checked;
+
+  /// 로그아웃 아이콘
+  static const IconData logout = Icons.logout;
 }
