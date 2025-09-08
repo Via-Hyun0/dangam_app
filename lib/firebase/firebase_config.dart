@@ -7,10 +7,12 @@
 /// 4. Firebase SDK 의존성 추가
 /// 5. 이 파일의 주석을 해제하고 실제 Firebase 초기화 코드 작성
 
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'firebase_options.dart';
 
 class FirebaseConfig {
   static bool _initialized = false;
@@ -25,13 +27,16 @@ class FirebaseConfig {
     if (_initialized) return;
 
     try {
-      // TODO::LUKA - Firebase 초기화 코드
-      // await Firebase.initializeApp();
-      //
-      // // Firebase 서비스 초기화 확인
-      // await _initializeAuth();
-      // await _initializeFirestore();
-      // await _initializeStorage();
+      // Firebase 초기화
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      // Firebase 서비스 초기화 확인
+      await _initializeAuth();
+      await _initializeFirestore();
+      await _initializeStorage();
+      await _initializeMessaging();
 
       _initialized = true;
       print('Firebase 초기화 완료');
@@ -48,14 +53,14 @@ class FirebaseConfig {
   /// - 보안 규칙 설정
   /// - 사용자 프로필 관리
   static Future<void> _initializeAuth() async {
-    // TODO::LUKA - Firebase Auth 초기화
-    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    //   if (user == null) {
-    //     print('사용자가 로그아웃됨');
-    //   } else {
-    //     print('사용자가 로그인됨: ${user.uid}');
-    //   }
-    // });
+    // Firebase Auth 초기화
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('사용자가 로그아웃됨');
+      } else {
+        print('사용자가 로그인됨: ${user.uid}');
+      }
+    });
   }
 
   /// Firestore 초기화
@@ -66,11 +71,11 @@ class FirebaseConfig {
   /// - 인덱스 설정
   /// - 컬렉션 구조 설계
   static Future<void> _initializeFirestore() async {
-    // TODO::LUKA - Firestore 초기화
-    // FirebaseFirestore.instance.settings = const Settings(
-    //   persistenceEnabled: true,
-    //   cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
-    // );
+    // Firestore 초기화
+    FirebaseFirestore.instance.settings = const Settings(
+      persistenceEnabled: true,
+      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+    );
   }
 
   /// Firebase Storage 초기화
@@ -80,8 +85,34 @@ class FirebaseConfig {
   /// - 보안 규칙 설정
   /// - 파일 업로드/다운로드 최적화
   static Future<void> _initializeStorage() async {
-    // TODO::LUKA - Firebase Storage 초기화
-    // FirebaseStorage.instance.setMaxUploadRetryTime(Duration(seconds: 30));
+    // Firebase Storage 초기화
+    FirebaseStorage.instance.setMaxUploadRetryTime(const Duration(seconds: 30));
+  }
+
+  /// Firebase Messaging 초기화
+  static Future<void> _initializeMessaging() async {
+    // Firebase Messaging 초기화
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    // 알림 권한 요청
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('사용자가 알림 권한을 허용했습니다');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('사용자가 임시 알림 권한을 허용했습니다');
+    } else {
+      print('사용자가 알림 권한을 거부했습니다');
+    }
   }
 
   /// Firebase 연결 상태 확인

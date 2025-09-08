@@ -3,6 +3,7 @@ import 'package:dangam_app/pages/dashboard_body.dart';
 import 'package:dangam_app/widgets/mobile_layout.dart';
 import 'package:dangam_app/theme/app_theme.dart';
 import 'package:dangam_app/services/data_service.dart';
+import 'package:dangam_app/firebase/firebase_config.dart';
 
 /// 단감 앱의 메인 진입점
 ///
@@ -17,6 +18,9 @@ import 'package:dangam_app/services/data_service.dart';
 /// - 앱 시작 시 데이터 동기화
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Firebase 초기화
+  await FirebaseConfig.initialize();
 
   // 데이터 서비스 초기화
   DataService().initialize();
