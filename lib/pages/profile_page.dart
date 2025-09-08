@@ -20,6 +20,13 @@ import 'package:dangam_app/theme/app_icons.dart';
 /// - 이 페이지는 사용자의 프로필 정보와 설정을 표시합니다
 /// - 사용자 정보, 통계, 메뉴 항목을 포함합니다
 /// - 일관된 디자인을 위해 테마 시스템을 사용합니다
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
 class ProfileBody extends StatefulWidget {
   const ProfileBody({super.key});
 
@@ -27,11 +34,34 @@ class ProfileBody extends StatefulWidget {
   State<ProfileBody> createState() => _ProfileBodyState();
 }
 
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: Text(
+          '프로필',
+          style: AppTypography.titleLarge.copyWith(
+            fontWeight: FontWeight.w800,
+            color: AppColors.darkAccent,
+          ),
+        ),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.darkAccent,
+        elevation: 0,
+        centerTitle: false,
+        titleSpacing: AppSpacing.lg,
+      ),
+      body: const ProfileBody(),
+    );
+  }
+}
+
 class _ProfileBodyState extends State<ProfileBody> {
   // 사용자 데이터 (실제 앱에서는 API에서 가져옴)
   late UserProfile _userProfile;
   late UserStats _userStats;
-  late UserSettings _userSettings;
 
   @override
   void initState() {
@@ -39,7 +69,6 @@ class _ProfileBodyState extends State<ProfileBody> {
     // 목업데이터 초기화 (실제 앱에서는 API 호출)
     _userProfile = MockProfileData.defaultProfile;
     _userStats = MockProfileData.userStats;
-    _userSettings = MockProfileData.userSettings;
   }
 
   @override
