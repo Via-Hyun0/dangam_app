@@ -83,3 +83,9 @@ lerna-debug.log*
 *.tmp
 *.temp
 *.cache
+
+# Firebase 설정 파일 (민감한 정보 포함)
+lib/firebase_options.dart
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+firebase.json
