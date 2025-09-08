@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dangam_app/models/job.dart';
+import 'package:dangam_app/data/mock_jobs.dart';
 import 'package:dangam_app/theme/app_colors.dart';
 import 'package:dangam_app/theme/app_typography.dart';
 import 'package:dangam_app/theme/app_spacing.dart';
